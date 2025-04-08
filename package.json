@@ -4,6 +4,10 @@
   "description": "Canteen app",
   "main": "index.js",
   "author": "Karan",
+  "scripts": {
+    "serve": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "license": "MIT",
   "dependencies": {
     "ejs": "^3.1.10",
