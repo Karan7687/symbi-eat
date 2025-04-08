@@ -1,3 +1,7 @@
 [.] Create Directory Structure
 [.]Create a NPM project and install independencies
+[.]Create express server
+[.] Git setup
+[.] Install laravel
+
 
