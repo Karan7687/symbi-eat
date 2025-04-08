@@ -1,0 +1,3 @@
+[.] Create Directory Structure
+[.]Create a NPM project and install independencies
+

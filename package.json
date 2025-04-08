@@ -1,0 +1,14 @@
+{
+  "name": "Symbi-eat",
+  "version": "1.0.0",
+  "description": "Canteen app",
+  "main": "index.js",
+  "author": "Karan",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "nodemon": "^3.1.9"
+  }
+}
