@@ -5,8 +5,10 @@ const ejs = require("ejs");
 const expressLayout = require("express-ejs-layouts");
 const path = require("path");
 
+//Assets
+app.use(express.static("public"));
 app.get("/", (req, res) => {
-  res.render('home');
+  res.render("home");
 });
 
 //set template
@@ -14,9 +16,8 @@ app.get("/", (req, res) => {
 app.use(expressLayout);
 app.set("views", path.join(__dirname, "/resources/views"));
 
-
 //which template to use
-app.set('view engine','ejs')
+app.set("view engine", "ejs");
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

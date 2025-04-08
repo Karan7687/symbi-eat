@@ -1,8 +1,11 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/scss/app.scss', 'public/css'); // Use `.sass()` instead of `.postCss()`
-
+mix.sass('resources/scss/app.scss', 'public/css')
+   .options({
+      postCss: [ tailwindcss('./tailwind.config.js') ],
+      processCssUrls: false,
+   });
 
 // (which file to execute , where to show it)
 
