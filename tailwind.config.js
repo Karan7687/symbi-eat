@@ -1,12 +1,7 @@
 module.exports = {
-    content: [
-      './resources/views/**/*.ejs',  // <== Add this line
-      './resources/**/*.js',
-      './resources/**/*.scss',
-    ],
-    theme: {
-      extend: {},
-    },
-    plugins: [],
-  }
-  
+  content: ["./resources/views/**/*.ejs"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

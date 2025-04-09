@@ -1,7 +1,74 @@
+// ✅ Define all your variables first
+$primary: #fe5f1e;
+$primary-hover: #b23301;
+$secondary: #f8f8f8;
+$oure: #fff;
+$dark: #1a1a1a; // Keep only one definition
+$gray: #ccc;
+$smooth: all 0.3s ease-in-out;
+
+// ✅ Tailwind directives AFTER variables
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
 body {
-  background-color: #f3f4f6;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: $dark;
 }
+
+.cart-icon {
+  transition: $smooth;
+}
+
+.cart-icon:hover {
+  transform: translateY(-5px) scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.4));
+}
+
+.nav-item {
+  transition: $smooth;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.4));
+    color: #e11d48;
+  }
+}
+@keyframes bounce-once {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(-25px);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce-once {
+  animation: bounce-once 1s ease;
+}
+.hidden-text {
+  opacity: 0;
+}
+.visible-text {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+  
