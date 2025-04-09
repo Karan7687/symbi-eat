@@ -2,7 +2,7 @@
 $primary: #fe5f1e;
 $primary-hover: #b23301;
 $secondary: #f8f8f8;
-$oure: #fff;
+$pure: #fff;
 $dark: #1a1a1a; // Keep only one definition
 $gray: #ccc;
 $smooth: all 0.3s ease-in-out;
@@ -71,4 +71,19 @@ body {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
 }
-  
+
+.size {
+  background: $secondary;
+}
+
+.add-to-cart {
+  border: 2px solid $primary;
+  color: $primary;
+  transition: $smooth;
+
+  &:hover {
+    background: $primary;
+    border-color: $pure;
+    color: $pure;
+  }
+}
