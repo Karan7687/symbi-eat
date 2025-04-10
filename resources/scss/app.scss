@@ -1,5 +1,5 @@
 // ✅ Define all your variables first
-$primary: #fe5f1e;
+$primary: #e8c547;
 $primary-hover: #b23301;
 $secondary: #f8f8f8;
 $pure: #fff;
@@ -85,5 +85,10 @@ body {
     background: $primary;
     border-color: $pure;
     color: $pure;
+  }
+}
+section.cart {
+  .amount {
+    color: $primary;
   }
 }
