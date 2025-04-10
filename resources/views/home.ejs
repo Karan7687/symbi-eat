@@ -1,408 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SymbiEat</title>
-    <link rel="icon" href="/img/symbi.ico" type="image/x-icon" />
+<section
+  class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white"
+>
+  <div
+    class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6"
+  >
+    <!-- Text -->
+    <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl">
+      <h6 class="text-lg text-[#457B9D] italic font-light">
+        <em>Are you hungry?</em>
+      </h6>
+      <h1
+        id="bounceText"
+        class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557]"
+      >
+        Don't wait!
+      </h1>
+      <p class="mt-4 text-gray-600 text-lg">
+        Experience culinary excellence with our premium dishes crafted for your
+        delight.
+      </p>
+      <button
+        class="mt-6 bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md"
+      >
+        Order Now
+      </button>
+    </div>
 
-    <link rel="stylesheet" href="/css/app.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Nunito Sans", sans-serif;
-        color: #333;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "Cormorant Garamond", serif;
-        letter-spacing: 0.5px;
-      }
-      .nav-item {
-        position: relative;
-      }
-      .nav-item::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: -4px;
-        left: 0;
-        background-color: #e8c547;
-        transition: width 0.3s ease;
-      }
-      .nav-item:hover::after {
-        width: 100%;
-      }
-      .hidden-text {
-        opacity: 0;
-        animation: fadeIn 1.5s forwards;
-      }
-      @keyframes fadeIn {
-        to {
-          opacity: 1;
-        }
-      }
-      .size {
-        background-color: #f5f5f5;
-        border: 1px solid #e8c547;
-        color: #1d3557;
-      }
-      .add-to-cart {
-        background-color: #1d3557;
-        color: white;
-        transition: all 0.3s ease;
-      }
-      .add-to-cart:hover {
-        background-color: #2a4a73;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      }
-      .navbar-container {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-      .menu-card {
-        transition: all 0.3s ease;
-        border: 1px solid #eaeaea;
-      }
-      .menu-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-        border-color: #e8c547;
-      }
-    </style>
-  </head>
-  <body class="bg-white">
-    <!-- Navbar -->
-    <nav class="bg-[#1D3557] text-white">
-      <div class="navbar-container">
+    <!-- Image -->
+    <div
+      class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA]"
+    >
+      <img
+        src="/img/hero.png"
+        alt="SymbiChef cooking"
+        class="w-full h-full object-cover scale-125"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Menu Section -->
+<section class="menu container mx-auto py-16 px-6">
+  <h1 class="text-4xl font-bold mb-16 text-[#1D3557] text-center relative">
+    Our Premium Menu
+    <span class="block w-24 h-1 bg-[#E8C547] mx-auto mt-4"></span>
+  </h1>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+  >
+    <!-- Menu Item Start -->
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <div class="relative">
+        <img
+          class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+          src="/img/hero.png"
+          alt="Veg Thali"
+        />
         <div
-          class="container mx-auto flex flex-wrap items-center justify-between px-6 py-5"
+          class="absolute top-2 right-2 bg-[#E8C547] text-[#1D3557] text-xs font-bold px-2 py-1 rounded-full"
         >
-          <!-- Logo and Title -->
-          <div class="flex items-center space-x-3">
-            <div class="bg-[#] p-2 rounded-lg">
-              <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-8 w-8" />
-            </div>
-            <span class="text-2xl font-semibold text-white tracking-wide"
-              >SymbiEat</span
-            >
-          </div>
-
-          <!-- Menu Links -->
-          <div class="flex flex-wrap items-center space-x-8 mt-4 sm:mt-0">
-            <a
-              href="#"
-              class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
-              >Menu</a
-            >
-            <a
-              href="#"
-              class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
-              >Offer</a
-            >
-            <a
-              href="#"
-              class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
-              >Register</a
-            >
-            <a
-              href="#"
-              class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
-              >Login</a
-            >
-            <a
-              href="#"
-              class="bg-[#] p-2 rounded-full hover:bg-[#] transition duration-300"
-            >
-              <img src="/img/cart.png" alt="Cart" class="h-6 w-6 nav-item" />
-            </a>
-          </div>
+          Popular
         </div>
       </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section
-      class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white"
-    >
-      <div
-        class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6"
-      >
-        <!-- Text -->
-        <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl">
-          <h6 class="text-lg text-[#457B9D] italic font-light">
-            <em>Are you hungry?</em>
-          </h6>
-          <h1
-            id="bounceText"
-            class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557]"
-          >
-            Don't wait!
-          </h1>
-          <p class="mt-4 text-gray-600 text-lg">
-            Experience culinary excellence with our premium dishes crafted for
-            your delight.
-          </p>
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
           <button
-            class="mt-6 bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md"
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
           >
-            Order Now
+            <span>+</span>
+            <span class="ml-4">Add</span>
           </button>
         </div>
-
-        <!-- Image -->
-        <div
-          class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA]"
+      </div>
+    </div>
+    <!-- Repeat Menu Items -->
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
         >
-          <img
-            src="/img/hero.png"
-            alt="SymbiChef cooking"
-            class="w-full h-full object-cover scale-125"
-          />
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
         </div>
       </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section class="menu container mx-auto py-16 px-6">
-      <h1 class="text-4xl font-bold mb-16 text-[#1D3557] text-center relative">
-        Our Premium Menu
-        <span class="block w-24 h-1 bg-[#E8C547] mx-auto mt-4"></span>
-      </h1>
-
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-      >
-        <!-- Menu Item Start -->
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <div class="relative">
-            <img
-              class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-              src="/img/hero.png"
-              alt="Veg Thali"
-            />
-            <div
-              class="absolute top-2 right-2 bg-[#E8C547] text-[#1D3557] text-xs font-bold px-2 py-1 rounded-full"
-            >
-              Popular
-            </div>
-          </div>
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
         </div>
-        <!-- Repeat Menu Items -->
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
-          <img
-            class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-            src="/img/hero.png"
-            alt="Veg Thali"
-          />
-          <div class="text-center">
-            <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
-            <p class="text-gray-600 text-sm mb-3">
-              A delicious assortment of vegetarian dishes
-            </p>
-            <span
-              class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
-              <button
-                class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Menu Item End -->
       </div>
-    </section>
-
-    <!-- JS -->
-    <script src="/js/app.js"></script>
-  </body>
-</html>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w-64 menu-card bg-white rounded-xl shadow-md p-5 mx-auto">
+      <img
+        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
+        src="/img/hero.png"
+        alt="Veg Thali"
+      />
+      <div class="text-center">
+        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">Veg Thali</h2>
+        <p class="text-gray-600 text-sm mb-3">
+          A delicious assortment of vegetarian dishes
+        </p>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs font-medium"
+          >small</span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg text-[#1D3557]">Rs.110</span>
+          <button
+            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Menu Item End -->
+  </div>
+</section>
