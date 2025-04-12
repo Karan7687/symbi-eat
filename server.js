@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 // Import routes
 const initRoutes = require("./routes/web");
-initRoutes(app);  // Call the function with the app as an argument
+initRoutes(app); // Call the function with the app as an argument
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
-<section class="cart py-16 bg-white">
-  <div class="order container mx-auto mb-5 w-1/2">
+<section class="cart pt-4 bg-white">
+  <div class="container mx-auto px-4">
     <!-- Header with fun animation -->
-    <div class="flex items-center border-b pb-3 relative">
+    <div class="flex items-center border-b pb-3 relative mb-6">
       <div class="relative">
         <img
           src="/img/cart.png"
@@ -17,237 +17,251 @@
       </div>
       <h1 class="font-bold ml-4 text-3xl">Order Summary</h1>
       <div
-        class="ml-auto text-sm bg-[#F8F9FA] px-3 py-1 rounded-full text-[#112240] font-medium"
+        class="ml-auto text-sm bg-[#E8C547] px-3 py-1 rounded-full text-[#112240] font-medium shadow-md animate-pulse ml-auto"
       >
         <span class="inline-block animate-pulse">⏰</span> Ready in 15 mins
       </div>
     </div>
 
-    <!-- Fun student-themed header -->
-    <!-- <div class="bg-[#F8F9FA] rounded-lg p-3 mt-4 mb-4 text-center">
-      <p class="text-[#112240] font-medium italic">
-        "Fueling your brain cells and happiness levels since 2023"
-      </p>
-      <div class="text-xs text-gray-500 mt-1">
-        ~ Your friendly campus food wizards ~
-      </div>
-    </div> -->
-
-    <!-- Parent container for each food item -->
-    <div
-      class="pizza-list bg-[#112240] p-4 mt-5 rounded-xl shadow-md text-white relative overflow-hidden"
-    >
-      <!-- Fun decorative elements -->
-      <div
-        class="absolute top-0 right-0 w-24 h-24 -rotate-45 -translate-y-12 translate-x-8 opacity-5"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="white"
-          width="96"
-          height="96"
-        >
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"
-          />
-        </svg>
-      </div>
-
-      <!-- Food item 1 with hover effect -->
-      <div
-        class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
-      >
-        <!-- Image with fun border -->
+    <!-- Two-column layout for cart items and order summary -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left column: Food items (takes 2/3 of the space) -->
+      <div class="lg:col-span-2">
         <div
-          class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
+          class="pizza-list bg-[#112240] p-4 rounded-xl shadow-md text-white relative overflow-hidden"
         >
-          <img
-            src="/img/hero.png"
-            alt="SymbiChef cooking"
-            class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
-          />
-        </div>
-
-        <!-- Name with emoji -->
-        <h1 class="font-bold text-lg flex-1 ml-4">
-          Veg Thali <span class="text-sm">🌱</span>
-          <div class="text-xs text-gray-400 font-normal">
-            The "I have an exam tomorrow" power meal
-          </div>
-        </h1>
-
-        <!-- Quantity & Price container -->
-        <div class="text-right">
-          <div class="text-sm">Qty: <span class="font-semibold">1</span></div>
-          <div class="text-[#E8C547] font-bold text-lg">₹110</div>
-        </div>
-      </div>
-
-      <!-- Food item 2 -->
-      <div
-        class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
-      >
-        <div
-          class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
-        >
-          <img
-            src="/img/hero.png"
-            alt="SymbiChef cooking"
-            class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
-          />
-        </div>
-        <h1 class="font-bold text-lg flex-1 ml-4">
-          Veg Thali <span class="text-sm">🔥</span>
-          <div class="text-xs text-gray-400 font-normal">
-            The "Deadline? What deadline?" special
-          </div>
-        </h1>
-        <div class="text-right">
-          <div class="text-sm">Qty: <span class="font-semibold">1</span></div>
-          <div class="text-[#E8C547] font-bold text-lg">₹110</div>
-        </div>
-      </div>
-
-      <!-- Food item 3 -->
-      <div
-        class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
-      >
-        <div
-          class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
-        >
-          <img
-            src="/img/hero.png"
-            alt="SymbiChef cooking"
-            class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
-          />
-        </div>
-        <h1 class="font-bold text-lg flex-1 ml-4">
-          Veg Thali <span class="text-sm">🧠</span>
-          <div class="text-xs text-gray-400 font-normal">
-            The "Brain food for that 9AM lecture" combo
-          </div>
-        </h1>
-        <div class="text-right">
-          <div class="text-sm">Qty: <span class="font-semibold">1</span></div>
-          <div class="text-[#E8C547] font-bold text-lg">₹110</div>
-        </div>
-      </div>
-
-      <!-- Food item 4 -->
-      <div
-        class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
-      >
-        <div
-          class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
-        >
-          <img
-            src="/img/hero.png"
-            alt="SymbiChef cooking"
-            class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
-          />
-        </div>
-        <h1 class="font-bold text-lg flex-1 ml-4">
-          Veg Thali <span class="text-sm">💪</span>
-          <div class="text-xs text-gray-400 font-normal">
-            The "Survived another all-nighter" reward
-          </div>
-        </h1>
-        <div class="text-right">
-          <div class="text-sm">Qty: <span class="font-semibold">1</span></div>
-          <div class="text-[#E8C547] font-bold text-lg">₹110</div>
-        </div>
-      </div>
-
-      <!-- Fun footer message -->
-      <div class="text-center mt-4 text-xs text-gray-400 italic">
-        * Each meal comes with a free dose of motivation and a side of
-        procrastination-fighting powers
-      </div>
-    </div>
-
-    <hr class="my-4 border-dashed border-gray-300" />
-
-    <!-- Enhanced total section -->
-    <div class="flex justify-between items-center py-4">
-      <div class="text-sm text-gray-500">
-        <div class="flex items-center">
-          <span>Estimated delivery:</span>
-          <span class="ml-2 font-medium text-[#112240]">12:30 PM</span>
-          <span class="ml-1 text-xs"
-            >(Just in time for your next class! 🏃‍♂️)</span
+          <!-- Fun decorative elements -->
+          <div
+            class="absolute top-0 right-0 w-24 h-24 -rotate-45 -translate-y-12 translate-x-8 opacity-5"
           >
-        </div>
-      </div>
-      <div class="text-right">
-        <div>
-          <span class="text-lg font-bold">Total:</span>
-          <span
-            class="amount text-2xl font-bold ml-2 text-[#112240] relative group"
-          >
-            ₹500
-            <span
-              class="absolute -top-4 -right-2 text-xs bg-[#E8C547] text-[#112240] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="white"
+              width="96"
+              height="96"
             >
-              Worth every rupee!
-            </span>
-          </span>
-        </div>
-        
-        <div class="text-xs text-gray-500 mt-1">
-          * Cheaper than your textbooks and tastier too !
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"
+              />
+            </svg>
+          </div>
+
+          <!-- Food item 1 with hover effect -->
+          <div
+            class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
+          >
+            <!-- Image with fun border -->
+            <div
+              class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
+            >
+              <img
+                src="/img/hero.png"
+                alt="SymbiChef cooking"
+                class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
+              />
+            </div>
+
+            <!-- Name with emoji -->
+            <h1 class="font-bold text-lg flex-1 ml-4">
+              Veg Thali <span class="text-sm">🌱</span>
+              <div class="text-xs text-gray-400 font-normal">
+                The "I have an exam tomorrow" power meal
+              </div>
+            </h1>
+
+            <!-- Quantity & Price container -->
+            <div class="text-right">
+              <div class="text-sm">
+                Qty: <span class="font-semibold">1</span>
+              </div>
+              <div class="text-[#E8C547] font-bold text-lg">₹110</div>
+            </div>
+          </div>
+
+          <!-- Food item 2 -->
+          <div
+            class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
+          >
+            <div
+              class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
+            >
+              <img
+                src="/img/hero.png"
+                alt="SymbiChef cooking"
+                class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
+              />
+            </div>
+            <h1 class="font-bold text-lg flex-1 ml-4">
+              Veg Thali <span class="text-sm">🔥</span>
+              <div class="text-xs text-gray-400 font-normal">
+                The "Deadline? What deadline?" special
+              </div>
+            </h1>
+            <div class="text-right">
+              <div class="text-sm">
+                Qty: <span class="font-semibold">1</span>
+              </div>
+              <div class="text-[#E8C547] font-bold text-lg">₹110</div>
+            </div>
+          </div>
+
+          <!-- Food item 3 -->
+          <div
+            class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
+          >
+            <div
+              class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
+            >
+              <img
+                src="/img/hero.png"
+                alt="SymbiChef cooking"
+                class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
+              />
+            </div>
+            <h1 class="font-bold text-lg flex-1 ml-4">
+              Veg Thali <span class="text-sm">🧠</span>
+              <div class="text-xs text-gray-400 font-normal">
+                The "Brain food for that 9AM lecture" combo
+              </div>
+            </h1>
+            <div class="text-right">
+              <div class="text-sm">
+                Qty: <span class="font-semibold">1</span>
+              </div>
+              <div class="text-[#E8C547] font-bold text-lg">₹110</div>
+            </div>
+          </div>
+
+          <!-- Food item 4 -->
+          <div
+            class="flex items-center justify-between mt-2 gap-4 w-full p-2 hover:bg-[#1a2e50] rounded-lg transition-colors duration-200 group"
+          >
+            <div
+              class="w-[75px] h-[75px] rounded-full overflow-hidden shadow-xl border-4 border-[#F8F9FA] group-hover:border-[#E8C547] transition-colors duration-200"
+            >
+              <img
+                src="/img/hero.png"
+                alt="SymbiChef cooking"
+                class="w-full h-full object-cover scale-125 group-hover:scale-150 transition-transform duration-300"
+              />
+            </div>
+            <h1 class="font-bold text-lg flex-1 ml-4">
+              Veg Thali <span class="text-sm">💪</span>
+              <div class="text-xs text-gray-400 font-normal">
+                The "Survived another all-nighter" reward
+              </div>
+            </h1>
+            <div class="text-right">
+              <div class="text-sm">
+                Qty: <span class="font-semibold">1</span>
+              </div>
+              <div class="text-[#E8C547] font-bold text-lg">₹110</div>
+            </div>
+          </div>
+
+          <!-- Fun footer message -->
+          <div class="text-center mt-4 text-xs text-gray-400 italic">
+            * Each meal comes with a free dose of motivation and a side of
+            procrastination-fighting powers
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Call to action button -->
-    <div class="mt-6">
-      <!-- <button
-        class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
-      >
-        <span class="relative z-10 flex items-center justify-center">
-          <span class="mr-2">🚀</span>
-          Confirm Order & Fuel Your Brain
-        </span>
-        <span
-          class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-        ></span>
-        <span
-          class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
-        ></span>
-      </button> -->
+      <!-- Right column: Order summary and coupon (takes 1/3 of the space) -->
+      <div class="lg:col-span-1">
+        <div class="bg-[#F8F9FA] rounded-xl p-6 shadow-md">
+          <h2 class="font-bold text-xl text-[#112240] mb-4">Order Details</h2>
 
-      <div class="mt-6">
-        <button
-          class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
-        >
-          <span class="relative z-10 flex items-center justify-center">
-            <span class="mr-2">🚀</span>
-            Confirm Order & Fuel Your Brain
-          </span>
-          <span
-            class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-          ></span>
-          <span
-            class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
-          ></span>
-        </button>
-  
+          <!-- Coupon code section -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Have a coupon?</label
+            >
+            <div class="flex">
+              <input
+                type="text"
+                placeholder="Enter coupon code"
+                class="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E8C547] focus:border-transparent"
+              />
+              <button
+                class="bg-[#112240] text-white px-4 py-2 rounded-r-lg hover:bg-[#1a2e50] transition-colors duration-200"
+              >
+                Apply
+              </button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              Try "STUDENT10" for 10% off your first order!
+            </div>
+          </div>
 
+          <hr class="my-4 border-dashed border-gray-300" />
+
+          <!-- Price breakdown -->
+          <div class="space-y-2 mb-4">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Subtotal</span>
+              <span class="font-medium">₹440</span>
+            </div>
+            <div class="flex justify-between text-sm">
+      
+              <span class="font-medium">₹60</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Discount</span>
+              <span class="font-medium text-green-600">-₹0</span>
+            </div>
+          </div>
+
+          <hr class="my-4 border-gray-300" />
+
+          <!-- Total section -->
+          <div class="flex justify-between items-center py-2">
+            <div class="text-sm text-gray-500">
+             
+            </div>
+          </div>
+
+          <div class="  py-2 mb-1">
+            <span class="text-lg font-bold">Total:</span>
+            <span
+              class="amount text-2xl font-bold text-[#112240] relative group"
+            >
+              ₹500
+              <span
+                class="absolute -top-4 -left-2 text-xs bg-[#E8C547] text-[#112240] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-0 transition-opacity duration-300"
+              >
+                Worth every rupee!
+              </span>
+              <div class="text-xs text-gray-500 mb-4">
+                * Cheaper than your textbooks and tastier too!
+              </div>  
+            </span>
+          </div>
+
+        
+
+          <!-- Call to action button -->
+          <button
+            class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+          >
+            <span class="relative z-10 flex items-center justify-center">
+              <span class="mr-2">🚀</span>
+              Confirm Order & Fuel Your Brain
+            </span>
+            <span
+              class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+            ></span>
+            <span
+              class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+            ></span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Fun footer -->
-    <div class="text-center mt-6 text-sm text-gray-500">
-      <p>
-        Your order is being prepared with love, laughter, and a sprinkle of
-        academic wisdom
-      </p>
-      <div class="flex justify-center mt-2 space-x-1">
-        <span class="animate-bounce inline-block delay-100">📚</span>
-        <span class="animate-bounce inline-block delay-200">🍽️</span>
-        <span class="animate-bounce inline-block delay-300">🧠</span>
-        <span class="animate-bounce inline-block delay-400">💪</span>
-      </div>
+   
     </div>
   </div>
 </section>
