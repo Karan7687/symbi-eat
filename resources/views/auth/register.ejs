@@ -1,0 +1,214 @@
+<section class="register-section py-12 bg-[#F8F9FA]">
+  <div class="container mx-auto px-4">
+    <div
+      class="form-container bg-white rounded-xl shadow-lg overflow-hidden max-w-5xl mx-auto"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <!-- Left side - Image and humor -->
+        <div
+          class="bg-[#1D3557] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden"
+        >
+          <div class="relative z-10">
+            <h2 class="text-white text-2xl md:text-3xl font-bold">
+              Create Account! Join the Food Revolution
+            </h2>
+
+            <div class="bg-white bg-opacity-10 rounded-xl p-6 mb-6">
+              <h3 class="text-[#E8C547] text-xl font-semibold mb-3">
+                "What we offer:"
+              </h3>
+              <ul class="text-white space-y-2 pl-5 list-disc">
+                <li>Preordering</li>
+                <li>Real-Time Updates</li>
+                <li>Seamless Payment Options</li>
+                <li>No Long Queues</li>
+                <li>No Late for Class</li>
+                <li>Track orders with preparation timer</li>
+              </ul>
+            </div>
+
+            <div class="bg-white bg-opacity-10 rounded-xl p-6">
+              <h3 class="text-[#E8C547] text-xl font-semibold mb-3">
+                Student Testimonial:
+              </h3>
+              <p class="text-white italic">
+                "When your crush is in the canteen line but you already got your
+                food – thanks to this app."
+              </p>
+            </div>
+          </div>
+
+          <!-- Floating emojis -->
+          <div
+            class="absolute top-[10%] left-[10%] text-4xl opacity-20 animate-float"
+          >
+            🍕
+          </div>
+          <div
+            class="absolute top-[30%] right-[20%] text-4xl opacity-20 animate-float delay-2s"
+          >
+            ☕
+          </div>
+          <div
+            class="absolute bottom-[20%] left-[30%] text-4xl opacity-20 animate-float delay-4s"
+          >
+            🍔
+          </div>
+          <div
+            class="absolute bottom-[40%] right-[10%] text-4xl opacity-20 animate-float delay-6s"
+          >
+            🍟
+          </div>
+        </div>
+
+        <!-- Right side - Form -->
+        <div class="p-8 md:p-12">
+          <form action="/register" method="POST">
+            <div class="mb-6">
+              <label class="block text-[#1D3557] font-semibold mb-2" for="name"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#E8C547] focus:ring-2 focus:ring-[#E8C547] focus:ring-opacity-20"
+                placeholder="As on student ID (or fake ID, we don't judge)"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-[#1D3557] font-semibold mb-2" for="email"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#E8C547] focus:ring-2 focus:ring-[#E8C547] focus:ring-opacity-20"
+                placeholder="Your college email (yes, we send food coupons)"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                class="block text-[#1D3557] font-semibold mb-2"
+                for="password"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#E8C547] focus:ring-2 focus:ring-[#E8C547] focus:ring-opacity-20"
+                  placeholder="Stronger than your coffee preference"
+                  required
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  onclick="togglePassword()"
+                >
+                  👁️
+                </button>
+              </div>
+
+              <!-- Password strength bars -->
+              <div class="flex space-x-1 mt-2">
+                <div
+                  class="h-1 flex-1 rounded-full bg-[#E5E7EB] password-strength-bar"
+                ></div>
+                <div
+                  class="h-1 flex-1 rounded-full bg-[#E5E7EB] password-strength-bar"
+                ></div>
+                <div
+                  class="h-1 flex-1 rounded-full bg-[#E5E7EB] password-strength-bar"
+                ></div>
+                <div
+                  class="h-1 flex-1 rounded-full bg-[#E5E7EB] password-strength-bar"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label class="flex items-center">
+                <input type="checkbox" class="w-4 h-4 mr-2" required />
+                <span class="text-sm">
+                  I agree to the
+                  <a href="#" class="text-[#1D3557] font-semibold"
+                    >Terms of Service</a
+                  >
+                  and
+                  <a href="#" class="text-[#1D3557] font-semibold"
+                    >Privacy Policy</a
+                  >
+                </span>
+              </label>
+            </div>
+
+            <button
+              class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+            >
+              <span class="relative z-10 flex items-center justify-center">
+                <span class="mr-2">🚀</span>
+                Start Ordering
+              </span>
+              <span
+                class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+              ></span>
+              <span
+                class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+              ></span>
+            </button>
+
+            <p class="text-center text-sm text-gray-500 mt-6">
+              By signing up, you acknowledge that food is better than sleep
+              during exam week.
+            </p>
+
+            <div class="text-center mt-6">
+              <p class="text-gray-600">
+                Already have an account?
+                <a
+                  href="/login"
+                  class="text-[#1D3557] font-semibold hover:underline"
+                  >Log in</a
+                >
+                and continue your food journey
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script for password toggle and strength -->
+  <script>
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      passwordField.type =
+        passwordField.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById("password").addEventListener("input", function (e) {
+      const password = e.target.value;
+      const strengthBars = document.querySelectorAll(".password-strength-bar");
+
+      strengthBars.forEach((bar) => bar.classList.remove("bg-[#E8C547]"));
+
+      if (password.length > 0) strengthBars[0].classList.add("bg-[#E8C547]");
+      if (password.length > 5) strengthBars[1].classList.add("bg-[#E8C547]");
+      if (password.length > 8) strengthBars[2].classList.add("bg-[#E8C547]");
+      if (
+        password.length > 12 &&
+        /[A-Z]/.test(password) &&
+        /[0-9]/.test(password)
+      )
+        strengthBars[3].classList.add("bg-[#E8C547]");
+    });
+  </script>
+</section>

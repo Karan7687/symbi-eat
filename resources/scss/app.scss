@@ -5,7 +5,9 @@ $secondary: #f8f8f8;
 $pure: #fff;
 $dark: #1a1a1a; // Keep only one definition
 $gray: #ccc;
+$gray-light: #e5e7eb; // Add this if not defined elsewhere
 $smooth: all 0.3s ease-in-out;
+$shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1); // Add this if not defined elsewhere
 
 // ✅ Tailwind directives AFTER variables
 @tailwind base;
@@ -38,6 +40,7 @@ body {
     color: #e11d48;
   }
 }
+
 @keyframes bounce-once {
   0% {
     transform: translateY(0);
@@ -64,9 +67,11 @@ body {
 .bounce-once {
   animation: bounce-once 1s ease;
 }
+
 .hidden-text {
   opacity: 0;
 }
+
 .visible-text {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
@@ -87,8 +92,64 @@ body {
     color: $pure;
   }
 }
+
 section.cart {
   .amount {
     color: $primary;
+  }
+}
+
+// Register and Login styles
+.form-container,
+.login-container {
+  box-shadow: $shadow-lg;
+
+  input:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.2);
+  }
+}
+
+// Add these to your existing app.scss
+
+// Animation for floating food emojis
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+// Add different animation delays for variety
+.delay-2s {
+  animation-delay: 2s;
+}
+
+.delay-4s {
+  animation-delay: 4s;
+}
+
+.delay-6s {
+  animation-delay: 6s;
+}
+
+// Password strength indicator
+.password-strength-bar {
+  height: 4px;
+  border-radius: 2px;
+  background-color: $gray-light;
+
+  &.active {
+    background-color: $primary;
   }
 }

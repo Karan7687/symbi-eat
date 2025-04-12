@@ -1,8 +1,31 @@
-//Colors
-$primary: #fe5f1e;
-$primary-hover: #b23301;
-$secondary: #f8f8f8;
+// Colors
+$primary: #e8c547;
+$primary-hover: #d4b33f;
+$secondary: #f8f9fa;
+$dark: #1d3557;
+$dark-hover: #2a4a73;
+$dark-deep: #112240;
+$dark-deeper: #1a2e50;
 $pure: #fff;
-$dark: #232323;
-$gray: #ccc;
+$gray: #6b7280;
+$gray-light: #e5e7eb;
+$gray-lighter: #f5f5f5;
+$accent: #457b9d;
+
+// Typography
+$font-heading: "Cormorant Garamond", serif;
+$font-body: "Nunito Sans", sans-serif;
+
+// Transitions
 $smooth: all 0.3s ease-in-out;
+
+// Shadows
+$shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 10px 20px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+// Border radius
+$radius-sm: 0.25rem;
+$radius-md: 0.5rem;
+$radius-lg: 1rem;
+$radius-full: 9999px;
