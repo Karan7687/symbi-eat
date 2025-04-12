@@ -3,5 +3,10 @@
 [.]Create express server
 [.] Git setup
 [.] Install laravel
+[.] Install tailwind css
+[.] Create Home, cart, Register, Login
+[.] Move Routes to route files    
+
+
 
 
