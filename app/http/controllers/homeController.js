@@ -1,8 +1,16 @@
+const Menu = require("../../models/menu");
 function homeController() {
   //factory Functions
   return {
-    index(req, res ) {
-      res.render("home");
+    async index(req, res) {
+      const foodItems = await Menu.find();
+      console.log(foodItems);
+      return res.render("home", { foodItems: foodItems });
+
+      //   Menu.find().then(function (foodItems) {
+      //     console.log(foodItems);
+      //     return res.render("home", { foodItems: foodItems });
+      //   });
     },
   };
 }
