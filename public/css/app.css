@@ -624,6 +624,12 @@ video {
 .h-full{
   height: 100%;
 }
+.h-72{
+  height: 18rem;
+}
+.h-60{
+  height: 15rem;
+}
 .min-h-\[calc\(100vh-80px\)\]{
   min-height: calc(100vh - 80px);
 }
@@ -656,6 +662,9 @@ video {
 }
 .w-full{
   width: 100%;
+}
+.w-60{
+  width: 15rem;
 }
 .max-w-4xl{
   max-width: 56rem;
@@ -968,6 +977,9 @@ video {
 }
 .pt-4{
   padding-top: 1rem;
+}
+.pt-6{
+  padding-top: 1.5rem;
 }
 .text-center{
   text-align: center;
