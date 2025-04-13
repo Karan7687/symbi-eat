@@ -10,3 +10,7 @@
 
 
 
+karanlk123321
+oi8w2Ekvb37GtGk0
+
+mongodb+srv://karanlk123321:oi8w2Ekvb37GtGk0@cluster0.3ypjjco.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

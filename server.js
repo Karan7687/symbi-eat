@@ -10,7 +10,29 @@ app.use(expressLayout);
 app.set("views", path.join(__dirname, "/resources/views"));
 app.set("view engine", "ejs");
 
-// Serve static files
+// Import mongoose
+const mongoose = require("mongoose");
+
+// DB connection
+const url = "mongodb://localhost/SymbiEat-Application";
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const connection = mongoose.connection; // Corrected here
+
+// Listening for connection open
+connection.once("open", () => {
+  console.log("DB Connected");
+});
+
+// Listening for connection error
+connection.on("error", (err) => {
+  console.log("Failed to connect to DB", err);
+});
+
+// Server static files
 app.use(express.static("public"));
 
 // Import routes
