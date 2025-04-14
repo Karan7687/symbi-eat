@@ -1,11 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const connection = mongoose.connection;
 const path = require("path");
 const ejs = require("ejs");
 const expressLayout = require("express-ejs-layouts");
 const session = require("express-session");
 const flash = require("express-flash");
+const MongoDbStore = require("connect-mongo");
 
 const app = express();
 
@@ -14,13 +16,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(expressLayout);
+
+//session Store
+//Created table in DB and and stores the sessions
+
+const mongoStore = MongoDbStore.create({
+  mongoUrl: process.env.MONGO_URL,
+  collectionName: "sessions",
+});
+//session setup
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "thisisasecretkey",
+    secret: process.env.SESSION_SECRET,
     resave: false,
+    store: mongoStore,
     saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
   })
 );
+
 app.use(flash());
 
 // Set views & template engine
