@@ -4,7 +4,7 @@ function homeController() {
   return {
     async index(req, res) {
       const foodItems = await Menu.find();
-      console.log(foodItems);
+
       return res.render("home", { foodItems: foodItems });
 
       //   Menu.find().then(function (foodItems) {

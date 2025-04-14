@@ -1,47 +1,48 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
-
-const app = express();
+const mongoose = require("mongoose");
+const path = require("path");
 const ejs = require("ejs");
 const expressLayout = require("express-ejs-layouts");
-const path = require("path");
 const session = require("express-session");
-// Set template engine
+const flash = require("express-flash");
+
+const app = express();
+
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static("public"));
 app.use(expressLayout);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "thisisasecretkey",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(flash());
+
+// Set views & template engine
 app.set("views", path.join(__dirname, "/resources/views"));
 app.set("view engine", "ejs");
 
-// Import mongoose
-const mongoose = require("mongoose");
-
-// DB connection
-const url = "mongodb://localhost/SymbiEat-Application";
-mongoose.connect(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const connection = mongoose.connection; // Corrected here
-
-// Listening for connection open
-connection.once("open", () => {
-  console.log("DB Connected");
-});
-
-// Listening for connection error
-connection.on("error", (err) => {
-  console.log("Failed to connect to DB", err);
-});
-
-  
-// Server static files
-app.use(express.static("public"));
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("DB Connected"))
+  .catch((err) => console.log("Failed to connect to DB", err));
 
 // Import routes
 const initRoutes = require("./routes/web");
-initRoutes(app); // Call the function with the app as an argument
+initRoutes(app);
 
+// Default route (optional test)
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
