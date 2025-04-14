@@ -7,7 +7,12 @@
 [.] Create Home, cart, Register, Login
 [.] Move Routes to route files    
 [.]Ftech foodItems
-    
+[.]Set cookies and Sessions
+[.]Sessions in Mongo Collection
+[.]set cart in sessions
+
+
+
 
 
 
