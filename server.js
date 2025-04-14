@@ -15,6 +15,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use("/resources-js", express.static(path.join(__dirname, "resources/js")));
+
 app.use(expressLayout);
 
 //session Store
@@ -39,6 +41,8 @@ app.use(flash());
 
 // Set views & template engine
 app.set("views", path.join(__dirname, "/resources/views"));
+app.use("/js", express.static(path.join(__dirname, "resources/js")));
+
 app.set("view engine", "ejs");
 
 // MongoDB connection
