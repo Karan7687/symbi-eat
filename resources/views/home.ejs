@@ -1,3 +1,5 @@
+
+
 <section
   class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white"
 >
@@ -102,17 +104,3 @@
     <!-- Menu Item End -->
   </div>
 </section>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const addToCartButtons = document.querySelectorAll(".add-to-cart");
-
-    addToCartButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const foodItem = JSON.parse(button.dataset.foodItem.replace(/&quot;/g, '"'));
-        
-
-        console.log(foodItem);
-      });
-    });
-  });
-</script>

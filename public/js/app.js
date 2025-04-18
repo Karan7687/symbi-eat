@@ -14,7 +14,8 @@ var addToCart = document.querySelectorAll(".add-to-cart"); //gives array of btns
 addToCart.forEach(function (btn) {
   btn.addEventListener("click", function (e) {
     //callback function
-    console.log(e);
+    var foodItem = JSON.parse(btn.dataset.foodItem);
+    console.log(foodItem);
   });
 });
 
