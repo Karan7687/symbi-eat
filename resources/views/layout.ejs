@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SymbiEat</title>
-    <link rel="icon" href="/img/symbi.ico" type="image/x-icon" />
-
+    <a href="/">
+      <link rel="icon" href="/img/symbi.ico" type="image/x-icon" />
+    </a>
     <link rel="stylesheet" href="/css/app.css" />
 
     <link
@@ -90,11 +91,15 @@
           <!-- Logo and Title -->
           <div class="flex items-center space-x-3">
             <div class="bg-[#] p-2 rounded-lg">
-              <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-8 w-8" />
+              <a href="/">
+                <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-8 w-8" />
+              </a>
             </div>
-            <span class="text-2xl font-semibold text-white tracking-wide"
-              >SymbiEat</span
-            >
+            <a href="/">
+              <span class="text-2xl font-semibold text-white tracking-wide"
+                >SymbiEat</span
+              >
+            </a>
           </div>
 
           <!-- Menu Links -->
@@ -131,6 +136,9 @@
     </nav>
 
     <%- body %>
+
+    <!-- Load Axios from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- JS -->
     <script src="/resources-js/app.js" defer></script>
