@@ -12,6 +12,7 @@ const MongoDbStore = require("connect-mongo");
 const app = express();
 
 // Middleware
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));

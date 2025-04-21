@@ -621,6 +621,9 @@ video {
 .min-h-\[calc\(100vh-80px\)\]{
   min-height: calc(100vh - 80px);
 }
+.w-1\/2{
+  width: 50%;
+}
 .w-12{
   width: 3rem;
 }
@@ -650,9 +653,6 @@ video {
 }
 .w-full{
   width: 100%;
-}
-.w-1\/2{
-  width: 50%;
 }
 .max-w-4xl{
   max-width: 56rem;
