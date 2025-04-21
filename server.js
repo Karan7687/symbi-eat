@@ -10,9 +10,10 @@ const flash = require("express-flash");
 const MongoDbStore = require("connect-mongo");
 
 const app = express();
+app.use(express.json());
 
 // Middleware
-app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -51,6 +52,12 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connected"))
   .catch((err) => console.log("Failed to connect to DB", err));
+//Global middleware
+app.use((req, res, next) => {
+  //Mount session to use session in layout.ejs
+  res.locals.session = req.session;
+  next();
+});
 
 // Import routes
 const initRoutes = require("./routes/web");

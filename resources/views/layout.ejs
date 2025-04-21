@@ -128,7 +128,20 @@
               href="/cart"
               class="bg-[#] p-2 rounded-full hover:bg-[#] transition duration-300"
             >
-              <img src="/img/cart.png" alt="Cart" class="h-6 w-6 nav-item" />
+              <div class="relative">
+                <img
+                  src="/img/cart.png"
+                  alt="cart"
+                  class="h-12 w-12 nav-item hover:rotate-12 transition-transform duration-300"
+                />
+                <!-- Small notification bubble -->
+                <div
+                  class="cartCounter absolute -top-1 -right-1 bg-[#E8C547] text-[#112240] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-bounce"
+                >
+                  <%= typeof session !== 'undefined' && session.cart ?
+                  session.cart.totalQty : '' %>
+                </div>
+              </div>
             </a>
           </div>
         </div>
