@@ -10,6 +10,8 @@
 [.]Set cookies and Sessions
 [.]Sessions in Mongo Collection
 [.]set cart in sessions
+[.]Build Register CURD
+
 
 
 
