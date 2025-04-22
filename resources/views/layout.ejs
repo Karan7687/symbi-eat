@@ -8,7 +8,8 @@
       <link rel="icon" href="/img/symbi.ico" type="image/x-icon" />
     </a>
     <link rel="stylesheet" href="/css/app.css" />
-
+    <link rel="stylesheet" href="/css/notification.css" />
+    <script src="/resources-js/notification.js" defer></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap"
       rel="stylesheet"
@@ -124,6 +125,7 @@
               class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
               >Login</a
             >
+
             <a
               href="/cart"
               class="bg-[#] p-2 rounded-full hover:bg-[#] transition duration-300"
@@ -139,7 +141,7 @@
                   class="cartCounter absolute -top-1 -right-1 bg-[#E8C547] text-[#112240] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-bounce"
                 >
                   <%= typeof session !== 'undefined' && session.cart ?
-                  session.cart.totalQty : '' %>
+                  session.cart.totalQty : '0' %>
                 </div>
               </div>
             </a>
