@@ -8,45 +8,47 @@ const expressLayout = require("express-ejs-layouts");
 const session = require("express-session");
 const flash = require("express-flash");
 const MongoDbStore = require("connect-mongo");
+const passport = require("passport");
 
 const app = express();
-app.use(express.json());
 
 // Middleware
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false  }));
 app.use(express.static("public"));
 app.use("/css", express.static(path.join(__dirname, "resources/css")));
 app.use("/resources-js", express.static(path.join(__dirname, "resources/js")));
 
 app.use(expressLayout);
 
-//session Store
-//Created table in DB and and stores the sessions
-
-const mongoStore = MongoDbStore.create({
+// Session Store
+let mongoStore = MongoDbStore.create({
   mongoUrl: process.env.MONGO_URL,
   collectionName: "sessions",
 });
-//session setup
+
+// Session middleware (⚠️ this should come before passport initialization)
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    store: mongoStore,
     saveUninitialized: false,
+    store: mongoStore,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
   })
 );
 
+// Flash messages
 app.use(flash());
+
+// Passport config (⚠️ passport comes after session middleware)
+const passportInit = require("./app/config/passport");
+passportInit(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set views & template engine
 app.set("views", path.join(__dirname, "/resources/views"));
-app.use("/js", express.static(path.join(__dirname, "resources/js")));
-
 app.set("view engine", "ejs");
 
 // MongoDB connection
@@ -54,9 +56,9 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("DB Connected"))
   .catch((err) => console.log("Failed to connect to DB", err));
-//Global middleware
+
+// Global middleware
 app.use((req, res, next) => {
-  //Mount session to use session in layout.ejs
   res.locals.session = req.session;
   next();
 });
@@ -65,7 +67,7 @@ app.use((req, res, next) => {
 const initRoutes = require("./routes/web");
 initRoutes(app);
 
-// Default route (optional test)
+// Default route
 app.get("/", (req, res) => {
   res.render("home");
 });
