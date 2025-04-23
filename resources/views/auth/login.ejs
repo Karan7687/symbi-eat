@@ -1,11 +1,88 @@
-<section class="login-section py-12 bg-[#F8F9FA] min-h-[calc(100vh-80px)]">
-  <div class="container mx-auto px-4 flex items-center justify-center h-full">
+<section
+  class="login-section py-6 bg-[#F8F9FA] min-h-[calc(100vh-80px)] flex items-center"
+>
+  <div class="container mx-auto px-4 flex items-center justify-center">
     <div
       class="login-container bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row"
     >
+      <!-- Success Message Overlay (Hidden by default) -->
+      <div
+        id="successMessage"
+        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 transform scale-0 opacity-0 transition-all duration-500"
+        style="display: none"
+      >
+        <div
+          class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 relative overflow-hidden"
+        >
+          <!-- Success content -->
+          <div class="relative z-10 text-center">
+            <div
+              class="w-24 h-24 bg-[#1D3557] bg-opacity-10 rounded-full mx-auto flex items-center justify-center mb-6 relative"
+            >
+              <div
+                class="absolute inset-0 rounded-full border-4 border-[#E8C547] animate-ping opacity-30"
+              ></div>
+              <div class="text-4xl">👋</div>
+            </div>
+
+            <h2 class="text-3xl font-bold text-[#1D3557] mb-4">
+              Welcome Back!
+            </h2>
+
+            <div class="mb-6 relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-[#1D3557] to-[#E8C547] opacity-10 rounded-lg"
+              ></div>
+              <div
+                id="typingText"
+                class="text-[#1D3557] font-medium p-4 text-lg"
+              ></div>
+            </div>
+
+            <div class="bg-[#1D3557] bg-opacity-10 rounded-xl p-4 mb-6">
+              <p class="text-[#1D3557] font-medium">🔥 Hot Right Now</p>
+              <div class="flex justify-between mt-2">
+                <div
+                  class="text-center bg-white bg-opacity-50 rounded-lg p-2 flex-1 mx-1"
+                >
+                  <div class="text-2xl">🍕</div>
+                  <p class="text-sm font-bold">Pizza</p>
+                </div>
+                <div
+                  class="text-center bg-white bg-opacity-50 rounded-lg p-2 flex-1 mx-1"
+                >
+                  <div class="text-2xl">🍔</div>
+                  <p class="text-sm font-bold">Burger</p>
+                </div>
+                <div
+                  class="text-center bg-white bg-opacity-50 rounded-lg p-2 flex-1 mx-1"
+                >
+                  <div class="text-2xl">🍜</div>
+                  <p class="text-sm font-bold">Ramen</p>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="/home"
+              id="continueButton"
+              class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group block"
+            >
+              <span class="relative z-10 flex items-center justify-center">
+                <span class="mr-2">🍽️</span>
+                Take Me to Food
+              </span>
+              <span
+                class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+              ></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <!-- Left side - Image and humor -->
       <div
-        class="bg-[#1D3557] p-8 md:p-12 flex flex-col justify-center md:w-5/12 relative"
+        class="bg-[#1D3557] p-8 md:p-10 flex flex-col justify-center md:w-5/12 relative"
       >
         <!-- Animated food background -->
         <div
@@ -15,35 +92,35 @@
 
         <div class="relative z-10">
           <h2 class="text-white text-3xl font-bold mb-4">Welcome Back!</h2>
-          <p class="text-[#E5E7EB] mb-8">
+          <p class="text-[#E5E7EB] mb-6">
             Your stomach has been waiting for this reunion.
           </p>
 
-          <div class="bg-white bg-opacity-10 rounded-xl p-6 mb-6">
-            <h3 class="text-[#E8C547] text-xl font-semibold mb-4">
+          <div class="bg-white bg-opacity-10 rounded-xl p-5 mb-5">
+            <h3 class="text-[#E8C547] text-xl font-semibold mb-3">
               Today's Mood:
             </h3>
             <div class="flex justify-between">
               <div class="text-center">
-                <div class="text-4xl">📚</div>
-                <p class="text-white text-sm mt-2">Studying</p>
+                <div class="text-3xl">📚</div>
+                <p class="text-white text-xs mt-1">Studying</p>
               </div>
               <div class="text-center transform scale-110">
-                <div class="text-4xl">🍔</div>
-                <p class="text-white text-sm mt-2">Eating</p>
+                <div class="text-3xl">🍔</div>
+                <p class="text-white text-xs mt-1">Eating</p>
               </div>
               <div class="text-center">
-                <div class="text-4xl">😴</div>
-                <p class="text-white text-sm mt-2">Sleeping</p>
+                <div class="text-3xl">😴</div>
+                <p class="text-white text-xs mt-1">Sleeping</p>
               </div>
             </div>
           </div>
 
-          <div class="bg-white bg-opacity-10 rounded-xl p-6">
-            <h3 class="text-[#E8C547] text-xl font-semibold mb-3">
+          <div class="bg-white bg-opacity-10 rounded-xl p-5">
+            <h3 class="text-[#E8C547] text-xl font-semibold mb-2">
               Student Wisdom:
             </h3>
-            <p class="text-white italic">
+            <p class="text-white italic text-sm">
               "The only thing I remember from my 8am class is what I ate for
               breakfast."
             </p>
@@ -52,24 +129,58 @@
       </div>
 
       <!-- Right side - Login form -->
-      <div class="p-8 md:p-12 md:w-7/12">
-        <h1 class="text-3xl font-bold text-[#1D3557] mb-2">
+      <div class="p-8 md:p-10 md:w-7/12">
+        <h1 class="text-2xl font-bold text-[#1D3557] mb-1">
           Log In to SymbiEat
         </h1>
 
-        <form action="/login" method="POST">
-          <div class="mb-6">
-            <label class="block text-[#1D3557] font-semibold mt-5" for="email"
+        <!-- Error message container (initially hidden) -->
+        <% if (typeof error !== 'undefined') { %>
+        <div
+          id="errorMessage"
+          class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 mb-4 rounded"
+        >
+          <div class="flex items-center">
+            <div class="text-xl mr-2">😅</div>
+            <p><%= error %></p>
+          </div>
+        </div>
+        <% } %>
+
+        <!-- Fun error message (hidden by default) -->
+        <div
+          id="funErrorMessage"
+          class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-3 mb-4 rounded hidden"
+        >
+          <div class="flex items-center">
+            <div class="text-xl mr-2" id="errorEmoji">🤔</div>
+            <p id="errorText">Hmm, that doesn't look right...</p>
+          </div>
+        </div>
+
+        <form id="loginForm" action="/login" method="POST">
+          <div class="mb-5">
+            <label class="block text-[#1D3557] font-semibold mt-4" for="email"
               >Email Address</label
             >
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#E8C547] focus:ring-2 focus:ring-[#E8C547] focus:ring-opacity-20"
-              placeholder="Where assignments are always late (.edu)"
-              required
-            />
+            <div class="relative">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-4 py-3 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#E8C547] focus:ring-2 focus:ring-[#E8C547] focus:ring-opacity-20"
+                placeholder="Where assignments are always late (.edu)"
+                required
+                autocomplete="email"
+                value="<%= typeof email !== 'undefined' ? email : '' %>"
+              />
+              <div
+                id="emailSuggestions"
+                class="absolute z-10 bg-white w-full border border-gray-200 rounded-lg shadow-lg mt-1 hidden"
+              >
+                <!-- Email suggestions will be populated here -->
+              </div>
+            </div>
           </div>
 
           <div class="mb-2">
@@ -92,10 +203,18 @@
               >
                 👁️
               </button>
+              <div
+                id="passwordEmoji"
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 opacity-0 transition-opacity duration-300"
+              ></div>
             </div>
+            <div
+              id="passwordStrengthMessage"
+              class="text-xs text-gray-500 mt-1 h-4"
+            ></div>
           </div>
 
-          <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center justify-between mb-5">
             <a
               href="/forgot-password"
               class="text-sm text-[#1D3557] hover:underline"
@@ -105,6 +224,7 @@
           </div>
 
           <button
+            type="submit"
             class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
           >
             <span class="relative z-10 flex items-center justify-center">
@@ -120,40 +240,39 @@
           </button>
         </form>
 
-        <div class="relative flex items-center my-8">
+        <div class="relative flex items-center my-6">
           <div class="flex-grow border-t border-gray-300"></div>
-          <span class="flex-shrink mx-4 text-gray-600 text-sm"
+          <span class="flex-shrink mx-4 text-gray-600 text-xs"
             >OR CONTINUE WITH</span
           >
           <div class="flex-grow border-t border-gray-300"></div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-2 gap-4 mb-5">
           <button
-            class="flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
+            class="flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
           >
             <span class="mr-2 font-semibold">G</span> Google
           </button>
           <button
-            class="flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
+            class="flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
           >
             <span class="mr-2 font-semibold">f</span> Facebook
           </button>
         </div>
 
-        <div class="text-center mt-6">
-          <p class="text-gray-600">
+        <div class="text-center">
+          <p class="text-gray-600 text-sm">
             New to SymbiEat?
             <a
               href="/register"
               class="text-[#1D3557] font-semibold hover:underline"
               >Create an account</a
             >
-            and start your food adventure
           </p>
         </div>
 
-        <p class="text-center text-sm text-gray-500 mt-8">
+        <p class="text-center text-xs text-gray-500 mt-4">
           Fun fact: 9 out of 10 students log in faster when they're hungry.
         </p>
       </div>
@@ -161,6 +280,108 @@
   </div>
 
   <script>
+    // Store previously used emails in localStorage
+    const recentEmails = JSON.parse(
+      localStorage.getItem("recentEmails") || "[]"
+    );
+
+    // Email suggestions functionality
+    const emailInput = document.getElementById("email");
+    const emailSuggestions = document.getElementById("emailSuggestions");
+
+    // Add current email to recent emails if not already there
+    if (emailInput.value && !recentEmails.includes(emailInput.value)) {
+      recentEmails.unshift(emailInput.value);
+      // Keep only the last 5 emails
+      if (recentEmails.length > 5) {
+        recentEmails.pop();
+      }
+      localStorage.setItem("recentEmails", JSON.stringify(recentEmails));
+    }
+
+    // Show email suggestions when input is focused
+    emailInput.addEventListener("focus", function () {
+      if (recentEmails.length > 0) {
+        showEmailSuggestions();
+      }
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener("click", function (e) {
+      if (e.target !== emailInput && e.target !== emailSuggestions) {
+        emailSuggestions.classList.add("hidden");
+      }
+    });
+
+    // Show email suggestions
+    function showEmailSuggestions() {
+      emailSuggestions.innerHTML = "";
+
+      recentEmails.forEach((email) => {
+        const div = document.createElement("div");
+        div.className =
+          "px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center";
+        div.innerHTML = `
+                  <span class="mr-2">📧</span>
+                  <span>${email}</span>
+                `;
+        div.addEventListener("click", function () {
+          emailInput.value = email;
+          emailSuggestions.classList.add("hidden");
+          document.getElementById("password").focus();
+        });
+        emailSuggestions.appendChild(div);
+      });
+
+      emailSuggestions.classList.remove("hidden");
+    }
+
+    // Fun password interactions
+    const passwordInput = document.getElementById("password");
+    const passwordEmoji = document.getElementById("passwordEmoji");
+    const passwordStrengthMessage = document.getElementById(
+      "passwordStrengthMessage"
+    );
+
+    const funnyPasswordMessages = [
+      "That's a secret worth keeping! 🤐",
+      "Ooh, very mysterious! 🕵️",
+      "Is that your pet's name? 🐶",
+      "Not 'password123' again... 🙄",
+      "Fort Knox level security! 🔒",
+      "Your crush's name? Bold choice! 💘",
+    ];
+
+    const passwordEmojis = ["🔒", "🔑", "🤫", "😎", "🦸‍♂️", "🕵️‍♀️", "🦹‍♀️"];
+
+    passwordInput.addEventListener("input", function () {
+      // Show random emoji when typing starts
+      if (this.value.length === 1) {
+        const randomEmoji =
+          passwordEmojis[Math.floor(Math.random() * passwordEmojis.length)];
+        passwordEmoji.textContent = randomEmoji;
+        passwordEmoji.style.opacity = "1";
+
+        // Move input text to make room for emoji
+        this.style.paddingLeft = "2.5rem";
+      } else if (this.value.length === 0) {
+        // Reset when empty
+        passwordEmoji.style.opacity = "0";
+        this.style.paddingLeft = "1rem";
+      }
+
+      // Show funny message based on password length
+      if (this.value.length > 0) {
+        const randomMessage =
+          funnyPasswordMessages[
+            Math.floor(Math.random() * funnyPasswordMessages.length)
+          ];
+        passwordStrengthMessage.textContent = randomMessage;
+      } else {
+        passwordStrengthMessage.textContent = "";
+      }
+    });
+
     // Toggle password visibility
     function togglePassword() {
       const passwordField = document.getElementById("password");
@@ -169,6 +390,95 @@
       } else {
         passwordField.type = "password";
       }
+    }
+
+    // Check if login was successful (this will be set by your backend)
+    const obj = {
+      passWord:
+        "<%= (typeof success !== 'undefined' && success) ? 'true' : 'false' %>",
+    };
+
+    // Show success message if login was successful
+    const isLoginSuccessful = obj.passWord === "true";
+    if (isLoginSuccessful) {
+      showSuccessMessage();
+    }
+
+    // Function to show success message
+    function showSuccessMessage() {
+      const successMessage = document.getElementById("successMessage");
+      successMessage.style.display = "flex";
+
+      // Start typing animation
+      const typingText = document.getElementById("typingText");
+      const textToType =
+        "We've been expecting you! Your favorite foods are waiting...";
+      let i = 0;
+
+      function typeWriter() {
+        if (i < textToType.length) {
+          typingText.innerHTML += textToType.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50);
+        }
+      }
+
+      // Trigger animations after a small delay
+      setTimeout(() => {
+        successMessage.classList.add("scale-100", "opacity-100");
+        successMessage.classList.remove("scale-0", "opacity-0");
+        typeWriter();
+      }, 100);
+
+      // Redirect after a delay if auto-redirect is enabled
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 3000);
+    }
+
+    // Fun error messages for wrong credentials
+    const funErrorMessages = [
+      {
+        text: "Hmm, that password is as forgotten as your homework!",
+        emoji: "🤔",
+      },
+      {
+        text: "Nice try! But your password and my diet have something in common - they both failed.",
+        emoji: "😅",
+      },
+      {
+        text: "Password incorrect! Did your roommate change it again?",
+        emoji: "🕵️",
+      },
+      {
+        text: "That's not it! Maybe try the name of the food you were craving during your last exam?",
+        emoji: "🍕",
+      },
+      {
+        text: "Wrong password! Is Mercury in retrograde or something?",
+        emoji: "🪐",
+      },
+      {
+        text: "Nope! That password is as wrong as putting pineapple on pizza.",
+        emoji: "🍍",
+      },
+    ];
+
+    // Check if there was a login error from the backend
+    const hasLoginError =
+      "<%= typeof error !== 'undefined' ? 'true' : 'false' %>";
+
+    // If there was an error but no error message is displayed yet, show a fun one
+    if (
+      hasLoginError === "true" &&
+      !document.getElementById("errorMessage").classList.contains("block")
+    ) {
+      const randomError =
+        funErrorMessages[Math.floor(Math.random() * funErrorMessages.length)];
+      const funErrorMessage = document.getElementById("funErrorMessage");
+      document.getElementById("errorEmoji").textContent = randomError.emoji;
+      document.getElementById("errorText").textContent = randomError.text;
+      funErrorMessage.classList.remove("hidden");
     }
 
     // Create falling food animation
@@ -190,7 +500,7 @@
       if (!animationContainer) return;
 
       const food = document.createElement("div");
-      food.className = "absolute text-4xl opacity-20";
+      food.className = "absolute text-3xl opacity-20";
       food.style.left = `${Math.random() * 100}%`;
       food.style.top = "-20px";
       food.style.animation = `foodFall ${
@@ -207,7 +517,7 @@
     }
 
     // Create initial food items
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 8; i++) {
       setTimeout(createFoodItem, i * 500);
     }
 
@@ -217,23 +527,40 @@
     // Add keyframes for food falling animation
     const style = document.createElement("style");
     style.textContent = `
-        @keyframes foodFall {
-          0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.2;
-          }
-          90% {
-            opacity: 0.2;
-          }
-          100% {
-            transform: translateY(500px) rotate(360deg);
-            opacity: 0;
-          }
-        }
-      `;
+                @keyframes foodFall {
+                  0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 0;
+                  }
+                  10% {
+                    opacity: 0.2;
+                  }
+                  90% {
+                    opacity: 0.2;
+                  }
+                  100% {
+                    transform: translateY(500px) rotate(360deg);
+                    opacity: 0;
+                  }
+                }
+
+                /* Animation for success message */
+                .scale-0 {
+                  transform: scale(0);
+                }
+
+                .scale-100 {
+                  transform: scale(1);
+                }
+
+                /* Reduce overall padding to prevent scrolling at 100% zoom */
+                @media (min-height: 700px) {
+                  .login-section {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                  }
+                }
+              `;
     document.head.appendChild(style);
   </script>
 </section>

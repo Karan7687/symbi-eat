@@ -1,42 +1,47 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const localStrategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+
 function init(passport) {
   passport.use(
-    new localStrategy(
+    new LocalStrategy(
       { usernameField: "email" },
       async (email, password, done) => {
-        //check if email exists
-        const user = await User.findOne({ email: email });
+        try {
+          // Check if user with the given email exists
+          const user = await User.findOne({ email: email });
 
-        if (!user) {
-          return done(null, false, { message: "No user with this email" });
+          if (!user) {
+            return done(null, false, { message: "No user with this email" });
+          }
+
+          // Compare the password
+          const match = await bcrypt.compare(password, user.password);
+          if (match) {
+            return done(null, user, { message: "Logged in successfully" });
+          } else {
+            return done(null, false, { message: "Wrong email or password" });
+          }
+        } catch (err) {
+          return done(err); // Forward the error to Passport
         }
-
-        bcrypt
-          .compare(password, user.password)
-          .then((match) => {
-            if (match) {
-              return done(null, user, { message: "Logged In successfully" });
-            }
-            return done(null, false, { message: "Wrong username or password" });
-          })
-          .catch((err) => {
-            return done(null, false, { message: "Something went wrong" });
-          });
       }
     )
   );
 
-  //Storing id after login
+  // Serialize user
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
 
-  passport.deserializeUser((user) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
+  // Deserialize user
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
   });
 }
 
