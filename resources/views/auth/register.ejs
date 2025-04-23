@@ -1,5 +1,99 @@
 <section class="register-section py-12 bg-[#F8F9FA]">
   <div class="container mx-auto px-4">
+    <!-- Success Message Overlay (Hidden by default) -->
+    <div
+      id="successMessage"
+      class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 transform scale-0 opacity-0 transition-all duration-500"
+      style="display: none"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 relative overflow-hidden"
+      >
+        <!-- Confetti animation container -->
+        <div id="confettiCanvas" class="absolute inset-0"></div>
+
+        <!-- Success content -->
+        <div class="relative z-10 text-center">
+          <div
+            class="w-24 h-24 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6 animate-bounce"
+          >
+            <svg
+              class="w-12 h-12 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+
+          <h2 class="text-3xl font-bold text-[#1D3557] mb-4">
+            Woohoo! You're In!
+          </h2>
+
+          <p class="text-gray-600 mb-6">
+            Your account has been created successfully. Get ready for a
+            delicious journey!
+          </p>
+
+          <div class="bg-[#1D3557] bg-opacity-10 rounded-xl p-4 mb-6">
+            <p class="text-[#1D3557] font-medium">🎁 Welcome Gift</p>
+            <p class="text-[#1D3557] font-bold text-xl">
+              20% OFF your first order
+            </p>
+            <p class="text-sm text-gray-600">
+              Use code:
+              <span
+                class="font-mono bg-[#E8C547] bg-opacity-30 px-2 py-1 rounded"
+                >NEWFOODIE</span
+              >
+            </p>
+          </div>
+
+          <button
+            id="continueButton"
+            class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+          >
+            <span class="relative z-10 flex items-center justify-center">
+              <span class="mr-2">🍽️</span>
+              Start Exploring
+            </span>
+            <span
+              class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+            ></span>
+          </button>
+
+          <!-- Social share -->
+          <div class="mt-6">
+            <p class="text-sm text-gray-500 mb-2">Share your excitement:</p>
+            <div class="flex justify-center space-x-4">
+              <a
+                href="#"
+                class="text-2xl hover:scale-125 transition-transform duration-300"
+                >📱</a
+              >
+              <a
+                href="#"
+                class="text-2xl hover:scale-125 transition-transform duration-300"
+                >📘</a
+              >
+              <a
+                href="#"
+                class="text-2xl hover:scale-125 transition-transform duration-300"
+                >📸</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div
       class="form-container bg-white rounded-xl shadow-lg overflow-hidden max-w-5xl mx-auto"
     >
@@ -63,7 +157,7 @@
 
         <!-- Right side - Form -->
         <div class="p-8 md:p-12">
-          <form action="/register" method="POST">
+          <form id="registrationForm" action="/register" method="POST">
             <div class="mb-6">
               <label class="block text-[#1D3557] font-semibold mb-2" for="name"
                 >Full Name</label
@@ -108,7 +202,7 @@
                   required
                 />
                 <button
-                  type="submit"
+                  type="button"
                   class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                   onclick="togglePassword()"
                 >
@@ -150,6 +244,7 @@
             </div>
 
             <button
+              type="submit"
               class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
             >
               <span class="relative z-10 flex items-center justify-center">
@@ -210,5 +305,158 @@
       )
         strengthBars[3].classList.add("bg-[#E8C547]");
     });
+
+    // Confetti animation function
+    function startConfetti() {
+      const canvas = document.createElement("canvas");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.position = "fixed";
+      canvas.style.top = "0";
+      canvas.style.left = "0";
+      canvas.style.pointerEvents = "none";
+      canvas.style.zIndex = "100";
+      document.getElementById("confettiCanvas").appendChild(canvas);
+
+      const ctx = canvas.getContext("2d");
+      const confettiCount = 200;
+      const confetti = [];
+
+      const colors = ["#E8C547", "#1D3557", "#FF6B6B", "#4ECDC4", "#F7FFF7"];
+
+      for (let i = 0; i < confettiCount; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: -Math.random() * canvas.height,
+          size: Math.random() * 10 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speed: Math.random() * 3 + 2,
+          angle: Math.random() * 6.28,
+          rotation: Math.random() * 0.2 - 0.1,
+          rotationSpeed: Math.random() * 0.01,
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let stillFalling = false;
+
+        for (let i = 0; i < confetti.length; i++) {
+          const c = confetti[i];
+
+          ctx.save();
+          ctx.translate(c.x, c.y);
+          ctx.rotate(c.angle);
+
+          ctx.fillStyle = c.color;
+          ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+
+          ctx.restore();
+
+          c.y += c.speed;
+          c.angle += c.rotationSpeed;
+
+          if (c.y < canvas.height) {
+            stillFalling = true;
+          }
+        }
+
+        if (stillFalling) {
+          requestAnimationFrame(animate);
+        } else {
+          canvas.remove();
+        }
+      }
+
+      animate();
+    }
+
+    // Success message display
+    document
+      .getElementById("registrationForm")
+      .addEventListener("submit", function (e) {
+        // This prevents the default form submission
+        e.preventDefault();
+
+        // Here we would normally submit the form data via AJAX
+        // Since we're not touching backend logic, we'll simulate a successful response
+
+        // Simulate form submission (in a real app, this would be an AJAX call)
+        setTimeout(function () {
+          // Show success message
+          const successMessage = document.getElementById("successMessage");
+          successMessage.style.display = "flex";
+
+          // Trigger animation after a small delay
+          setTimeout(function () {
+            successMessage.classList.add("scale-100", "opacity-100");
+            successMessage.classList.remove("scale-0", "opacity-0");
+            startConfetti();
+          }, 100);
+
+          // In a real implementation, you would submit the form here
+          // For example: document.getElementById('registrationForm').submit();
+        }, 1000); // Simulate network delay
+      });
+
+    // Continue button functionality
+    document
+      .getElementById("continueButton")
+      .addEventListener("click", function () {
+        // Hide success message
+        const successMessage = document.getElementById("successMessage");
+        successMessage.classList.remove("scale-100", "opacity-100");
+        successMessage.classList.add("scale-0", "opacity-0");
+
+        // Redirect to dashboard or homepage
+        setTimeout(function () {
+          successMessage.style.display = "none";
+          window.location.href = "/"; // Change this to your desired redirect URL
+        }, 500);
+
+        // In a real implementation, you would submit the form here if not already done
+        // document.getElementById('registrationForm').submit();
+      });
   </script>
+
+  <style>
+    /* Animation for floating emojis */
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .delay-2s {
+      animation-delay: 2s;
+    }
+
+    .delay-4s {
+      animation-delay: 4s;
+    }
+
+    .delay-6s {
+      animation-delay: 6s;
+    }
+
+    /* Animation for success message */
+    .scale-0 {
+      transform: scale(0);
+    }
+
+    .scale-100 {
+      transform: scale(1);
+    }
+  </style>
 </section>
