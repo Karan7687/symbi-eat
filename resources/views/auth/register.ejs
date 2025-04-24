@@ -1,6 +1,12 @@
-<!-- design -->
 <section class="register-section py-12 bg-[#F8F9FA]">
   <div class="container mx-auto px-4">
+    <!-- Hidden iframe for form submission -->
+    <iframe
+      name="hiddenIframe"
+      id="hiddenIframe"
+      style="display: none"
+    ></iframe>
+
     <!-- Success Message Overlay (Hidden by default) -->
     <div
       id="successMessage"
@@ -8,88 +14,190 @@
       style="display: none"
     >
       <div
-        class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 relative overflow-hidden"
+        class="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 relative overflow-hidden"
       >
         <!-- Confetti animation container -->
         <div id="confettiCanvas" class="absolute inset-0"></div>
 
         <!-- Success content -->
-        <div class="relative z-10 text-center">
-          <div
-            class="w-24 h-24 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6 animate-bounce"
-          >
-            <svg
-              class="w-12 h-12 text-green-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"
-              ></path>
-            </svg>
-          </div>
-
-          <h2 class="text-3xl font-bold text-[#1D3557] mb-4">
-            Woohoo! You're In!
-          </h2>
-
-          <p class="text-gray-600 mb-6">
-            Your account has been created successfully. Get ready for a
-            delicious journey!
-          </p>
-
-          <div class="bg-[#1D3557] bg-opacity-10 rounded-xl p-4 mb-6">
-            <p class="text-[#1D3557] font-medium">🎁 Welcome Gift</p>
-            <p class="text-[#1D3557] font-bold text-xl">
-              20% OFF your first order
-            </p>
-            <p class="text-sm text-gray-600">
-              Use code:
-              <span
-                class="font-mono bg-[#E8C547] bg-opacity-30 px-2 py-1 rounded"
-                >NEWFOODIE</span
-              >
-            </p>
-          </div>
-
-          <button
-            id="continueButton"
-            class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
-          >
-            <span class="relative z-10 flex items-center justify-center">
-              <span class="mr-2">🍽️</span>
-              Start Exploring
-            </span>
-            <span
-              class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-            ></span>
-          </button>
-
-          <!-- Social share -->
-          <div class="mt-6">
-            <p class="text-sm text-gray-500 mb-2">Share your excitement:</p>
-            <div class="flex justify-center space-x-4">
-              <a
-                href="#"
-                class="text-2xl hover:scale-125 transition-transform duration-300"
-                >📱</a
-              >
-              <a
-                href="#"
-                class="text-2xl hover:scale-125 transition-transform duration-300"
-                >📘</a
-              >
-              <a
-                href="#"
-                class="text-2xl hover:scale-125 transition-transform duration-300"
-                >📸</a
-              >
+        <div class="relative z-10">
+          <div class="flex items-start">
+            <!-- Dancing Chef Character (More sophisticated) -->
+            <div class="chef-container w-24 h-24 mr-4 flex-shrink-0">
+              <div class="chef relative w-full h-full">
+                <!-- Chef body -->
+                <div
+                  class="chef-body absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white rounded-full border-2 border-[#1D3557]"
+                >
+                  <!-- Chef hat -->
+                  <div
+                    class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-14 h-10 bg-white border-2 border-[#1D3557] rounded-t-full"
+                  >
+                    <div
+                      class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-3 bg-white border-2 border-[#1D3557] rounded-full"
+                    ></div>
+                  </div>
+                  <!-- Chef face -->
+                  <div
+                    class="absolute top-3 left-1/2 transform -translate-x-1/2 w-12 h-6"
+                  >
+                    <!-- Eyes -->
+                    <div
+                      class="absolute top-0 left-2 w-1.5 h-1.5 bg-[#1D3557] rounded-full"
+                    ></div>
+                    <div
+                      class="absolute top-0 right-2 w-1.5 h-1.5 bg-[#1D3557] rounded-full"
+                    ></div>
+                    <!-- Smile -->
+                    <div
+                      class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-3 border-b-2 border-[#1D3557] rounded-b-full"
+                    ></div>
+                  </div>
+                </div>
+                <!-- Chef arms -->
+                <div
+                  class="chef-arm-left absolute bottom-8 left-2 w-5 h-2 bg-white border-2 border-[#1D3557] rounded-full"
+                ></div>
+                <div
+                  class="chef-arm-right absolute bottom-8 right-2 w-5 h-2 bg-white border-2 border-[#1D3557] rounded-full"
+                ></div>
+                <!-- Chef legs -->
+                <div
+                  class="chef-leg-left absolute bottom-0 left-6 w-2 h-5 bg-white border-2 border-[#1D3557] rounded-full"
+                ></div>
+                <div
+                  class="chef-leg-right absolute bottom-0 right-6 w-2 h-5 bg-white border-2 border-[#1D3557] rounded-full"
+                ></div>
+                <!-- Chef spatula -->
+                <div
+                  class="chef-spatula absolute bottom-8 right-0 w-6 h-2 bg-[#E8C547] border-2 border-[#1D3557] rounded-sm"
+                ></div>
+              </div>
             </div>
+
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <!-- Animated Green Checkmark -->
+                <div
+                  class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                >
+                  <svg
+                    class="w-6 h-6 text-green-500 checkmark-animation"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-[#1D3557]">
+                  Woohoo! You're In!
+                </h2>
+              </div>
+
+              <p class="text-gray-600 mb-4">
+                Your account has been created successfully. Get ready for a
+                delicious journey!
+              </p>
+            </div>
+          </div>
+
+          <!-- Content organized in a more compact layout -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <!-- Fun Food Fact -->
+            <div
+              class="bg-[#F0F7FF] rounded-xl p-3 border-l-4 border-[#1D3557]"
+            >
+              <p class="text-[#1D3557] font-medium text-sm">🍽️ Fun Food Fact</p>
+              <p id="foodFact" class="text-gray-700 text-sm italic">
+                Loading a tasty fact...
+              </p>
+            </div>
+
+            <!-- Discount code -->
+            <div class="bg-[#1D3557] bg-opacity-10 rounded-xl p-3">
+              <p class="text-[#1D3557] font-medium text-sm">🎁 Welcome Gift</p>
+              <p class="text-[#1D3557] font-bold">20% OFF</p>
+              <p class="text-xs text-gray-600">
+                Code:
+                <span
+                  class="font-mono bg-[#E8C547] bg-opacity-30 px-2 py-0.5 rounded"
+                  >NEWFOODIE</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="flex space-x-3">
+            <!-- Let's Eat button -->
+            <button
+              id="continueButton"
+              class="flex-1 bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-2.5 px-4 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+            >
+              <span class="relative z-10 flex items-center justify-center">
+                <span class="mr-2">🍽️</span>
+                Let's Eat!
+              </span>
+              <span
+                class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+              ></span>
+            </button>
+
+            <!-- Share button -->
+            <div class="dropdown relative">
+              <button
+                id="shareButton"
+                class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center"
+              >
+                <span class="mr-2">🔗</span>
+                Share
+              </button>
+              <div
+                id="shareDropdown"
+                class="dropdown-menu hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg p-2 z-10"
+              >
+                <a
+                  href="#"
+                  class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                >
+                  <span class="mr-2">📱</span> WhatsApp
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                >
+                  <span class="mr-2">📘</span> Facebook
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                >
+                  <span class="mr-2">📸</span> Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Food emojis floating animation -->
+          <div class="food-emoji absolute top-2 right-2 text-xl opacity-70">
+            🍕
+          </div>
+          <div class="food-emoji absolute bottom-2 left-10 text-xl opacity-70">
+            🍔
+          </div>
+          <div class="food-emoji absolute top-10 left-2 text-xl opacity-70">
+            🍟
+          </div>
+          <div
+            class="food-emoji absolute bottom-10 right-10 text-xl opacity-70"
+          >
+            🌮
           </div>
         </div>
       </div>
@@ -158,7 +266,12 @@
 
         <!-- Right side - Form -->
         <div class="p-8 md:p-12">
-          <form id="registrationForm" action="/register" method="POST">
+          <form
+            id="registrationForm"
+            action="/register"
+            method="POST"
+            target="hiddenIframe"
+          >
             <div class="mb-6">
               <label class="block text-[#1D3557] font-semibold mb-2" for="name"
                 >Full Name</label
@@ -246,9 +359,13 @@
 
             <button
               type="submit"
+              id="submitButton"
               class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
             >
-              <span class="relative z-10 flex items-center justify-center">
+              <span
+                id="buttonText"
+                class="relative z-10 flex items-center justify-center"
+              >
                 <span class="mr-2">🚀</span>
                 Start Ordering
               </span>
@@ -259,205 +376,221 @@
                 class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
               ></span>
             </button>
-
-            <p class="text-center text-sm text-gray-500 mt-6">
-              By signing up, you acknowledge that food is better than sleep
-              during exam week.
-            </p>
-
-            <div class="text-center mt-6">
-              <p class="text-gray-600">
-                Already have an account?
-                <a
-                  href="/login"
-                  class="text-[#1D3557] font-semibold hover:underline"
-                  >Log in</a
-                >
-                and continue your food journey
-              </p>
-            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Script for password toggle and strength -->
-  <script>
-    function togglePassword() {
-      const passwordField = document.getElementById("password");
-      passwordField.type =
-        passwordField.type === "password" ? "text" : "password";
-    }
-
-    document.getElementById("password").addEventListener("input", function (e) {
-      const password = e.target.value;
-      const strengthBars = document.querySelectorAll(".password-strength-bar");
-
-      strengthBars.forEach((bar) => bar.classList.remove("bg-[#E8C547]"));
-
-      if (password.length > 0) strengthBars[0].classList.add("bg-[#E8C547]");
-      if (password.length > 5) strengthBars[1].classList.add("bg-[#E8C547]");
-      if (password.length > 8) strengthBars[2].classList.add("bg-[#E8C547]");
-      if (
-        password.length > 12 &&
-        /[A-Z]/.test(password) &&
-        /[0-9]/.test(password)
-      )
-        strengthBars[3].classList.add("bg-[#E8C547]");
-    });
-
-    // Confetti animation function
-    function startConfetti() {
-      const canvas = document.createElement("canvas");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.position = "fixed";
-      canvas.style.top = "0";
-      canvas.style.left = "0";
-      canvas.style.pointerEvents = "none";
-      canvas.style.zIndex = "100";
-      document.getElementById("confettiCanvas").appendChild(canvas);
-
-      const ctx = canvas.getContext("2d");
-      const confettiCount = 200;
-      const confetti = [];
-
-      const colors = ["#E8C547", "#1D3557", "#FF6B6B", "#4ECDC4", "#F7FFF7"];
-
-      for (let i = 0; i < confettiCount; i++) {
-        confetti.push({
-          x: Math.random() * canvas.width,
-          y: -Math.random() * canvas.height,
-          size: Math.random() * 10 + 5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          speed: Math.random() * 3 + 2,
-          angle: Math.random() * 6.28,
-          rotation: Math.random() * 0.2 - 0.1,
-          rotationSpeed: Math.random() * 0.01,
-        });
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        let stillFalling = false;
-
-        for (let i = 0; i < confetti.length; i++) {
-          const c = confetti[i];
-
-          ctx.save();
-          ctx.translate(c.x, c.y);
-          ctx.rotate(c.angle);
-
-          ctx.fillStyle = c.color;
-          ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
-
-          ctx.restore();
-
-          c.y += c.speed;
-          c.angle += c.rotationSpeed;
-
-          if (c.y < canvas.height) {
-            stillFalling = true;
-          }
-        }
-
-        if (stillFalling) {
-          requestAnimationFrame(animate);
-        } else {
-          canvas.remove();
-        }
-      }
-
-      animate();
-    }
-
-    // Success message display
-    document
-      .getElementById("registrationForm")
-      .addEventListener("submit", function (e) {
-        // This prevents the default form submission
-        e.preventDefault();
-
-        // Here we would normally submit the form data via AJAX
-        // Since we're not touching backend logic, we'll simulate a successful response
-
-        // Simulate form submission (in a real app, this would be an AJAX call)
-        setTimeout(function () {
-          // Show success message
-          const successMessage = document.getElementById("successMessage");
-          successMessage.style.display = "flex";
-
-          // Trigger animation after a small delay
-          setTimeout(function () {
-            successMessage.classList.add("scale-100", "opacity-100");
-            successMessage.classList.remove("scale-0", "opacity-0");
-            startConfetti();
-          }, 100);
-
-          // In a real implementation, you would submit the form here
-          // For example: document.getElementById('registrationForm').submit();
-        }, 1000); // Simulate network delay
-      });
-
-    // Continue button functionality
-    document
-      .getElementById("continueButton")
-      .addEventListener("click", function () {
-        // Hide success message
-        const successMessage = document.getElementById("successMessage");
-        successMessage.classList.remove("scale-100", "opacity-100");
-        successMessage.classList.add("scale-0", "opacity-0");
-
-        // Redirect to dashboard or homepage
-        setTimeout(function () {
-          successMessage.style.display = "none";
-          window.location.href = "/dashboard"; // Change this to your desired redirect URL
-        }, 500);
-
-        // In a real implementation, you would submit the form here if not already done
-        // document.getElementById('registrationForm').submit();
-      });
-  </script>
-
-  <style>
-    /* Animation for floating emojis */
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-      100% {
-        transform: translateY(0px);
-      }
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .delay-2s {
-      animation-delay: 2s;
-    }
-
-    .delay-4s {
-      animation-delay: 4s;
-    }
-
-    .delay-6s {
-      animation-delay: 6s;
-    }
-
-    /* Animation for success message */
-    .scale-0 {
-      transform: scale(0);
-    }
-
-    .scale-100 {
-      transform: scale(1);
-    }
-  </style>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+<script>
+  // Array of fun food facts
+  const funFoodFacts = [
+    "The world's most expensive pizza costs $12,000 and takes 72 hours to make.",
+    "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly good to eat.",
+    "The fear of cooking is known as 'Mageirocophobia'.",
+    "Apples float in water because they are 25% air.",
+    "The hottest chili pepper in the world is the Carolina Reaper, measuring over 2.2 million Scoville Heat Units.",
+    "Chocolate was once used as currency by the Aztecs.",
+    "The most expensive spice in the world is saffron, which can cost up to $5,000 per pound.",
+    "Peanuts aren't nuts – they're legumes, related to beans and lentils.",
+    "The average person will consume about 35 tons of food during their lifetime.",
+    "Bananas are berries, but strawberries aren't.",
+  ];
+
+  // Get random food fact
+  function getRandomFoodFact() {
+    const randomIndex = Math.floor(Math.random() * funFoodFacts.length);
+    return funFoodFacts[randomIndex];
+  }
+
+  // Enhanced confetti animation
+  function triggerFullScreenConfetti() {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function () {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+
+      // Particles from left and right
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        colors: ["#E8C547", "#1D3557", "#ff0000", "#00ff00", "#0000ff"],
+        shapes: ["circle", "square"],
+        gravity: 0.5,
+        scalar: 1.5,
+      });
+
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        colors: ["#E8C547", "#1D3557", "#ff0000", "#00ff00", "#0000ff"],
+        shapes: ["circle", "square"],
+        gravity: 0.5,
+        scalar: 1.5,
+      });
+    }, 250);
+  }
+
+  const registrationForm = document.getElementById("registrationForm");
+  const submitButton = document.getElementById("submitButton");
+  const buttonText = document.getElementById("buttonText");
+  const continueButton = document.getElementById("continueButton");
+  const foodFactElement = document.getElementById("foodFact");
+  const shareButton = document.getElementById("shareButton");
+  const shareDropdown = document.getElementById("shareDropdown");
+  const chef = document.querySelector(".chef");
+
+  // Toggle share dropdown
+  shareButton.addEventListener("click", function () {
+    shareDropdown.classList.toggle("hidden");
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    if (
+      !shareButton.contains(event.target) &&
+      !shareDropdown.contains(event.target)
+    ) {
+      shareDropdown.classList.add("hidden");
+    }
+  });
+
+  // Animate chef
+  function animateChef() {
+    // Add dancing animation class
+    chef.classList.add("dancing");
+
+    // Animate chef arms and legs
+    const chefArmLeft = document.querySelector(".chef-arm-left");
+    const chefArmRight = document.querySelector(".chef-arm-right");
+    const chefLegLeft = document.querySelector(".chef-leg-left");
+    const chefLegRight = document.querySelector(".chef-leg-right");
+    const chefSpatula = document.querySelector(".chef-spatula");
+
+    chefArmLeft.style.animation = "wave 1s ease-in-out infinite";
+    chefArmRight.style.animation = "wave 1s ease-in-out 0.5s infinite";
+    chefLegLeft.style.animation = "dance-leg 1s ease-in-out infinite";
+    chefLegRight.style.animation = "dance-leg 1s ease-in-out 0.5s infinite";
+    chefSpatula.style.animation = "flip-spatula 1s ease-in-out infinite";
+  }
+
+  // Animate food emojis
+  function animateFoodEmojis() {
+    const foodEmojis = document.querySelectorAll(".food-emoji");
+    foodEmojis.forEach((emoji, index) => {
+      emoji.style.animation = `float-around 5s ease-in-out ${
+        index * 0.5
+      }s infinite`;
+    });
+  }
+
+  registrationForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Show loading spinner
+    buttonText.innerHTML =
+      '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
+    submitButton.disabled = true;
+
+    const formData = new FormData(registrationForm);
+    const formDataObject = Object.fromEntries(formData.entries());
+
+    try {
+      // Submit the form to the hidden iframe
+      registrationForm.submit();
+
+      // Simulate a response after a short delay
+      setTimeout(() => {
+        const successMessage = document.getElementById("successMessage");
+        successMessage.style.display = "flex";
+
+        // Set a random food fact
+        foodFactElement.textContent = getRandomFoodFact();
+
+        // Start animations
+        setTimeout(() => {
+          successMessage.classList.add("scale-100", "opacity-100");
+          triggerFullScreenConfetti();
+          animateChef();
+          animateFoodEmojis();
+        }, 100);
+      }, 2000);
+    } catch (error) {
+      console.error("Error during registration:", error);
+      buttonText.innerHTML = '<span class="mr-2">🚀</span>Start Ordering';
+      submitButton.disabled = false;
+    }
+  });
+
+  // Password strength indicator
+  const passwordInput = document.getElementById("password");
+  const strengthBars = document.querySelectorAll(".password-strength-bar");
+
+  passwordInput.addEventListener("input", function () {
+    const password = this.value;
+    let strength = 0;
+
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+    // Update strength bars
+    strengthBars.forEach((bar, index) => {
+      if (index < strength) {
+        switch (index) {
+          case 0:
+            bar.className = "h-1 flex-1 rounded-full bg-red-400";
+            break;
+          case 1:
+            bar.className = "h-1 flex-1 rounded-full bg-yellow-400";
+            break;
+          case 2:
+            bar.className = "h-1 flex-1 rounded-full bg-green-400";
+            break;
+          case 3:
+            bar.className = "h-1 flex-1 rounded-full bg-green-600";
+            break;
+        }
+      } else {
+        bar.className = "h-1 flex-1 rounded-full bg-[#E5E7EB]";
+      }
+    });
+  });
+
+  function togglePassword() {
+    const passwordField = document.getElementById("password");
+    const passwordIcon = document.querySelector(
+      "button[onclick='togglePassword()']"
+    );
+
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      passwordIcon.textContent = "🙈";
+    } else {
+      passwordField.type = "password";
+      passwordIcon.textContent = "👁️";
+    }
+  }
+
+  // Redirect to home page when "Let's Eat!" button is clicked
+  continueButton.addEventListener("click", function () {
+    window.location.href = "/";
+  });
+</script>
