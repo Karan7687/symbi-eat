@@ -181,10 +181,11 @@
           </div>
         </div>
 
-        <form id="loginForm" action="/login" method="POST">
-          <% if(messages.error){%>
-          <span class="text-red-500 text-sm"> <%= messages.error%> </span>
-          <%}%>
+        <form id="registrationForm" action="/register" method="POST">
+          <% if (messages.error) { %>
+            <span class="text-red-500 text-sm block mb-4"><%= messages.error %></span>
+          <% } %>
+        
           <div class="mb-5">
             <label class="block text-[#1D3557] font-semibold mt-4" for="email"
               >Email Address</label
@@ -263,8 +264,7 @@
             <span
               class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
             ></span>
-          </button>
-        </form>
+          </button></form>
 
         <div class="relative flex items-center my-6">
           <div class="flex-grow border-t border-gray-300"></div>

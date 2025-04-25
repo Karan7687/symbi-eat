@@ -30,43 +30,33 @@ function authController() {
     },
     async postRegister(req, res) {
       const { name, email, password } = req.body;
-      console.log(req.body);
 
-      // Validate the request
       if (!name || !email || !password) {
-        req.flash("error", "All fields are required");
-        req.flash("name", name);
-        req.flash("email", email);
-        return res.redirect("/register");
+        return res
+          .status(400)
+          .json({ success: false, message: "All fields are required" });
       }
 
-      // Check if user already exists
       const existingUser = await User.exists({ email: email });
       if (existingUser) {
-        req.flash("error", "Email already taken");
-        req.flash("name", name);
-        req.flash("email", email);
-        return res.redirect("/register");
+        return res
+          .status(400)
+          .json({ success: false, message: "Email already taken" });
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Create new user
-      const user = new User({
-        name,
-        email,
-        password: hashedPassword,
-      });
+      const user = new User({ name, email, password: hashedPassword });
 
       user
         .save()
         .then(() => {
-          return res.redirect("/");
+          return res.status(200).json({ success: true });
         })
         .catch((err) => {
-          req.flash("error", "Something went wrong!");
-          return res.redirect("/register");
+          return res
+            .status(500)
+            .json({ success: false, message: "Something went wrong!" });
         });
     },
   };

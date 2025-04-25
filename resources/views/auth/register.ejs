@@ -266,15 +266,11 @@
 
         <!-- Right side - Form -->
         <div class="p-8 md:p-12">
-          <form
-            id="registrationForm"
-            action="/register"
-            method="POST"
-            target="hiddenIframe"
-          >
+          <form id="registrationForm" action="/register" method="POST">
             <% if(messages.error){%>
             <span class="text-red-500 text-sm"> <%= messages.error%> </span>
             <%}%>
+
             <div class="mb-6">
               <label class="block text-[#1D3557] font-semibold mb-2" for="name"
                 >Full Name</label
@@ -506,38 +502,41 @@
   registrationForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Show loading spinner
-    buttonText.innerHTML =
-      '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
+    buttonText.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...`;
     submitButton.disabled = true;
 
     const formData = new FormData(registrationForm);
     const formDataObject = Object.fromEntries(formData.entries());
 
     try {
-      // Submit the form to the hidden iframe
-      registrationForm.submit();
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formDataObject),
+      });
 
-      // Simulate a response after a short delay
-      setTimeout(() => {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Show success message
         const successMessage = document.getElementById("successMessage");
         successMessage.style.display = "flex";
-
-        // Set a random food fact
         foodFactElement.textContent = getRandomFoodFact();
-
-        // Start animations
         setTimeout(() => {
           successMessage.classList.add("scale-100", "opacity-100");
           triggerFullScreenConfetti();
           animateChef();
           animateFoodEmojis();
         }, 100);
-      }, 2000);
+      } else {
+        alert(result.message || "Registration failed.");
+        submitButton.disabled = false;
+        buttonText.innerHTML = '<span class="mr-2">🚀</span>Start Ordering';
+      }
     } catch (error) {
-      console.error("Error during registration:", error);
-      buttonText.innerHTML = '<span class="mr-2">🚀</span>Start Ordering';
+      alert("An error occurred.");
       submitButton.disabled = false;
+      buttonText.innerHTML = '<span class="mr-2">🚀</span>Start Ordering';
     }
   });
 
