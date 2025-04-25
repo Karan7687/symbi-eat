@@ -1,83 +1,136 @@
+<section class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white relative overflow-hidden">
+  <!-- Subtle animated background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+    <div class="food-particle" style="--delay: 0s; --size: 30px; --top: 15%; --left: 10%;">🍕</div>
+    <div class="food-particle" style="--delay: 2s; --size: 25px; --top: 25%; --left: 85%;">🍔</div>
+    <div class="food-particle" style="--delay: 4s; --size: 28px; --top: 65%; --left: 5%;">🍟</div>
+    <div class="food-particle" style="--delay: 6s; --size: 32px; --top: 80%; --left: 90%;">🌮</div>
+    <div class="food-particle" style="--delay: 8s; --size: 22px; --top: 40%; --left: 75%;">🍦</div>
+  </div>
 
-
-<section
-  class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white"
->
-  <div
-    class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6"
-  >
-    <!-- Text -->
-    <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl">
-      <h6 class="text-lg text-[#457B9D] italic font-light">
-        <em>Are you hungry?</em>
-      </h6>
-      <h1
-        id="bounceText"
-        class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557]"
-      >
+  <div class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 relative z-10">
+    <!-- Text with enhanced animations -->
+    <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl fade-in-up">
+      <div class="inline-block bg-[#457B9D]/10 px-4 py-1 rounded-full mb-2">
+        <h6 class="text-lg text-[#457B9D] italic font-light flex items-center">
+          <span class="pulse-dot mr-2"></span>
+          <em>Are you hungry?</em>
+        </h6>
+      </div>
+      
+      <h1 id="bounceText" class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557] text-gradient">
         Don't wait!
       </h1>
-      <p class="mt-4 text-gray-600 text-lg">
-        Experience culinary excellence with our premium dishes crafted for your
-        delight.
+      
+      <p class="mt-4 text-gray-600 text-lg max-w-md leading-relaxed">
+        Experience culinary excellence with our premium dishes crafted for your delight. Fresh ingredients, amazing taste.
       </p>
-      <button
-        class="mt-6 bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md"
-      >
-        Order Now
-      </button>
+      
+     
+      
+      <a href="#menu">
+      <div class="flex flex-wrap gap-4 items-center">
+        <button class="order-button mt-2 bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md flex items-center">
+          <span>Order Now</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 arrow-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+        </a>
+        
+      </div>
+      
+   
     </div>
 
-    <!-- Image -->
-    <div
-      class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA]"
-    >
-      <img
-        src="/img/hero.png"
-        alt="SymbiChef cooking"
-        class="w-full h-full object-cover scale-125"
-      />
+    <!-- Dynamic Image Carousel -->
+    <div class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA] relative image-carousel">
+      <!-- Overlay gradient for depth -->
+      <div class="absolute inset-0 bg-gradient-to-tr from-[#1D3557]/10 to-transparent z-10 rounded-full"></div>
+      
+      <!-- Image container with carousel -->
+      <div class="carousel-container w-full h-full relative">
+        <div class="carousel-images w-full h-full">
+          <!-- Images will be dynamically inserted here -->
+        </div>
+        
+        <!-- Navigation dots -->
+        <div class="carousel-dots absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-20">
+          <!-- Dots will be dynamically inserted here -->
+        </div>
+      </div>
     </div>
+  </div>
+  
+  <!-- Curved divider -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" fill="#ffffff" preserveAspectRatio="none" class="w-full h-[50px]">
+      <path d="M0,0 C240,95 480,95 720,48 C960,0 1200,0 1440,48 L1440,100 L0,100 Z"></path>
+    </svg>
   </div>
 </section>
 
 <!-- Menu Section -->
-<section class="menu container mx-auto py-16 px-6">
-  <h1 class="text-4xl font-bold mb-16 text-[#1D3557] text-center relative">
+<section id="menu" class="menu container mx-auto py-16 px-6">
+  <h1 class="text-4xl font-bold mb-4 text-[#1D3557] text-center relative">
     Our Premium Menu
     <span class="block w-24 h-1 bg-[#E8C547] mx-auto mt-4"></span>
   </h1>
+  
+  <p class="text-center text-gray-600 max-w-2xl mx-auto mb-16">
+    Discover our carefully crafted menu featuring the freshest ingredients and bold flavors. 
+    From quick bites to hearty meals, we've got your cravings covered.
+  </p>
 
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-  >
+  <!-- Category filter -->
+  <div class="flex justify-center flex-wrap gap-3 mb-10">
+    <button class="category-filter active" data-category="all">All</button>
+    <button class="category-filter" data-category="breakfast">Breakfast</button>
+    <button class="category-filter" data-category="lunch">Lunch</button>
+    <button class="category-filter" data-category="dinner">Dinner</button>
+    <button class="category-filter" data-category="snacks">Snacks</button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
     <!-- Menu Item Start -->
-
     <%foodItems.forEach(function(foodItem){ %>
-    <div class="w-60 menu-card bg-white rounded-xl shadow-md p-6 mx-auto">
-      <img
-        class="h-40 w-full mb-4 mx-auto rounded-lg object-cover"
-        src="/img/<%= foodItem.image %>"
-        alt="<%= foodItem.name %>"
-        onerror="this.onerror=null; this.src='/img/default.jpg';"
-      />
+    <div class="menu-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 transition-transform duration-300">
+      <div class="relative">
+        <img
+          class="h-48 w-full object-cover"
+          src="/img/<%= foodItem.image %>"
+          alt="<%= foodItem.name %>"
+          onerror="this.onerror=null; this.src='/img/default.jpg';"
+        />
+        <div class="absolute top-3 right-3 bg-[#E8C547] text-[#1D3557] text-xs font-bold px-2 py-1 rounded-full">
+          Popular
+        </div>
+      </div>
 
-      <div class="text-center">
-        <h2 class="mb-2 text-xl font-bold text-[#1D3557]">
-          <%= foodItem.name %>
-        </h2>
-        <p class="text-gray-600 text-sm mb-3">
-          A delicious assortment of vegetarian dishes
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+          <h2 class="text-xl font-bold text-[#1D3557] line-clamp-1">
+            <%= foodItem.name %>
+          </h2>
+          <span class="font-bold text-lg text-[#1D3557]">₹<%= foodItem.price %></span>
+        </div>
+        
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+          A delicious assortment of vegetarian dishes prepared with fresh ingredients
         </p>
 
-        <div class="flex items-center justify-around mt-6">
-          <span class="font-bold text-lg text-[#1D3557]"
-            >₹ <%=foodItem.price %></span
-          >
+        <div class="flex items-center justify-between mt-4">
+          <div class="preparation-time flex items-center text-xs text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            15-20 min
+          </div>
+          
           <button
-              data-food-item='<%- JSON.stringify(foodItem).replace(/"/g, '&quot;') %>'
-              class="add-to-cart w-1/2 bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300 relative overflow-hidden group"
-            >
+            data-food-item='<%- JSON.stringify(foodItem).replace(/"/g, '&quot;') %>'
+            class="add-to-cart w-auto bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+          >
             <span class="relative z-10 flex items-center justify-center">
               <span class="mr-2">🚀</span>
               Add
@@ -89,18 +142,554 @@
               class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
             ></span>
           </button>
-          <!-- <button
-            class="add-to-cart py-2 px-6 rounded-lg flex items-center font-bold"
-          >
-            <span>+</span>
-            <span class="ml-4">Add</span>
-          </button> -->
         </div>
       </div>
     </div>
-
     <% })%>
-
     <!-- Menu Item End -->
   </div>
 </section>
+
+<!-- Features Section -->
+<section class="features py-16 bg-gradient-to-b from-white to-[#F8F9FA]">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-[#1D3557] text-center mb-16">
+      Why Choose Us
+      <span class="block w-20 h-1 bg-[#E8C547] mx-auto mt-4"></span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Fast Delivery</h3>
+        <p class="text-gray-600">Hot food delivered to your location in 15 minutes or less.</p>
+      </div>
+      
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Quality Food</h3>
+        <p class="text-gray-600">Fresh ingredients and recipes prepared by expert chefs.</p>
+      </div>
+      
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Student Friendly</h3>
+        <p class="text-gray-600">Special discounts and meal plans designed for students.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brain Food Section -->
+<section class="brain-food py-16 bg-gradient-to-r from-[#1D3557] to-[#2A4365] text-white">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-6">
+      Brain Food
+      <span class="block w-20 h-1 bg-[#E8C547] mx-auto mt-4"></span>
+    </h2>
+    
+    <p class="text-center max-w-2xl mx-auto mb-12 text-white/80">
+      Fuel your study sessions with our specially curated menu items designed to boost cognitive function and help you ace those exams.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brain Food Item 1 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-[#E8C547] flex items-center justify-center text-2xl mr-4">
+            🧠
+          </div>
+          <h3 class="text-xl font-bold">Memory Booster Bowl</h3>
+        </div>
+        <p class="mb-4 text-white/80">Rich in omega-3 fatty acids and antioxidants to enhance memory and focus.</p>
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-[#E8C547]">₹199</span>
+          <div class="flex items-center text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-[#E8C547]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Brain Power: High
+          </div>
+        </div>
+      </div>
+      
+      <!-- Brain Food Item 2 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-[#E8C547] flex items-center justify-center text-2xl mr-4">
+            ⚡
+          </div>
+          <h3 class="text-xl font-bold">Focus Fuel Wrap</h3>
+        </div>
+        <p class="mb-4 text-white/80">Protein-packed wrap with brain-boosting ingredients to maintain concentration.</p>
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-[#E8C547]">₹149</span>
+          <div class="flex items-center text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-[#E8C547]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Brain Power: Medium
+          </div>
+        </div>
+      </div>
+      
+      <!-- Brain Food Item 3 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-[#E8C547] flex items-center justify-center text-2xl mr-4">
+            🔋
+          </div>
+          <h3 class="text-xl font-bold">Exam Energy Smoothie</h3>
+        </div>
+        <p class="mb-4 text-white/80">Blend of fruits, nuts, and natural energy boosters to power through long study sessions.</p>
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-[#E8C547]">₹129</span>
+          <div class="flex items-center text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-[#E8C547]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Brain Power: High
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Styles for the enhanced elements -->
+<style>
+  /* Dynamic image carousel */
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .carousel-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    transform: scale(1.25);
+  }
+  
+  .carousel-image.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .carousel-dot.active {
+    background-color: white;
+    transform: scale(1.3);
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  /* Food particles */
+  .food-particle {
+    position: absolute;
+    font-size: var(--size);
+    top: var(--top);
+    left: var(--left);
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  
+  /* Pulse dot */
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #E8C547;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+  
+  /* Text gradient */
+  .text-gradient {
+    background: linear-gradient(90deg, #1D3557, #457B9D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  /* Arrow animation */
+  .arrow-right {
+    transition: transform 0.3s ease;
+  }
+  
+  .order-button:hover .arrow-right {
+    transform: translateX(5px);
+  }
+  
+  /* Category filter */
+  .category-filter {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1D3557;
+    background-color: #F3F4F6;
+    transition: all 0.3s ease;
+  }
+  
+  .category-filter:hover {
+    background-color: #E5E7EB;
+  }
+  
+  .category-filter.active {
+    background-color: #1D3557;
+    color: white;
+  }
+  
+  /* Feature cards */
+  .feature-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    background-color: #F3F4F6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: #1D3557;
+  }
+  
+  /* Food facts carousel */
+  .food-facts-carousel {
+    position: relative;
+  }
+  
+  .food-fact {
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  /* Timer buttons */
+  .timer-btn {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    background-color: #F3F4F6;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1D3557;
+    transition: all 0.2s ease;
+  }
+  
+  .timer-btn:hover {
+    background-color: #E5E7EB;
+  }
+  
+  .timer-btn.active {
+    background-color: #1D3557;
+    color: white;
+  }
+</style>
+
+<!-- Script for dynamic image carousel and other enhancements -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Image carousel setup
+    const carouselImages = [
+      '/img/hero.png',
+      '/img/club-sandwich.png',
+      '/img/veg-noodles.png',
+      '/img/pasta.png',
+    ];
+    
+    // Fallback images if the specified ones don't exist
+    const fallbackImages = [
+      '/img/hero.png',
+      '/img/default.jpg',
+      '/img/default.jpg',
+      '/img/default.jpg',
+      '/img/default.jpg'
+    ];
+    
+    const carouselContainer = document.querySelector('.carousel-images');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    
+    if (carouselContainer && dotsContainer) {
+      // Create image elements and dots
+      carouselImages.forEach((src, index) => {
+        // Create image element
+        const img = document.createElement('img');
+        img.className = `carousel-image ${index === 0 ? 'active' : ''}`;
+        img.src = src;
+        img.alt = `Food image ${index + 1}`;
+        img.onerror = function() {
+          this.onerror = null;
+          this.src = fallbackImages[index];
+        };
+        carouselContainer.appendChild(img);
+        
+        // Create dot element
+        const dot = document.createElement('div');
+        dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+        dot.dataset.index = index;
+        dot.addEventListener('click', () => {
+          goToSlide(index);
+        });
+        dotsContainer.appendChild(dot);
+      });
+      
+      // Auto-rotate carousel
+      let currentIndex = 0;
+      const totalSlides = carouselImages.length;
+      
+      function goToSlide(index) {
+        // Update current index
+        currentIndex = index;
+        
+        // Update images
+        const images = document.querySelectorAll('.carousel-image');
+        images.forEach((img, i) => {
+          img.classList.toggle('active', i === index);
+        });
+        
+        // Update dots
+        const dots = document.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }
+      
+      function nextSlide() {
+        const nextIndex = (currentIndex + 1) % totalSlides;
+        goToSlide(nextIndex);
+      }
+      
+      // Auto-rotate every 3 seconds (changed from 5 seconds)
+      const intervalId = setInterval(nextSlide, 3000);
+      
+      // Stop rotation on hover
+      const carousel = document.querySelector('.image-carousel');
+      carousel.addEventListener('mouseenter', () => {
+        clearInterval(intervalId);
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        clearInterval(intervalId);
+        setInterval(nextSlide, 3000);
+      });
+    }
+    
+    // Category filter functionality
+    const categoryButtons = document.querySelectorAll('.category-filter');
+    const menuItems = document.querySelectorAll('.menu-card');
+    
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Get selected category
+        const category = button.dataset.category;
+        
+        // Filter menu items (this is just visual, actual filtering would need backend integration)
+        if (category === 'all') {
+          menuItems.forEach(item => {
+            item.style.display = 'block';
+            item.classList.add('fade-in-up');
+          });
+        } else {
+          // In a real implementation, you would filter based on actual categories
+          // This is just a visual demonstration
+          menuItems.forEach((item, index) => {
+            // Randomly show/hide items for demo purposes
+            const shouldShow = Math.random() > 0.5;
+            item.style.display = shouldShow ? 'block' : 'none';
+            if (shouldShow) {
+              item.classList.add('fade-in-up');
+            }
+          });
+        }
+      });
+    });
+    
+    // Animate text on scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.feature-card, .menu-card');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('fade-in-up');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Run once on load
+    
+    // Food facts carousel
+    const foodFacts = document.querySelectorAll('.food-fact');
+    let currentFactIndex = 0;
+    
+    function showNextFact() {
+      // Hide current fact
+      foodFacts[currentFactIndex].style.opacity = '0';
+      
+      // Update index
+      currentFactIndex = (currentFactIndex + 1) % foodFacts.length;
+      
+      // Show next fact after transition
+      setTimeout(() => {
+        foodFacts.forEach((fact, i) => {
+          fact.style.opacity = i === currentFactIndex ? '1' : '0';
+        });
+      }, 500);
+    }
+    
+    // Rotate facts every 8 seconds
+    setInterval(showNextFact, 8000);
+    
+    // Study break timer functionality
+    const timerBtns = document.querySelectorAll('.timer-btn');
+    const timerDisplay = document.querySelector('.timer-display');
+    const startTimerBtn = document.getElementById('start-timer');
+    let selectedMinutes = 0;
+    let timerInterval;
+    
+    timerBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        timerBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedMinutes = parseInt(btn.dataset.minutes);
+        
+        // Update display
+        const minutes = selectedMinutes;
+        const seconds = 0;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      });
+    });
+    
+    startTimerBtn.addEventListener('click', () => {
+      if (selectedMinutes === 0) return;
+      
+      // Clear any existing interval
+      clearInterval(timerInterval);
+      
+      // Set initial time
+      let totalSeconds = selectedMinutes * 60;
+      
+      // Update display
+      function updateTimerDisplay() {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (totalSeconds === 0) {
+          clearInterval(timerInterval);
+          alert('Study break time! Take a moment to refresh and grab a bite.');
+        }
+      }
+      
+      // Start countdown
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        totalSeconds--;
+        updateTimerDisplay();
+        
+        if (totalSeconds === 0) {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+      
+      // Change button text
+      startTimerBtn.textContent = 'Timer Running';
+      startTimerBtn.disabled = true;
+      
+      // Re-enable after timer completes
+      setTimeout(() => {
+        startTimerBtn.textContent = 'Start Timer';
+        startTimerBtn.disabled = false;
+      }, totalSeconds * 1000);
+    });
+  });
+</script>

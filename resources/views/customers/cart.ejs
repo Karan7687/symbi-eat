@@ -8,7 +8,6 @@
           alt="cart"
           class="h-10 w-10 sm:h-12 sm:w-12 nav-item hover:rotate-12 transition-transform duration-300"
         />
-  
       </div>
       <h1 class="font-bold ml-2 sm:ml-4 text-xl sm:text-2xl md:text-3xl">
         <% if (session && session.cart && session.cart.items &&
@@ -36,14 +35,14 @@
         >
           <!-- Decorative element -->
           <div
-            class="absolute top-0 right-0 w-24 h-24 -rotate-45 -translate-y-12 translate-x-8 opacity-5"
+            class="absolute top-10 right-0 w-24 h-24 -rotate-45 -translate-y-12 translate-x-8 opacity-5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
               fill="white"
               width="96"
               height="96"
+              viewBox="0 0 24 24"
             >
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"
@@ -88,419 +87,416 @@
             </div>
           </div>
           <% }) %> <% } else { %>
-          <!-- EMPTY CART ENHANCED SECTION -->
+          <!-- ENHANCED EMPTY CART SECTION -->
           <div class="empty-cart-container p-4 sm:p-6 text-center">
-            <!-- Floating food icons background -->
-            <div class="empty-cart-food-icon" style="top: 10%; left: 10%">
-              🍕
-            </div>
-            <div
-              class="empty-cart-food-icon"
-              style="top: 20%; left: 80%; animation-delay: 2s"
-            >
-              🍔
-            </div>
-            <div
-              class="empty-cart-food-icon"
-              style="top: 70%; left: 15%; animation-delay: 4s"
-            >
-              🍟
-            </div>
-            <div
-              class="empty-cart-food-icon"
-              style="top: 60%; left: 85%; animation-delay: 6s"
-            >
-              🥤
-            </div>
-            <div
-              class="empty-cart-food-icon"
-              style="top: 40%; left: 50%; animation-delay: 8s"
-            >
-              🍦
-            </div>
-
-            <!-- Brain background -->
-            <svg
-              class="empty-cart-brain empty-cart-spin"
-              viewBox="0 0 512 512"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="currentColor"
-                d="M208 225.3c-5.9-1.2-11.7-2.3-17.4-3.5c-11.5-8.7-19.6-22.5-19.6-38.2c0-26.4 21.5-47.9 47.9-47.9c12.7 0 24.1 5 32.7 13c8.5-8 20-13 32.7-13c26.4 0 47.9 21.5 47.9 47.9c0 15.7-8.2 29.5-19.6 38.2c-5.7 1.2-11.5 2.3-17.4 3.5c-11.6 2.3-23.7 3.5-36.2 3.5s-24.5-1.2-36.1-3.5zm-25.2 38.1c-42.1-14.3-67.2-40.8-67.2-65.2c0-31.1 25.3-56.4 56.4-56.4c8.5 0 16.6 1.9 23.8 5.2c14.1-10.6 31.6-16.8 50.6-16.8c19 0 36.5 6.2 50.6 16.8c7.2-3.3 15.3-5.2 23.8-5.2c31.1 0 56.4 25.3 56.4 56.4c0 24.4-25.1 50.9-67.2 65.2c-7.1 2.4-14.5 4.5-22.1 6.1c-13.9 3-28.7 4.6-44 4.6s-30.1-1.6-44-4.6c-7.6-1.6-15-3.7-22.1-6.1z"
-              />
-            </svg>
-
-            <!-- Empty cart icon -->
-            <div class="relative mb-4 sm:mb-6 inline-block empty-cart-icon">
+            <!-- 3D Fridge Card -->
+            <div class="empty-fridge-card mx-auto max-w-md perspective">
               <div
-                class="absolute inset-0 bg-[#E8C547] rounded-full opacity-20"
-              ></div>
-              <div
-                class="relative bg-[#1a2e50] p-4 sm:p-6 rounded-full border-4 border-dashed border-[#E8C547]"
+                class="fridge-door relative bg-gradient-to-b from-gray-100 to-gray-300 rounded-2xl p-6 shadow-xl transform-style preserve-3d hover:rotate-y-15 transition-transform duration-500"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-12 w-12 sm:h-16 sm:w-16 text-[#E8C547]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
                 <div
-                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center empty-cart-shake"
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 w-3 h-24 bg-gray-400 rounded-full shadow-inner"
+                ></div>
+                <div
+                  class="fridge-content bg-white rounded-xl p-6 mt-4 shadow-inner min-h-[300px] flex flex-col items-center justify-center relative overflow-hidden"
                 >
-                  0
+                  <div class="sad-face relative w-32 h-32">
+                    <div
+                      class="absolute w-2 h-2 bg-[#E8C547] rounded-full left-8 top-8 opacity-80"
+                    ></div>
+                    <div
+                      class="absolute w-2 h-2 bg-[#E8C547] rounded-full right-8 top-8 opacity-80"
+                    ></div>
+                    <div
+                      class="absolute w-16 h-2 bg-[#E8C547] rounded-full left-8 bottom-8 opacity-80 sad-mouth"
+                    ></div>
+                    <div
+                      class="absolute w-1 h-1 bg-[#E8C547] rounded-full left-6 top-6 opacity-60"
+                    ></div>
+                    <div
+                      class="absolute w-1 h-1 bg-[#E8C547] rounded-full right-6 top-6 opacity-60"
+                    ></div>
+                  </div>
+                  <h3 class="text-2xl font-bold text-gray-800 mt-4">
+                    Your Cart is Empty
+                  </h3>
                 </div>
               </div>
             </div>
 
-            <!-- Dark humor heading -->
-            <h2
-              class="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-white empty-cart-fade-in"
-            >
-              Your Cart is as Empty as Your
-              <span class="text-[#E8C547] italic">Will to Study</span>
-            </h2>
-
-            <!-- Random dark humor quotes -->
-            <div class="quote-container min-h-[4rem] flex items-center justify-center">
-              <p
-                id="emptyCartQuote"
-                class="text-base sm:text-lg text-center text-gray-300 max-w-md mx-auto mb-4 sm:mb-6 empty-cart-quote"
+            <!-- Call to Action -->
+            <div class="mt-8 relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-[#E8C547] to-[#F7B801] blur-xl opacity-30 rounded-full"
+              ></div>
+              <button
+                onclick="window.location.href='/'"
+                class="relative bg-gradient-to-r from-[#E8C547] to-[#F7B801] hover:from-[#F7B801] hover:to-[#E8C547] text-[#112240] font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
-                <span class="quote-text"></span><span class="cursor">|</span>
-              </p>
+                <span class="flex items-center justify-center">
+                  <span class="mr-2 text-2xl">🍔</span>
+                  Feed Me Now!
+                </span>
+              </button>
             </div>
 
-            <!-- Brain fuel meter -->
-
-            <!-- Food suggestions with dark humor -->
-
-            <!-- Student testimonials -->
-
-            <!-- Ghost animation -->
+            <!-- Floating food emojis with animation -->
+            <div
+              class="floating-food-container absolute inset-0 overflow-hidden pointer-events-none"
+            >
+              <div
+                class="floating-food"
+                style="--delay: 0s; --x: -30px; --y: -20px"
+              >
+                🍕
+              </div>
+              <div
+                class="floating-food"
+                style="--delay: 2s; --x: 30px; --y: -25px"
+              >
+                🍔
+              </div>
+              <div
+                class="floating-food"
+                style="--delay: 4s; --x: -20px; --y: -30px"
+              >
+                🍟
+              </div>
+              <div
+                class="floating-food"
+                style="--delay: 6s; --x: 25px; --y: -15px"
+              >
+                🌮
+              </div>
+              <div
+                class="floating-food"
+                style="--delay: 8s; --x: -25px; --y: -25px"
+              >
+                🍦
+              </div>
+            </div>
           </div>
           <% } %>
-
-          <!-- Footer note -->
         </div>
       </div>
 
       <!-- Right column: Order summary - Only show when cart has items -->
       <% if (session && session.cart && session.cart.items &&
       Object.keys(session.cart.items).length > 0) { %>
-      <div class="lg:col-span-1">
-        <div class="bg-[#F8F9FA] rounded-xl p-4 sm:p-6 shadow-md">
-          <h2 class="font-bold text-lg sm:text-xl text-[#112240] mb-3 sm:mb-4">
-            Order Details
-          </h2>
-
-          <!-- Coupon -->
-          <div class="mb-4 sm:mb-6">
-            <label
-              class="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2"
-              >Have a coupon?</label
-            >
-            <div class="flex">
-              <input
-                type="text"
-                placeholder="Enter coupon code"
-                class="flex-1 border border-gray-300 rounded-l-lg px-2 sm:px-3 py-1 sm:py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8C547] focus:border-transparent"
-              />
-              <button
-                class="bg-[#112240] text-white px-3 sm:px-4 py-1 sm:py-2 rounded-r-lg hover:bg-[#1a2e50] transition-colors duration-200 text-sm"
-              >
-                Apply
-              </button>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">
-              Try "STUDENT10" for 10% off your first order!
-            </div>
-          </div>
-
-          <hr class="my-3 sm:my-4 border-dashed border-gray-300" />
-
-          <!-- Breakdown -->
-          <div class="space-y-1 sm:space-y-2 mb-3 sm:mb-4">
-            <div class="flex justify-between text-xs sm:text-sm">
-              <span class="text-gray-600">Subtotal</span>
-              <span class="font-medium">₹<%= session.cart.totalPrice %></span>
-            </div>
-         
-
-          <hr class="my-3 sm:my-4 border-gray-300" />
-
-          <!-- Total -->
-          <div class="py-1 sm:py-2 mb-1">
-            <span class="text-base sm:text-lg font-bold">Total:</span>
-            <span
-              class="amount text-xl sm:text-2xl font-bold text-[#112240] relative group"
-            >
-              ₹<%= session.cart.totalPrice%>
-              <span
-                class="absolute -top-4 -left-2 text-xs bg-[#E8C547] text-[#112240] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              >
-                Worth every rupee!
-              </span>
-              <div class="text-xs text-gray-500 mb-3 sm:mb-4">
-                * Cheaper than your textbooks and tastier too!
+           <!-- Right column: Order summary -->
+           <div class="lg:col-span-1">
+            <div class="bg-[#F8F9FA] rounded-xl p-6 shadow-md">
+              <h2 class="font-bold text-xl text-[#112240] mb-4">Order Details</h2>
+    
+              <!-- Coupon -->
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Have a coupon?</label
+                >
+                <div class="flex">
+                  <input
+                    type="text"
+                    placeholder="Enter coupon code"
+                    class="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E8C547] focus:border-transparent"
+                  />
+                  <button
+                    class="bg-[#112240] text-white px-4 py-2 rounded-r-lg hover:bg-[#1a2e50] transition-colors duration-200"
+                  >
+                    Apply
+                  </button>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">
+                  Try "STUDENT10" for 10% off your first order!
+                </div>
               </div>
-            </span>
-          </div>
-
-          <!-- Confirm Button -->
-          <button
-            class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-2 sm:py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group text-sm sm:text-base"
-          >
-            <span class="relative z-10 flex items-center justify-center">
-              <span class="mr-2">🚀</span>
-              Confirm Order & Fuel Your Brain
-            </span>
-            <span
-              class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-            ></span>
-            <span
-              class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
-            ></span>
-          </button>
-        </div>
-      </div>
+    
+              <hr class="my-4 border-dashed border-gray-300" />
+    
+              <!-- Breakdown -->
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Subtotal</span>
+                  <span class="font-medium">₹440</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Delivery</span>
+                  <span class="font-medium">₹60</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-600">Discount</span>
+                  <span class="font-medium text-green-600">-₹0</span>
+                </div>
+              </div>
+    
+              <hr class="my-4 border-gray-300" />
+    
+              <!-- Total -->
+              <div class="py-2 mb-1">
+                <span class="text-lg font-bold">Total:</span>
+                <span
+                  class="amount text-2xl font-bold text-[#112240] relative group"
+                >
+                  ₹<%= session.cart && session.cart.totalPrice ?
+                  session.cart.totalPrice : 0 %>
+                  <span
+                    class="absolute -top-4 -left-2 text-xs bg-[#E8C547] text-[#112240] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  >
+                    Worth every rupee!
+                  </span>
+                  <div class="text-xs text-gray-500 mb-4">
+                    * Cheaper than your textbooks and tastier too!
+                  </div>
+                </span>
+              </div>
+    
+              <!-- Confirm Button -->
+              <button
+                class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+              >
+                <span class="relative z-10 flex items-center justify-center">
+                  <span class="mr-2">🚀</span>
+                  Confirm Order & Fuel Your Brain
+    
+                </span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                ></span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+                ></span>
+              </button>
       <% } %>
     </div>
   </div>
 </section>
 
+<!-- Add the empty cart script and styles at the end of the body -->
+<style>
+  /* 3D Fridge Card Styles */
+  .perspective {
+    perspective: 1000px;
+  }
 
-<!-- Add the empty cart script at the end of the body -->
+  .transform-style {
+    transform-style: preserve-3d;
+  }
+
+  .hover\:rotate-y-15:hover {
+    transform: rotateY(15deg);
+  }
+
+  /* Sad mouth animation */
+  @keyframes sadMouth {
+    0%,
+    100% {
+      transform: scaleX(1);
+    }
+    50% {
+      transform: scaleX(0.8);
+    }
+  }
+
+  .sad-mouth {
+    animation: sadMouth 3s ease-in-out infinite;
+  }
+
+  /* Brain fuel animation */
+  @keyframes pulseBrainFuel {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  .brain-fuel-bar {
+    animation: pulseBrainFuel 2s ease-in-out infinite;
+  }
+
+  /* Floating food animation */
+  @keyframes floatingFood {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(var(--x), var(--y));
+    }
+  }
+
+  .floating-food {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: floatingFood 8s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+
+  .floating-food:nth-child(1) {
+    top: 10%;
+    left: 10%;
+  }
+  .floating-food:nth-child(2) {
+    top: 20%;
+    right: 15%;
+  }
+  .floating-food:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+  }
+  .floating-food:nth-child(4) {
+    bottom: 20%;
+    right: 10%;
+  }
+  .floating-food:nth-child(5) {
+    top: 50%;
+    left: 50%;
+  }
+
+  /* Hours counter animation */
+  @keyframes countUp {
+    0% {
+      opacity: 0.7;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.7;
+    }
+  }
+
+  .hours-counter {
+    animation: countUp 1s linear infinite;
+  }
+
+  /* Hunger quotes fade animation */
+  @keyframes fadeQuote {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    10% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  .hunger-quote {
+    animation: fadeQuote 10s ease-in-out infinite;
+  }
+</style>
+
 <script>
   // Only run this script if the cart is empty
   document.addEventListener("DOMContentLoaded", function () {
     const emptyCartContainer = document.querySelector(".empty-cart-container");
 
-    // Make body unscrollable when cart is empty
     if (emptyCartContainer) {
-      document.body.classList.add("no-scroll");
-
-      // Adjust container height to fit viewport
-      const adjustHeight = () => {
-        const viewportHeight = window.innerHeight;
-        const headerHeight = document.querySelector(
-          ".cart .flex.items-center.border-b"
-        ).offsetHeight;
-        const footerHeight = document.querySelector(
-          ".cart .text-center.mt-3"
-        )?.offsetHeight || 0;
-        const availableHeight =
-          viewportHeight - headerHeight - footerHeight - 40; // 40px for padding
-
-        emptyCartContainer.style.minHeight = `${availableHeight}px`;
-      };
-
-      // Run on load and resize
-      adjustHeight();
-      window.addEventListener("resize", adjustHeight);
-
-      // Array of dark humor quotes about empty stomachs and student life
-      const darkHumorQuotes = [
+      // Array of hunger quotes
+      const hungerQuotes = [
+        "Your stomach is so empty, it's starting to digest your life choices.",
         "This cart is emptier than your DMs and your soul combined.",
-        "Even depression eats more than you do.",
-        "If hunger was fatal, you'd be a ghost by now.",
-        "This cart is like your love life — full of cravings, zero fulfilment.",
         "Your stomach just Googled: 'How to survive without friends or food.'",
-        "The only thing you've digested lately is disappointment.",
         "You scroll food, but eat regret. Relatable?",
         "Your stomach wrote a suicide note. It's been ignored too long.",
-        "Empty cart? Even the Grim Reaper left you a snack, bro.",
-        "At this point, your survival is just a coding error in nature.",
         "This cart is as abandoned as your childhood dreams.",
         "Your stomach filed a missing person report on food.",
-        "You're not hungry, you're just slowly fading from existence.",
         "Even your attendance has more in it than this cart.",
         "Food isn't the only thing you've been ghosted by.",
         "Your life's loading screen is stuck on 'Hunger'.",
-        "This is what happens when your bank balance and GPA compete.",
-        "You've unlocked the 'starving artist' path — minus the talent.",
-        "This cart is as emotionally stable as your group project.",
-        "Congratulations! You've officially hit rock bottom — with an empty stomach."
       ];
 
-      // Brain fuel levels with corresponding messages
-      const brainFuelLevels = [
-        {
-          width: "5%",
-          message: "CRITICAL: Your brain cells are filing for unemployment.",
-        },
-        {
-          width: "10%",
-          message: "WARNING: Academic performance rapidly declining.",
-        },
-        {
-          width: "15%",
-          message: "ALERT: You're one hunger pang away from eating your notes.",
-        },
-        {
-          width: "20%",
-          message: "DANGER: Stomach now louder than lecture hall.",
-        },
+      // Brain fuel messages
+      const brainFuelMessages = [
+        "CRITICAL: Your brain cells are filing for unemployment.",
+        "WARNING: Academic performance rapidly declining.",
+        "ALERT: You're one hunger pang away from eating your notes.",
+        "DANGER: Stomach now louder than lecture hall.",
       ];
 
-      // Get elements
-      const quoteElement = document.getElementById("emptyCartQuote");
-      const textElement = quoteElement.querySelector(".quote-text");
-      const cursorElement = quoteElement.querySelector(".cursor");
-      const meterElement = document.getElementById("brainFuelMeter");
-      const meterMessageElement = document.getElementById("brainFuelMessage");
-      const testimonialElement = document.getElementById(
-        "testimonialContainer"
-      );
-      const hangerLevelElement = document.getElementById("hangerLevel");
-      const hoursSinceFoodElement = document.getElementById("hoursSinceFood");
-      const studyEfficiencyBarElement =
-        document.getElementById("studyEfficiencyBar");
-      const studyEfficiencyPercentElement = document.getElementById(
-        "studyEfficiencyPercent"
-      );
-      const studyMessageElement = document.getElementById("studyMessage");
+      // Hunger levels
+      const hungerLevels = ["HIGH", "EXTREME", "CRITICAL", "HANGRY AF"];
 
-      // Typewriter effect variables
-      let currentQuoteIndex = 0;
-      let currentCharIndex = 0;
-      let isTyping = true;
-      let isWaiting = false;
-      
-      // Function to type text with typewriter effect
-      function typeText() {
-        if (isWaiting || !textElement) return;
-        
-        const currentQuote = darkHumorQuotes[currentQuoteIndex];
-        
-        if (isTyping) {
-          // Typing forward
-          if (currentCharIndex < currentQuote.length) {
-            textElement.textContent = currentQuote.substring(0, currentCharIndex + 1);
-            currentCharIndex++;
-            setTimeout(typeText, 50 + Math.random() * 30); // Random typing speed for realism
-          } else {
-            // Finished typing, wait before erasing
-            isWaiting = true;
-            setTimeout(() => {
-              isTyping = false;
-              isWaiting = false;
-              typeText();
-            }, 3000); // Wait 3 seconds before erasing
-          }
-        } else {
-          // Erasing
-          if (currentCharIndex > 0) {
-            textElement.textContent = currentQuote.substring(0, currentCharIndex - 1);
-            currentCharIndex--;
-            setTimeout(typeText, 30); // Erase faster than typing
-          } else {
-            // Finished erasing, move to next quote
-            isTyping = true;
-            currentQuoteIndex = (currentQuoteIndex + 1) % darkHumorQuotes.length;
-            setTimeout(typeText, 500); // Small pause before typing next quote
-          }
+      // Update hunger quote
+      function updateHungerQuote() {
+        const quoteElement = document.querySelector(".hunger-quote");
+        if (quoteElement) {
+          const randomQuote =
+            hungerQuotes[Math.floor(Math.random() * hungerQuotes.length)];
+          quoteElement.textContent = randomQuote;
         }
       }
 
-      // Function to update brain fuel meter
+      // Update brain fuel message
       function updateBrainFuel() {
-        const randomIndex = Math.floor(Math.random() * brainFuelLevels.length);
-        const level = brainFuelLevels[randomIndex];
-        if (meterElement && meterMessageElement) {
-          meterElement.style.width = level.width;
-          meterMessageElement.textContent = level.message;
+        const messageElement = document.querySelector(".brain-fuel-message");
+        const barElement = document.querySelector(".brain-fuel-bar");
+        const percentElement = document.getElementById("brainFuelPercent");
+
+        if (messageElement && barElement && percentElement) {
+          const randomMessage =
+            brainFuelMessages[
+              Math.floor(Math.random() * brainFuelMessages.length)
+            ];
+          const randomPercent = Math.floor(Math.random() * 20) + 5; // 5-25%
+
+          messageElement.textContent = randomMessage;
+          barElement.style.width = `${randomPercent}%`;
+          percentElement.textContent = `${randomPercent}%`;
         }
       }
 
-      // Function to update testimonial
-      function updateTestimonial() {
-        if (testimonialElement && typeof studentTestimonials !== 'undefined') {
-          const randomIndex = Math.floor(
-            Math.random() * studentTestimonials.length
-          );
-          testimonialElement.textContent = studentTestimonials[randomIndex];
-          testimonialElement.classList.remove("empty-cart-fade-in");
-          void testimonialElement.offsetWidth; // Trigger reflow
-          testimonialElement.classList.add("empty-cart-fade-in");
+      // Update hunger level
+      function updateHungerLevel() {
+        const levelElement = document.querySelector(".hunger-level");
+        if (levelElement) {
+          const randomLevel =
+            hungerLevels[Math.floor(Math.random() * hungerLevels.length)];
+          levelElement.textContent = randomLevel;
         }
       }
 
-      // Function to update hanger level
-      function updateHangerLevel() {
-        if (hangerLevelElement) {
-          const hangerLevel = Math.floor(Math.random() * 9000) + 1000;
-          hangerLevelElement.textContent = `HANGRY LVL: ${hangerLevel}`;
-          hangerLevelElement.classList.remove("empty-cart-shake");
-          void hangerLevelElement.offsetWidth; // Trigger reflow
-          hangerLevelElement.classList.add("empty-cart-shake");
+      // Update hours counter
+      function updateHoursCounter() {
+        const counterElement = document.querySelector(".hours-counter");
+        if (counterElement) {
+          const hours = Math.floor(Math.random() * 12) + 6;
+          const minutes = Math.floor(Math.random() * 60);
+          const seconds = Math.floor(Math.random() * 60);
+
+          counterElement.textContent = `${hours
+            .toString()
+            .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+            .toString()
+            .padStart(2, "0")}`;
         }
       }
 
-      // Function to update study efficiency
-      function updateStudyEfficiency() {
-        if (
-          hoursSinceFoodElement &&
-          studyEfficiencyBarElement &&
-          studyEfficiencyPercentElement &&
-          studyMessageElement
-        ) {
-          const hours = Math.floor(Math.random() * 12) + 1;
-          hoursSinceFoodElement.textContent = hours;
-
-          // Calculate efficiency (decreases as hours increase)
-          const efficiency = Math.max(5, Math.floor(100 - hours * 8));
-          studyEfficiencyBarElement.style.width = `${efficiency}%`;
-          studyEfficiencyPercentElement.textContent = `${efficiency}%`;
-
-          // Update color based on efficiency
-          if (efficiency < 20) {
-            studyEfficiencyBarElement.className = "h-full bg-red-600";
-            studyMessageElement.textContent =
-              "At this rate, you might as well be studying in your sleep. Food = Brain Power.";
-          } else if (efficiency < 50) {
-            studyEfficiencyBarElement.className = "h-full bg-orange-500";
-            studyMessageElement.textContent =
-              "You're retaining about as much information as a leaky bucket. Food = Brain Power.";
-          } else if (efficiency < 80) {
-            studyEfficiencyBarElement.className = "h-full bg-yellow-500";
-            studyMessageElement.textContent =
-              "Not terrible, but your brain is running on fumes. Food = Brain Power.";
-          } else {
-            studyEfficiencyBarElement.className = "h-full bg-green-500";
-            studyMessageElement.textContent =
-              "Wow, you're actually functioning! Imagine if you added food to the equation!";
-          }
-        }
-      }
-
-      // Start the typewriter effect
-      if (textElement) {
-        typeText();
-      }
-
-      // Initial updates for other elements
+      // Initial updates
+      updateHungerQuote();
       updateBrainFuel();
-      updateTestimonial();
-      updateHangerLevel();
-      updateStudyEfficiency();
+      updateHungerLevel();
+      updateHoursCounter();
 
-      // Set intervals for updates (except quotes which are handled by typewriter)
-      setInterval(updateBrainFuel, 7000);
-      setInterval(updateTestimonial, 8000);
-      setInterval(updateHangerLevel, 3000);
-      setInterval(updateStudyEfficiency, 10000);
-    } else {
-      // Make sure scrolling is enabled when cart has items
-      document.body.classList.remove("no-scroll");
+      // Set intervals for updates
+      setInterval(updateHungerQuote, 10000); // Every 10 seconds
+      setInterval(updateBrainFuel, 7000); // Every 7 seconds
+      setInterval(updateHungerLevel, 5000); // Every 5 seconds
+      setInterval(updateHoursCounter, 1000); // Every second
     }
   });
 </script>

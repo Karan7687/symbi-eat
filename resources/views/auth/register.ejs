@@ -272,6 +272,9 @@
             method="POST"
             target="hiddenIframe"
           >
+            <% if(messages.error){%>
+            <span class="text-red-500 text-sm"> <%= messages.error%> </span>
+            <%}%>
             <div class="mb-6">
               <label class="block text-[#1D3557] font-semibold mb-2" for="name"
                 >Full Name</label
