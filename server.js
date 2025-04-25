@@ -38,14 +38,13 @@ app.use(
   })
 );
 
-// Flash messages
-app.use(flash());
-
 // Passport config (⚠️ passport comes after session middleware)
 const passportInit = require("./app/config/passport");
 passportInit(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+// Flash messages
+app.use(flash());
 
 // Set views & template engine
 app.set("views", path.join(__dirname, "/resources/views"));
@@ -60,6 +59,7 @@ mongoose
 // Global middleware
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  res.locals.user = req.user;
   next();
 });
 

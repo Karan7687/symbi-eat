@@ -3,6 +3,16 @@
   class="login-section py-6 bg-[#F8F9FA] min-h-[calc(100vh-80px)] flex items-center"
 >
   <div class="container mx-auto px-4 flex items-center justify-center">
+    <% if (typeof message !== 'undefined' && message) { %>
+    <div class="w-full text-center mb-4">
+      <div
+        class="inline-block px-4 py-2 rounded-md font-semibold <% if (type === 'success') { %> bg-green-100 text-green-800 <% } else { %> bg-red-100 text-red-800 <% } %> border border-solid <% if (type === 'success') { %> border-green-400 <% } else { %> border-red-400 <% } %> shadow"
+      >
+        <%= message %>
+      </div>
+    </div>
+    <% } %>
+
     <div
       class="login-container bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row"
     >
@@ -147,7 +157,7 @@
           Log In to SymbiEat
         </h1>
 
-        <!-- Error message container (initially hidden) -->
+        <!-- Error message container (from backend) -->
         <% if (typeof error !== 'undefined') { %>
         <div
           id="errorMessage"
@@ -181,11 +191,11 @@
           </div>
         </div>
 
-        <form id="registrationForm" action="/register" method="POST">
-          <% if (messages.error) { %>
-            <span class="text-red-500 text-sm block mb-4"><%= messages.error %></span>
-          <% } %>
-        
+        <form id="loginForm" action="/login" method="POST">
+          <% if(messages.error){%>
+          <span class="text-red-500 text-sm"> <%= messages.error%> </span>
+          <%}%>
+
           <div class="mb-5">
             <label class="block text-[#1D3557] font-semibold mt-4" for="email"
               >Email Address</label
@@ -252,6 +262,7 @@
 
           <button
             type="submit"
+            id="loginButton"
             class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
           >
             <span class="relative z-10 flex items-center justify-center">
@@ -264,7 +275,8 @@
             <span
               class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
             ></span>
-          </button></form>
+          </button>
+        </form>
 
         <div class="relative flex items-center my-6">
           <div class="flex-grow border-t border-gray-300"></div>
@@ -746,19 +758,5 @@
                 }
               `;
     document.head.appendChild(style);
-
-    // For testing purposes - simulate success or error
-    // Comment these out in production
-    function simulateSuccessLogin() {
-      showSuccessMessage();
-    }
-
-    function simulateErrorLogin() {
-      showFunErrorMessage();
-    }
-
-    // Uncomment one of these to test the animations
-    // setTimeout(simulateSuccessLogin, 1000); // Test success message
-    // setTimeout(simulateErrorLogin, 1000);   // Test error message
   </script>
 </section>
