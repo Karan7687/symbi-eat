@@ -59,6 +59,14 @@ function authController() {
             .json({ success: false, message: "Something went wrong!" });
         });
     },
+    logout(req, res, next) {
+      req.logout(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/login");
+      });
+    },
   };
 }
 

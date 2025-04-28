@@ -117,11 +117,15 @@
             >
 
             <% if(user){ %>
-            <a
-              href="/logout"
-              class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
-              >Logout</a
-            >
+            <form id="logout" action="/logout" method="POST">
+              <a
+                onclick="document.getElementById('logout').submit()"
+                href="#"
+                class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
+                >Logout</a
+              >
+            </form>
+
             <%} else {%>
             <a
               href="/register"
