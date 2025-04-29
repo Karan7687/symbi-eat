@@ -250,7 +250,12 @@
               </div>
     
               <!-- Confirm Button -->
-              <button
+               <% if (user) { %>
+        <div>
+                <form action="
+                "> 
+                <a href="/login">
+                <button
                 class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
               >
                 <span class="relative z-10 flex items-center justify-center">
@@ -265,6 +270,29 @@
                   class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
                 ></span>
               </button>
+            </a>
+            </form>
+          </div>
+          <%} else{%>
+            <a href="/login">
+           <button
+                class="w-full bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-3 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+              >
+                <span class="relative z-10 flex items-center justify-center">
+                  <span class="mr-2">🚀</span>
+                  Login to order !
+    
+                </span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                ></span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+                ></span>
+              </button>
+            </a>
+              <%}%>
+              
       <% } %>
     </div>
   </div>
