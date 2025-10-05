@@ -36,7 +36,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
-git add .github/workflows/ci.yml
-git commit -m "Add Node.js + Docker public CI workflow"
-git push origin main
+          tags: ghcr.io/karan7687/symbi-eat:latest
