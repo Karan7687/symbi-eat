@@ -21,8 +21,8 @@ WORKDIR /app
 # Copy only necessary files from builder
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist  # adjust if your build folder is different
-COPY --from=builder /app/server.js ./server.js  # adjust entry file if needed
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server.js ./server.js
 
 # Expose app port
 EXPOSE 3000
