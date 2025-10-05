@@ -11,49 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # 2. Setup Node.js 18
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3. Cache node_modules for faster builds
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - run: npm ci
+      - run: npm run production
 
-      # 4. Install dependencies
-      - name: Install dependencies
-        run: npm ci
-
-      # 5. Build production assets
-      - name: Build production assets
-        run: npm run production
-
-      # 6. Setup Docker Buildx
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 7. Login to Docker Hub
-      - name: Login to Docker Hub
+      # Login using GitHub token (no secrets needed)
+      - name: Login to GHCR
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
-      # 8. Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: karan7687/symbi-eat:latest
+          tags: ghcr.io/${{ github.repository }}:latest
+git add .github/workflows/ci.yml
+git commit -m "Add Node.js + Docker public CI workflow"
+git push origin main
