@@ -1,28 +1,31 @@
-# Stage 1: Build assets
+# Stage 1: Build stage
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
+# Copy all source files
 COPY . .
+
+# Build production assets
 RUN npm run production
 
-# Stage 2: Production image
+# Stage 2: Production stage
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy only production files
-COPY package*.json ./
-RUN npm ci --production
+# Copy only necessary files from builder
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist  # adjust if your build folder is different
+COPY --from=builder /app/server.js ./server.js  # adjust entry file if needed
 
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/server.js ./server.js
-COPY --from=builder /app/routes ./routes
-COPY --from=builder /app/resources ./resources
+# Expose app port
+EXPOSE 3000
 
-EXPOSE 3100
-
+# Start the application
 CMD ["node", "server.js"]
