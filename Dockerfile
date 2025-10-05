@@ -3,17 +3,13 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy all source files
 COPY . .
 
-# Build production assets
 RUN npm run production
 
-# Stage 2: Production stage
 FROM node:18-alpine
 
 WORKDIR /app
