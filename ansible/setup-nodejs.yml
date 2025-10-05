@@ -1,0 +1,55 @@
+---
+- name: Configure Node.js environment
+  hosts: app_servers
+  become: true
+
+  vars:
+    app_user: symbiuser
+    app_dir: /opt/symbi-eat
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - curl
+          - git
+          - build-essential
+        state: present
+        update_cache: yes
+
+    - name: Add NodeSource Node.js 18 repo
+      shell: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash -
+      args:
+        executable: /bin/bash
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Create app user
+      user:
+        name: "{{ app_user }}"
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Create project directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0755'
+
+    - name: Copy project files
+      copy:
+        src: ../
+        dest: "{{ app_dir }}"
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0755'
+
+    - name: Install Node.js dependencies
+      npm:
+        path: "{{ app_dir }}"
+        production: yes
