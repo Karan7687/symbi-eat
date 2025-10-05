@@ -1,11 +1,11 @@
-function orderController(){
+// function orderController(){
 
-    return {
+//     return {
 
-        store(req,res){
+//         store(req,res){
 
-        }
-    }
-}
+//         }
+//     }
+// }
 
-module.exports=orderController;
+// module.exports=orderController;
