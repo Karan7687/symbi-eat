@@ -3,40 +3,80 @@ const moment = require("moment");
 
 function orderController() {
   return {
-    store(req, res) {
-      const cart = req.session.cart;
+    // store: place the order, save total, clear session, render orders page with success overlay
+    async store(req, res) {
+      try {
+        const cart = req.session.cart;
 
-      if (!cart || !cart.items) {
-        req.flash("error", "Your cart is empty!");
+        if (!cart || !cart.items || Object.keys(cart.items).length === 0) {
+          req.flash("error", "Your cart is empty!");
+          return res.redirect("/cart");
+        }
+
+        // compute total (fallback if cart.total or cart.totalPrice is missing)
+        let total =
+          typeof cart.total === "number"
+            ? cart.total
+            : typeof cart.totalPrice === "number"
+            ? cart.totalPrice
+            : 0;
+
+        if (total === 0) {
+          for (const id in cart.items) {
+            const it = cart.items[id];
+            total += (it.item.price || 0) * (it.qty || 0);
+          }
+        }
+
+        const order = new Order({
+          customerId: req.user._id,
+          items: cart.items,
+          total: total, // saved in DB under 'total'
+        });
+
+        const saved = await order.save();
+
+        // clear cart
+        req.session.cart = null;
+
+        // fetch updated orders to show on orders page
+        const orders = await Order.find({ customerId: req.user._id }).sort({
+          createdAt: -1,
+        });
+
+        // render orders page with success overlay payload
+        return res.render("customers/orders", {
+          orders,
+          moment,
+          success: true,
+          orderId: saved._id,
+          total: total,
+          user: req.user,
+          session: req.session,
+        });
+      } catch (err) {
+        console.error("Order save error:", err);
+        req.flash("error", "Something went wrong!");
         return res.redirect("/cart");
       }
-
-      const order = new Order({
-        customerId: req.user._id,
-        items: cart.items,
-        total: cart.totalPrice, // <-- Add total here
-      });
-
-      order
-        .save()
-        .then((result) => {
-          req.flash("success", "Order Placed Successfully!");
-          // Optional: clear cart after order is placed
-          req.session.cart = null;
-          res.redirect("/");
-        })
-        .catch((err) => {
-          req.flash("error", "Something went wrong!");
-          return res.redirect("/cart");
-        });
     },
 
-    // /•	It Fetches the orders of current logged in user
+    // index: show orders page (regular view)
     async index(req, res) {
-      const orders = await Order.find({ customerId: req.user._id }, null, {
-        sort: { createdAt: -1 },
-      });
-      res.render("customers/orders", { orders: orders, moment: moment });
+      try {
+        const orders = await Order.find({ customerId: req.user._id }).sort({
+          createdAt: -1,
+        });
+        return res.render("customers/orders", {
+          orders,
+          moment,
+          user: req.user,
+          session: req.session,
+        });
+      } catch (err) {
+        console.error("Fetch orders error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
     },
   };
 }

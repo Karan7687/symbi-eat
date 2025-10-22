@@ -1,8 +1,66 @@
+<% if (typeof success !== 'undefined' && success) { %>
+<div
+  id="orderSuccessOverlay"
+  class="fixed inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-50 text-center text-white"
+>
+  <lottie-player
+    src="https://lottie.host/6c18e6df-3b84-4744-b252-cb6ab25a6821/2TtEidCChL.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    autoplay
+  ></lottie-player>
+
+  <h1 class="text-3xl font-bold mt-4 text-[#E8C547]" id="successText">
+    Order Placed Successfully!
+  </h1>
+  <p class="text-gray-300 mt-2 text-sm">₹<%= total %></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("orderSuccessOverlay");
+    const text = document.getElementById("successText");
+
+    // Animate text entrance
+    gsap.fromTo(
+      text,
+      { scale: 0.6, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.8, ease: "elastic.out(1,0.5)" }
+    );
+
+    // Confetti burst
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      }, i * 300);
+    }
+
+    // Fade out overlay after 3 seconds
+    setTimeout(() => {
+      gsap.to(overlay, {
+        opacity: 0,
+        duration: 1,
+        onComplete: () => overlay.remove(),
+      });
+    }, 3000);
+  });
+</script>
+<% } %>
+
 <section
   class="orders min-h-[calc(100vh-80px)] py-16 bg-gradient-to-b from-[#F8F9FA] to-white"
 >
   <div class="container mx-auto px-6">
-    <!-- Success Message -->
+    <!-- Success Message (Persistent Banner) -->
+    <% if (typeof success !== 'undefined' && success) { %>
     <div
       class="mb-8 p-6 bg-[#E8C547]/20 border-l-4 border-[#E8C547] rounded-lg shadow-md flex items-center gap-4"
     >
@@ -24,6 +82,7 @@
         Order placed successfully!
       </p>
     </div>
+    <% } %>
 
     <!-- Orders Table Card -->
     <div class="bg-white rounded-xl shadow-xl overflow-hidden">
@@ -62,20 +121,22 @@
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
-            <% if(orders.length) {%> <% orders.forEach((order )=>{ %>
-
+            <% if (orders && orders.length) { %> <% orders.forEach((order) => {
+            %>
             <tr class="hover:bg-[#457B9D]/5 transition-colors">
               <td
                 class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold"
               >
-                <a class="link hover:text-[#E8C547] transition-colors" href="/"
-                  ><%= order._id%></a
+                <a
+                  class="link hover:text-[#E8C547] transition-colors"
+                  href="/orders/<%= order._id %>"
+                  ><%= order._id %></a
                 >
               </td>
               <td
                 class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
               >
-                <%= order.total %>
+                ₹<%= order.total %>
               </td>
               <td
                 class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
@@ -85,15 +146,19 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
                   class="px-3 py-1 rounded-full text-sm font-semibold bg-[#E8C547]/20 text-[#1D3557] animate-pulse"
-                  >Delivered</span
+                  ><%= order.status %></span
                 >
               </td>
             </tr>
-
-            <% }) %> <% } else {%>
-
-            <p class="text-[#1D3557] font-semibold text-lg">No orders yet!</p>
-
+            <% }); %> <% } else { %>
+            <tr>
+              <td
+                colspan="4"
+                class="px-6 py-6 text-center text-[#1D3557] font-semibold text-lg"
+              >
+                No orders yet!
+              </td>
+            </tr>
             <% } %>
           </tbody>
         </table>
@@ -111,22 +176,18 @@
   </div>
 </section>
 
-<!-- Styles (Tailwind + extra tweaks) -->
 <style>
   .link {
     text-decoration: none;
     color: #1d3557;
     font-weight: 600;
   }
-
   .link:hover {
     color: #e8c547;
   }
-
   .animate-pulse {
     animation: pulse 2s infinite;
   }
-
   @keyframes pulse {
     0%,
     100% {
