@@ -1,11 +1,31 @@
-// function orderController(){
+const Order= require("../../../models/order")
+function orderController(){
 
-//     return {
+    return {
 
-//         store(req,res){
+        store(req,res){
 
-//         }
-//     }
-// }
+            // console.log(body)
+            //validate the request
 
-// module.exports=orderController;
+                const order=new Order({
+                    customerId:req.user._id,
+                    items:req.session.cart.items,
+
+                })
+
+                order.save().then(result=>{
+                    req.flash("Success", "Order Placed Successfully !")
+                    res.redirect("/")
+
+                }).catch(err=>{
+
+                    req.flash("error","Something went wrong !")
+
+                    return res.redirect("/cart");
+                })
+        }
+    };
+}
+
+module.exports=orderController;
