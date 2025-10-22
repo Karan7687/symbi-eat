@@ -33,7 +33,9 @@ function orderController() {
 
     // /•	It Fetches the orders of current logged in user
     async index(req, res) {
-      const orders = await Order.find({ customerId: req.user._id });
+      const orders = await Order.find({ customerId: req.user._id }, null, {
+        sort: { createdAt: -1 },
+      });
       res.render("customers/orders", { orders: orders, moment: moment });
     },
   };
