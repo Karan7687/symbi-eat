@@ -24,7 +24,10 @@ function initRoutes(app) {
 
   app.get("/cart", cartController().index);
   app.post("/update-cart", cartController().update);
+  
+  //Customer Routes
   app.post("/orders",orderController().store);  
+  app.get("/customer/orders",orderController().index);
 }
 
 // Export the function so it can be required in server.js

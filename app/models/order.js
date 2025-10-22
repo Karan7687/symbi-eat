@@ -1,23 +1,22 @@
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    customerId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        required: true
-
+    customerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    items:{
-        type:Object,
-        required:true
+    items: {
+      type: Object,
+      required: true,
     },
     // phone:{type:String, required:true},
     // address:{type:String, required:true},
-    paymentType:{type:String, default:"UPI"},
-    status:{type:String, default:"order_Placed"},
+    paymentType: { type: String, default: "UPI" },
+    status: { type: String, default: "order_Placed" },
+
     //linking myUSerCollection with myOrderCollection
   },
   {

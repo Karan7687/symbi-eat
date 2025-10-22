@@ -24,7 +24,20 @@ function orderController(){
 
                     return res.redirect("/cart");
                 })
+        },
+        async  index(req,res){
+
+                //fetch orders of logged in  used from DB
+                const orders= await Order.find({customerId:req.user._id});
+            // console.log(orders); 
+            // we get the orders, now render it on some customers/order.ejs page to see orders list
+            
+            res.render("customers/orders",{orders:orders})
+                
+
         }
+
+
     };
 }
 
