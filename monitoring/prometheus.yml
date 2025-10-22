@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'symbi-eat'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['host.docker.internal:3100']  # Node.js app running on port 3100

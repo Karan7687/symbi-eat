@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: symbi-eat-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: symbi-eat
+  template:
+    metadata:
+      labels:
+        app: symbi-eat
+    spec:
+      containers:
+      - name: symbi-eat
+        image: karan7687/symbi-eat:latest
+        ports:
+        - containerPort: 3000

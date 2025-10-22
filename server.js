@@ -9,8 +9,32 @@ const session = require("express-session");
 const flash = require("express-flash");
 const MongoDbStore = require("connect-mongo");
 const passport = require("passport");
+const client = require("prom-client"); // ✅ Prometheus client
 
 const app = express();
+
+// ==================== Prometheus Metrics ====================
+// Create a counter metric for HTTP requests
+const requestCounter = new client.Counter({
+  name: "http_requests_total",
+  help: "Total HTTP Requests",
+  labelNames: ["method", "route", "status"],
+});
+
+// Middleware to count requests
+app.use((req, res, next) => {
+  res.on("finish", () => {
+    requestCounter.labels(req.method, req.path, res.statusCode).inc();
+  });
+  next();
+});
+
+// Metrics endpoint
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+// ============================================================
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
