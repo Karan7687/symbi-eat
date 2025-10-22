@@ -1,4 +1,5 @@
 const Order = require("../../../models/order");
+const moment = require("moment");
 
 function orderController() {
   return {
@@ -30,9 +31,10 @@ function orderController() {
         });
     },
 
+    // /•	It Fetches the orders of current logged in user
     async index(req, res) {
       const orders = await Order.find({ customerId: req.user._id });
-      res.render("customers/orders", { orders: orders });
+      res.render("customers/orders", { orders: orders, moment: moment });
     },
   };
 }
