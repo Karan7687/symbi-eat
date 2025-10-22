@@ -1,44 +1,40 @@
-const Order= require("../../../models/order")
-function orderController(){
+const Order = require("../../../models/order");
 
-    return {
+function orderController() {
+  return {
+    store(req, res) {
+      const cart = req.session.cart;
 
-        store(req,res){
+      if (!cart || !cart.items) {
+        req.flash("error", "Your cart is empty!");
+        return res.redirect("/cart");
+      }
 
-            // console.log(body)
-            //validate the request
+      const order = new Order({
+        customerId: req.user._id,
+        items: cart.items,
+        total: cart.totalPrice, // <-- Add total here
+      });
 
-                const order=new Order({
-                    customerId:req.user._id,
-                    items:req.session.cart.items,
+      order
+        .save()
+        .then((result) => {
+          req.flash("success", "Order Placed Successfully!");
+          // Optional: clear cart after order is placed
+          req.session.cart = null;
+          res.redirect("/");
+        })
+        .catch((err) => {
+          req.flash("error", "Something went wrong!");
+          return res.redirect("/cart");
+        });
+    },
 
-                })
-
-                order.save().then(result=>{
-                    req.flash("Success", "Order Placed Successfully !")
-                    res.redirect("/")
-
-                }).catch(err=>{
-
-                    req.flash("error","Something went wrong !")
-
-                    return res.redirect("/cart");
-                })
-        },
-        async  index(req,res){
-
-                //fetch orders of logged in  used from DB
-                const orders= await Order.find({customerId:req.user._id});
-            // console.log(orders); 
-            // we get the orders, now render it on some customers/order.ejs page to see orders list
-            
-            res.render("customers/orders",{orders:orders})
-                
-
-        }
-
-
-    };
+    async index(req, res) {
+      const orders = await Order.find({ customerId: req.user._id });
+      res.render("customers/orders", { orders: orders });
+    },
+  };
 }
 
-module.exports=orderController;
+module.exports = orderController;

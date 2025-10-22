@@ -1,62 +1,111 @@
-<section class="orders min-h-[calc(100vh-80px)] py-16 bg-gradient-to-b from-[#F8F9FA] to-white">
+<section
+  class="orders min-h-[calc(100vh-80px)] py-16 bg-gradient-to-b from-[#F8F9FA] to-white"
+>
   <div class="container mx-auto px-6">
     <!-- Success Message -->
-    <div class="mb-8 p-6 bg-[#E8C547]/20 border-l-4 border-[#E8C547] rounded-lg shadow-md flex items-center gap-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#1D3557]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    <div
+      class="mb-8 p-6 bg-[#E8C547]/20 border-l-4 border-[#E8C547] rounded-lg shadow-md flex items-center gap-4"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-[#1D3557]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 13l4 4L19 7"
+        />
       </svg>
-      <p class="text-[#1D3557] font-semibold text-lg">Order placed successfully!</p>
+      <p class="text-[#1D3557] font-semibold text-lg">
+        Order placed successfully!
+      </p>
     </div>
 
     <!-- Orders Table Card -->
     <div class="bg-white rounded-xl shadow-xl overflow-hidden">
       <div class="p-6 border-b border-gray-100 bg-[#457B9D]/10">
         <h2 class="text-2xl font-bold text-[#1D3557]">My Orders</h2>
-        <p class="text-gray-600 mt-1">Track all your past and current orders here.</p>
+        <p class="text-gray-600 mt-1">
+          Track all your past and current orders here.
+        </p>
       </div>
 
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-[#1D3557]">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Order ID</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Total</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Time</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Status</th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Order ID
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Total
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Time
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Status
+              </th>
             </tr>
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
-            <% if(orders.length) {%>
+            <% if(orders.length) {%> <% orders.forEach((order )=>{ %>
 
-                <% orders.forEach((order )=>{ %>
-
-                    <tr class="hover:bg-[#457B9D]/5 transition-colors">
-              <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold">
-                <a class="link hover:text-[#E8C547] transition-colors" href="/"><%= order._id%></a>
+            <tr class="hover:bg-[#457B9D]/5 transition-colors">
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold"
+              >
+                <a class="link hover:text-[#E8C547] transition-colors" href="/"
+                  ><%= order._id%></a
+                >
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium">500</td>
-              <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"><%= order.createdAt    %></td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
+              >
+                <%= order.total%>
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
+              >
+                <%= order.createdAt %>
+              </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-3 py-1 rounded-full text-sm font-semibold bg-[#E8C547]/20 text-[#1D3557] animate-pulse">Delivered</span>
+                <span
+                  class="px-3 py-1 rounded-full text-sm font-semibold bg-[#E8C547]/20 text-[#1D3557] animate-pulse"
+                  >Delivered</span
+                >
               </td>
             </tr>
 
-               <% }) %>
-            
-           
-            <% } else {%>
-                
-      <p class="text-[#1D3557] font-semibold text-lg">No orders yet!</p>
+            <% }) %> <% } else {%>
 
-                <% } %>
+            <p class="text-[#1D3557] font-semibold text-lg">No orders yet!</p>
+
+            <% } %>
           </tbody>
         </table>
       </div>
 
       <!-- Pagination / Controls -->
       <div class="p-4 flex justify-end bg-[#F8F9FA]">
-        <button class="px-4 py-2 rounded-lg bg-[#E8C547] text-[#1D3557] font-bold hover:bg-[#D4B33F] transition">Load More</button>
+        <button
+          class="px-4 py-2 rounded-lg bg-[#E8C547] text-[#1D3557] font-bold hover:bg-[#D4B33F] transition"
+        >
+          Load More
+        </button>
       </div>
     </div>
   </div>
@@ -66,12 +115,12 @@
 <style>
   .link {
     text-decoration: none;
-    color: #1D3557;
+    color: #1d3557;
     font-weight: 600;
   }
 
   .link:hover {
-    color: #E8C547;
+    color: #e8c547;
   }
 
   .animate-pulse {
@@ -79,7 +128,14 @@
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.05); }
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
   }
 </style>

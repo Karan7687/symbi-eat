@@ -16,6 +16,10 @@ const orderSchema = new Schema(
     // address:{type:String, required:true},
     paymentType: { type: String, default: "UPI" },
     status: { type: String, default: "order_Placed" },
+    total: {
+      type: Number,
+      required: true,
+    },
 
     //linking myUSerCollection with myOrderCollection
   },
