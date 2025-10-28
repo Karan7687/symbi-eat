@@ -1,39 +1,159 @@
-<section class="orders">
-  <div class="header">
-    <h2>All Orders</h2>
-    <p>Total Orders: <%= orders.length %></p>
-  </div>
+<section
+  class="orders min-h-[calc(100vh-80px)] py-16 bg-gradient-to-b from-[#F8F9FA] to-white"
+>
+  <div class="container mx-auto px-6">
+    <!-- Header -->
+    <div
+      class="mb-8 p-6 bg-[#1D3557] text-white rounded-xl shadow-lg flex items-center justify-between"
+    >
+      <div>
+        <h2 class="text-3xl font-bold text-[#E8C547]">All Orders</h2>
+        <p class="text-gray-200 mt-1">
+          Manage and update live canteen orders below.
+        </p>
+      </div>
+      <span
+        class="bg-[#E8C547]/20 text-[#E8C547] font-semibold px-4 py-2 rounded-full text-sm"
+        >Total Orders: <%= orders.length %></span
+      >
+    </div>
 
-  <% if (orders.length === 0) { %>
-  <p class="no-orders">No orders found.</p>
-  <% } else { %>
-  <table>
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Customer</th>
-        <th>Status</th>
-        <th>Time</th>
-      </tr>
-    </thead>
-    <tbody id="orderTableBody">
-      <% orders.forEach((order) => { %>
-      <tr>
-        <td><%= order._id %></td>
-        <td>
-          <%= order.customerId && order.customerId.name ? order.customerId.name
-          : 'Unknown' %>
-        </td>
-        <td><%= order.status %></td>
-        <td>
-          <%= order.createdAt ? new Date(order.createdAt).toLocaleString() :
-          'N/A' %>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
-  <% } %>
+    <!-- Orders Table -->
+    <div
+      class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100"
+    >
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-[#1D3557]">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Order ID
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Customer
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Status
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
+              >
+                Time
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% if (orders && orders.length) { %>
+            <% orders.forEach((order) => { %>
+            <tr class="hover:bg-[#457B9D]/5 transition-colors">
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold"
+              >
+                <%= order._id %>
+              </td>
+
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
+              >
+                <%= order.customerId && order.customerId.name
+                  ? order.customerId.name
+                  : "Unknown" %>
+              </td>
+
+              <!-- Status Dropdown -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="relative inline-block w-40">
+                  <select
+                    class="status-select w-full px-3 py-2 rounded-full text-sm font-semibold capitalize border transition-all duration-200 cursor-pointer focus:outline-none"
+                    data-id="<%= order._id %>"
+                  >
+                    <option value="placed" <%= order.status === 'placed' ? 'selected' : '' %>>
+                      Placed
+                    </option>
+                    <option value="confirmed" <%= order.status === 'confirmed' ? 'selected' : '' %>>
+                      Confirmed
+                    </option>
+                    <option value="prepared" <%= order.status === 'prepared' ? 'selected' : '' %>>
+                      Prepared
+                    </option>
+                    
+                    <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>
+                      Completed
+                    </option>
+                  </select>
+                </div>
+              </td>
+
+              <td
+                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
+              >
+                <%= order.createdAt
+                  ? new Date(order.createdAt).toLocaleTimeString()
+                  : "N/A" %>
+              </td>
+            </tr>
+            <% }); %>
+            <% } else { %>
+            <tr>
+              <td
+                colspan="4"
+                class="px-6 py-6 text-center text-[#1D3557] font-semibold text-lg"
+              >
+                No orders yet!
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script src="/resources-js/app.js"></script>
+
+<style>
+  /* Base Select Styling */
+  .status-select {
+    appearance: none;
+    background-position: right 0.8rem center;
+    background-repeat: no-repeat;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  /* Color Badges for each status */
+  .status-select option[value="placed"] {
+    background-color: #fff7e6;
+    color: #b7791f;
+  }
+  .status-select option[value="confirmed"] {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+  }
+  .status-select option[value="prepared"] {
+    background-color: #faf5ff;
+    color: #6b46c1;
+  }
+  .status-select option[value="delivered"] {
+    background-color: #edf2f7;
+    color: #4a5568;
+  }
+  .status-select option[value="completed"] {
+    background-color: #f0fff4;
+    color: #2f855a;
+  }
+
+  /* Dropdown Animation */
+  .status-select:focus {
+    box-shadow: 0 0 0 3px rgba(232, 197, 71, 0.3);
+    border-color: #e8c547;
+  }
+</style>
