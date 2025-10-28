@@ -4,6 +4,7 @@ const authController = require("../app/http/controllers/authController");
 const cartController = require("../app/http/controllers/customers/cartController");
 const orderController = require("../app/http/controllers/customers/orderController");
 const homeController = require("../app/http/controllers/homeController");
+const adminOrderController = require("../app/http/controllers/admin/orderController");
 const guest = require("../app/http/middlewares/guest");
 const auth = require("../app/http/middlewares/auth");
 
@@ -27,8 +28,19 @@ function initRoutes(app) {
   app.post("/update-cart", cartController().update);
 
   //Customer Routes
-  app.post("/orders",auth, orderController().store);
-  app.get("/customer/orders",auth, orderController().index);
+  app.post("/orders", auth, orderController().store);
+  app.get("/customer/orders", auth, orderController().index);
+
+  //Admin Routes
+  app.get(
+    "/admin/orders",
+    auth,
+    (req, res, next) => {
+      console.log("🟡 Route hit: /admin/orders");
+      next();
+    },
+    adminOrderController().index
+  );
 }
 
 // Export the function so it can be required in server.js

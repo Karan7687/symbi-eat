@@ -42,6 +42,9 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/css", express.static(path.join(__dirname, "resources/css")));
 app.use("/resources-js", express.static(path.join(__dirname, "resources/js")));
+console.log("🔍 Serving static files from:", path.join(__dirname, "public"));
+console.log("🔍 Serving JS from:", path.join(__dirname, "resources/js"));
+console.log("🔍 Serving CSS from:", path.join(__dirname, "resources/css"));
 
 app.use(expressLayout);
 
@@ -90,14 +93,16 @@ app.use((req, res, next) => {
 // Import routes
 const initRoutes = require("./routes/web");
 initRoutes(app);
+console.log("✅ Routes initialized");
 
 // Default route
 app.get("/", (req, res) => {
+  console.log("🟢 GET / hit");
   res.render("home");
 });
 
 // Start server
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

@@ -1,0 +1,39 @@
+<section class="orders">
+  <div class="header">
+    <h2>All Orders</h2>
+    <p>Total Orders: <%= orders.length %></p>
+  </div>
+
+  <% if (orders.length === 0) { %>
+  <p class="no-orders">No orders found.</p>
+  <% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody id="orderTableBody">
+      <% orders.forEach((order) => { %>
+      <tr>
+        <td><%= order._id %></td>
+        <td>
+          <%= order.customerId && order.customerId.name ? order.customerId.name
+          : 'Unknown' %>
+        </td>
+        <td><%= order.status %></td>
+        <td>
+          <%= order.createdAt ? new Date(order.createdAt).toLocaleString() :
+          'N/A' %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</section>
+
+<script src="/resources-js/app.js"></script>

@@ -1,3 +1,5 @@
+console.log("✅ app.js loaded and running");
+import { initAdmin } from "./admin";
 let addToCart = document.querySelectorAll(".add-to-cart"); //gives array of btns
 let cartCounter = document.querySelector(".cartCounter"); //get span wth id cartCounter
 
@@ -16,3 +18,5 @@ addToCart.forEach((btn) => {
     // console.log(foodItem);
   });
 });
+
+initAdmin();
