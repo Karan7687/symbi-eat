@@ -26,89 +26,66 @@
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-[#1D3557]">
             <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
-              >
-                Order ID
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
-              >
-                Customer
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider"
-              >
-                Time
-              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Token</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Order ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Customer</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-[#E8C547] uppercase tracking-wider">Time</th>
             </tr>
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
             <% if (orders && orders.length) { %>
-            <% orders.forEach((order) => { %>
-            <tr class="hover:bg-[#457B9D]/5 transition-colors">
-              <td
-                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold"
-              >
-                <%= order._id %>
-              </td>
+              <% 
+                // Reverse the order array to show latest orders first
+                const reversedOrders = [...orders].reverse();
+                reversedOrders.forEach((order, index) => { 
+                  const tokenNumber = reversedOrders.length - index; 
+              %>
+                <tr class="hover:bg-[#457B9D]/5 transition-colors">
+                  
+                  <!-- Token Column (Descending Order) -->
+                  <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold">
+                    <%= tokenNumber %>
+                  </td>
 
-              <td
-                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
-              >
-                <%= order.customerId && order.customerId.name
-                  ? order.customerId.name
-                  : "Unknown" %>
-              </td>
+                  <!-- Order ID -->
+                  <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold">
+                    <%= order._id %>
+                  </td>
 
-              <!-- Status Dropdown -->
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="relative inline-block w-40">
-                  <select
-                    class="status-select w-full px-3 py-2 rounded-full text-sm font-semibold capitalize border transition-all duration-200 cursor-pointer focus:outline-none"
-                    data-id="<%= order._id %>"
-                  >
-                    <option value="placed" <%= order.status === 'placed' ? 'selected' : '' %>>
-                      Placed
-                    </option>
-                    <option value="confirmed" <%= order.status === 'confirmed' ? 'selected' : '' %>>
-                      Confirmed
-                    </option>
-                    <option value="prepared" <%= order.status === 'prepared' ? 'selected' : '' %>>
-                      Prepared
-                    </option>
-                    
-                    <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>
-                      Completed
-                    </option>
-                  </select>
-                </div>
-              </td>
+                  <!-- Customer -->
+                  <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium">
+                    <%= order.customerId && order.customerId.name ? order.customerId.name : "Unknown" %>
+                  </td>
 
-              <td
-                class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium"
-              >
-                <%= order.createdAt
-                  ? new Date(order.createdAt).toLocaleTimeString()
-                  : "N/A" %>
-              </td>
-            </tr>
-            <% }); %>
+                  <!-- Status Dropdown -->
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="relative inline-block w-40">
+                      <select
+                        class="status-select w-full px-3 py-2 rounded-full text-sm font-semibold capitalize border transition-all duration-200 cursor-pointer focus:outline-none"
+                        data-id="<%= order._id %>"
+                      >
+                        <option value="placed" <%= order.status === 'placed' ? 'selected' : '' %>>Placed</option>
+                        <option value="confirmed" <%= order.status === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+                        <option value="prepared" <%= order.status === 'prepared' ? 'selected' : '' %>>Prepared</option>
+                        <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <!-- Time -->
+                  <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-medium">
+                    <%= order.createdAt ? new Date(order.createdAt).toLocaleTimeString() : "N/A" %>
+                  </td>
+                </tr>
+              <% }); %>
             <% } else { %>
-            <tr>
-              <td
-                colspan="4"
-                class="px-6 py-6 text-center text-[#1D3557] font-semibold text-lg"
-              >
-                No orders yet!
-              </td>
-            </tr>
+              <tr>
+                <td colspan="5" class="px-6 py-6 text-center text-[#1D3557] font-semibold text-lg">
+                  No orders yet!
+                </td>
+              </tr>
             <% } %>
           </tbody>
         </table>
@@ -141,10 +118,6 @@
   .status-select option[value="prepared"] {
     background-color: #faf5ff;
     color: #6b46c1;
-  }
-  .status-select option[value="delivered"] {
-    background-color: #edf2f7;
-    color: #4a5568;
   }
   .status-select option[value="completed"] {
     background-color: #f0fff4;
