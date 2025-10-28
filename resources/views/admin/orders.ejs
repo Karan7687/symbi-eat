@@ -37,14 +37,15 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <% if (orders && orders.length) { %>
               <% 
-                // Reverse the order array to show latest orders first
-                const reversedOrders = [...orders].reverse();
-                reversedOrders.forEach((order, index) => { 
-                  const tokenNumber = reversedOrders.length - index; 
+                // Sort so new orders are on top
+                const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                sortedOrders.forEach((order, index) => { 
+                  // Token 1 for oldest, highest for newest (descending display)
+                  const tokenNumber = sortedOrders.length - index;
               %>
                 <tr class="hover:bg-[#457B9D]/5 transition-colors">
                   
-                  <!-- Token Column (Descending Order) -->
+                  <!-- Token Column -->
                   <td class="px-6 py-4 whitespace-nowrap text-[#1D3557] font-semibold">
                     <%= tokenNumber %>
                   </td>
