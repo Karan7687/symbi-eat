@@ -37,36 +37,46 @@ Built with scalability, clean UI, and real‑world usability in mind.
 * 🧾 Centralized order history
 
 ---
-
 ## 🖼️ Screenshots
 
-### Landing Page
+### 🏠 Landing Page
+Modern hero section with clear call-to-action and clean navigation.
 
-* Modern hero section with call‑to‑action
-* Clean navigation for Menu, Offers, Register & Login
-
-### Authentication
-
-* User‑friendly registration form
-* Input validation & password strength indicator
-
-### Menu & Ordering
-
-* Category‑based food listing
-* Popular tags & pricing
-* Add‑to‑cart functionality
-
-### Order Confirmation
-
-* Order success animation
-* Total bill display
-
-### Admin Dashboard
-
-* Live list of all orders
-* Token number, order ID, customer name, status & time
+![Landing Page](public/img/Screenshots/Home.png)
 
 ---
+
+### 🔐 User Registration
+User-friendly registration form with validation and password strength indicator.
+
+![Register Page](public/img/Screenshots/register.png)
+
+---
+
+### 🍕 Sucessful Registration Celebration
+A smooth and secure onboarding experience with real-time input validation.
+
+
+![Menu Page](public/img/Screenshots/image.png)
+
+### 🍕 Menu & Ordering
+Category-based menu with popular tags, pricing, and add-to-cart actions.
+
+![Menu Page](public/img/Screenshots/Menu.png)
+
+---
+
+### 🎉 Order Confirmation
+Animated order success screen with total bill details.
+
+![Order Success](public/img/Screenshots/sucess.png)
+
+---
+
+### 🧑‍🍳 Admin Dashboard
+Live admin panel displaying all orders with token number, customer, status, and time.
+
+![Admin Dashboard](public/img/Screenshots/admin.png)
 
 ## 🛠️ Tech Stack
 
