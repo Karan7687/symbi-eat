@@ -140,7 +140,7 @@ College canteens face two major problems:
 
 ## 👨‍💻 Author
 
-**Karan Laxman Kamble**
+**Karan Kamble**
 B.Tech – Computer Science & Engineering
 Symbiosis Institute of Technology, Pune
 
