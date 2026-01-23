@@ -145,9 +145,11 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
-                  class="px-3 py-1 rounded-full text-sm font-semibold bg-[#E8C547]/20 text-[#1D3557] animate-pulse"
-                  ><%= order.status %></span
+                  class="order-status px-3 py-1 rounded-full text-sm font-semibold capitalize"
+                  data-order-id="<%= order._id %>"
                 >
+                  <%= order.status %>
+                </span>
               </td>
             </tr>
             <% }); %> <% } else { %>
@@ -185,6 +187,25 @@
   .link:hover {
     color: #e8c547;
   }
+  
+  /* Status color classes */
+  .order-status.placed {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  .order-status.confirmed {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+  .order-status.prepared {
+    background-color: #e9d5ff;
+    color: #6b21a8;
+  }
+  .order-status.completed {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
   .animate-pulse {
     animation: pulse 2s infinite;
   }
@@ -199,4 +220,156 @@
       transform: scale(1.05);
     }
   }
+  
+  /* Real-time update notification */
+  .status-update-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+  }
+  
+  .status-update-notification.show {
+    transform: translateX(0);
+  }
 </style>
+
+<!-- Current user data for Socket.IO -->
+<script id="current-user" type="application/json">
+  <%= JSON.stringify({ id: user._id, name: user.name, role: 'customer' }) %>
+</script>
+
+<!-- Socket.IO client -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+class CustomerOrderTracker {
+  constructor() {
+    this.socket = null;
+    this.currentUser = null;
+    this.init();
+  }
+
+  init() {
+    // Initialize Socket.IO connection
+    this.socket = io();
+    
+    // Get current user info
+    this.currentUser = JSON.parse(document.getElementById('current-user').textContent);
+    
+    if (this.currentUser) {
+      // Join user-specific room
+      this.socket.emit('join-room', {
+        userId: this.currentUser.id,
+        role: this.currentUser.role
+      });
+      
+      // Set up event listeners
+      this.setupEventListeners();
+    }
+  }
+
+  setupEventListeners() {
+    // Listen for order status updates
+    this.socket.on('order-status-updated', (data) => {
+      this.handleOrderStatusUpdate(data);
+    });
+    
+    // Connection status
+    this.socket.on('connect', () => {
+      console.log('🔌 Connected to real-time server');
+      this.showNotification('Connected to real-time updates', 'success');
+    });
+    
+    this.socket.on('disconnect', () => {
+      console.log('🔌 Disconnected from real-time server');
+      this.showNotification('Connection lost', 'warning');
+    });
+  }
+
+  handleOrderStatusUpdate(data) {
+    const { orderId, status, orderNumber } = data;
+    
+    // Update order status in UI
+    this.updateOrderStatusUI(orderId, status);
+    
+    // Show notification
+    const statusMessages = {
+      'placed': 'Order placed - Waiting for confirmation',
+      'confirmed': 'Order confirmed - Starting preparation',
+      'prepared': 'Order is being prepared',
+      'completed': 'Order completed successfully',
+      'cancelled': 'Order has been cancelled'
+    };
+    
+    const message = statusMessages[status] || `Order status updated to: ${status}`;
+    this.showNotification(`Order #${orderNumber}: ${message}`, 'info');
+  }
+
+  updateOrderStatusUI(orderId, status) {
+    // Find and update status badge
+    const statusBadge = document.querySelector(`[data-order-id="${orderId}"]`);
+    if (statusBadge) {
+      // Remove all status classes
+      statusBadge.className = 'order-status px-3 py-1 rounded-full text-sm font-semibold capitalize';
+      
+      // Add new status class
+      statusBadge.classList.add(status);
+      statusBadge.textContent = status;
+      
+      // Add pulse animation for update
+      statusBadge.classList.add('animate-pulse');
+      setTimeout(() => {
+        statusBadge.classList.remove('animate-pulse');
+      }, 2000);
+    }
+  }
+
+  showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'status-update-notification';
+    notification.innerHTML = `
+      <div class="flex items-center">
+        <div class="flex-1">
+          <div class="font-semibold">Order Update</div>
+          <div class="text-sm opacity-90">${message}</div>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.parentElement.removeChild(notification);
+        }
+      }, 300);
+    }, 5000);
+  }
+}
+
+// Initialize order tracker when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  new CustomerOrderTracker();
+});
+</script>

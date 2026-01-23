@@ -4,12 +4,45 @@ const passport = require("passport");
 
 function authController() {
   const _getRedirectUrl = (req) => {
-    return req.user.role === "admin" ? "/admin/orders" : "customer/orders";
+    if (req.user.role === "admin") {
+      return "/admin/dashboard";
+    } else if (req.user.role === "customer") {
+      return "/menu"; // Send users to the menu page
+    } else {
+      return "/"; // fallback to home
+    }
   };
+  
+  // Store previous user info to allow switching back
+  const _storePreviousUser = (req, currentUser) => {
+    if (!req.session.previousUsers) {
+      req.session.previousUsers = [];
+    }
+    
+    // Remove if already exists
+    req.session.previousUsers = req.session.previousUsers.filter(user => user.id !== currentUser.id);
+    
+    // Add current user to previous users
+    req.session.previousUsers.push({
+      id: currentUser.id,
+      email: currentUser.email,
+      name: currentUser.name,
+      role: currentUser.role
+    });
+    
+    // Keep only last 3 users
+    if (req.session.previousUsers.length > 3) {
+      req.session.previousUsers = req.session.previousUsers.slice(-3);
+    }
+  };
+  
   return {
     login(req, res) {
-      res.render("auth/login");
+      // Show available users to switch between
+      const previousUsers = req.session.previousUsers || [];
+      res.render("auth/login", { previousUsers });
     },
+    
     postLogin(req, res, next) {
       passport.authenticate("local", (err, user, info) => {
         if (err) {
@@ -20,6 +53,12 @@ function authController() {
           req.flash("error", info.message);
           return res.redirect("/login");
         }
+        
+        // Store current user before switching (if logged in)
+        if (req.isAuthenticated()) {
+          _storePreviousUser(req, req.user);
+        }
+        
         req.login(user, (err) => {
           if (err) {
             req.flash("error", info.message);
@@ -29,6 +68,43 @@ function authController() {
           return res.redirect(_getRedirectUrl(req));
         });
       })(req, res, next);
+    },
+    
+    // Switch to a previous user
+    switchUser(req, res) {
+      const userId = req.params.userId;
+      const previousUsers = req.session.previousUsers || [];
+      const targetUser = previousUsers.find(user => user.id === userId);
+      
+      if (!targetUser) {
+        req.flash("error", "User not found");
+        return res.redirect("/login");
+      }
+      
+      // Find full user object from database
+      User.findById(userId).then(user => {
+        if (!user) {
+          req.flash("error", "User not found");
+          return res.redirect("/login");
+        }
+        
+        // Store current user before switching
+        if (req.isAuthenticated()) {
+          _storePreviousUser(req, req.user);
+        }
+        
+        req.login(user, (err) => {
+          if (err) {
+            req.flash("error", "Failed to switch user");
+            return res.redirect("/login");
+          }
+          
+          return res.redirect(_getRedirectUrl(req));
+        });
+      }).catch(err => {
+        req.flash("error", "Failed to switch user");
+        res.redirect("/login");
+      });
     },
     register(req, res) {
       res.render("auth/register");
@@ -69,6 +145,8 @@ function authController() {
         if (err) {
           return next(err);
         }
+        
+        // Single session - just logout the current user
         res.redirect("/login");
       });
     },

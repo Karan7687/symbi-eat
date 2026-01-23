@@ -310,6 +310,31 @@
           </p>
         </div>
 
+        <% if (typeof previousUsers !== 'undefined' && previousUsers.length > 0) { %>
+        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Quick Switch:</p>
+          <div class="space-y-2">
+            <% previousUsers.forEach(function(user) { %>
+            <a href="/switch-user/<%= user.id %>" 
+               class="flex items-center justify-between p-2 bg-white rounded border hover:bg-gray-50 transition-colors">
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-<%= user.role === 'admin' ? '[#E8C547]' : '[#1D3557]' %> text-white rounded-full flex items-center justify-center text-xs font-bold mr-3">
+                  <%= user.name.charAt(0).toUpperCase() %>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-900"><%= user.name %></p>
+                  <p class="text-xs text-gray-500"><%= user.role %> - <%= user.email %></p>
+                </div>
+              </div>
+              <span class="text-xs bg-<%= user.role === 'admin' ? 'yellow' : 'blue' %>-100 text-<%= user.role === 'admin' ? 'yellow' : 'blue' %>-800 px-2 py-1 rounded">
+                <%= user.role %>
+              </span>
+            </a>
+            <% }); %>
+          </div>
+        </div>
+        <% } %>
+
         <p class="text-center text-xs text-gray-500 mt-4">
           Fun fact: 9 out of 10 students log in faster when they're hungry.
         </p>

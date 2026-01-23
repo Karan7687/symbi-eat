@@ -55,11 +55,17 @@ export default function initAdmin() {
         console.log(`⚙️ Updating order ${orderId} to ${newStatus}...`);
 
         try {
-          await axios.post("/admin/order/status", {
+          const response = await axios.post("/admin/order/status", {
             orderId,
             status: newStatus,
           });
-          console.log("✅ Status updated successfully!");
+          
+          if (response.data.success) {
+            console.log("✅ Status updated successfully!");
+            console.log("📡 Real-time update broadcasted by server");
+          } else {
+            console.error("❌ Failed to update status:", response.data.error);
+          }
         } catch (err) {
           console.error("❌ Failed to update status:", err);
         }

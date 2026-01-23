@@ -1,0 +1,76 @@
+<!-- Cart Modal -->
+<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+  <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[80vh] overflow-hidden">
+    <div class="flex items-center justify-between p-4 border-b">
+      <h3 class="text-xl font-bold text-[#1D3557]">Your Cart</h3>
+      <button onclick="closeCartModal()" class="text-gray-500 hover:text-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div id="cart-items" class="max-h-[60vh] overflow-y-auto">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+  </div>
+</div>
+
+<!-- Floating Cart Button -->
+<div class="fixed bottom-6 right-6 z-40">
+  <button onclick="openCartModal()" 
+          class="bg-[#E8C547] text-[#1D3557] p-4 rounded-full shadow-lg hover:bg-[#D4B33F] transition-all duration-300 transform hover:scale-110 relative">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+  </button>
+</div>
+
+<style>
+  #cart-modal {
+    backdrop-filter: blur(4px);
+  }
+  
+  .cart-item {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .cart-item:hover {
+    transform: translateX(4px);
+  }
+  
+  /* Cart button animation */
+  .fixed.bottom-6.right-6 button:hover {
+    box-shadow: 0 10px 25px rgba(232, 197, 71, 0.3);
+  }
+  
+  /* Cart count badge animation */
+  #cart-count {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+  }
+</style>
+
+<script src="/js/cart.js"></script>

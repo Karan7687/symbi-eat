@@ -8,8 +8,22 @@ function init(passport) {
       { usernameField: "email" },
       async (email, password, done) => {
         try {
-          // Check if user with the given email exists
-          const user = await User.findOne({ email: email });
+          let user;
+
+          // Check if login is for admin (username: admin, password: admin@123)
+          if (email === "admin" && password === "admin@123") {
+            // Look for admin user in database
+            user = await User.findOne({ role: "admin" });
+            
+            if (!user) {
+              return done(null, false, { message: "Admin account not found. Please run seed script." });
+            }
+            
+            return done(null, user, { message: "Logged in successfully as admin" });
+          }
+
+          // Regular user authentication with email
+          user = await User.findOne({ email: email });
 
           if (!user) {
             return done(null, false, { message: "No user with this email" });

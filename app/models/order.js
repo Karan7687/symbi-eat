@@ -12,16 +12,47 @@ const orderSchema = new Schema(
       type: Object,
       required: true,
     },
-    // phone:{type:String, required:true},
-    // address:{type:String, required:true},
     paymentType: { type: String, default: "UPI" },
-    status: { type: String, default: "order_Placed" },
+    status: { 
+      type: String, 
+      enum: ['pending', 'confirmed', 'preparing', 'ready', 'completed', 'cancelled'],
+      default: 'pending' 
+    },
     total: {
       type: Number,
       required: true,
     },
-
-    //linking myUSerCollection with myOrderCollection
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    estimatedDeliveryTime: {
+      type: Date
+    },
+    actualDeliveryTime: {
+      type: Date
+    },
+    deliveryAddress: {
+      type: String,
+      default: 'Campus Delivery'
+    },
+    phone: {
+      type: String,
+      required: true
+    },
+    specialInstructions: {
+      type: String,
+      default: ''
+    },
+    // Tracking information
+    tracking: {
+      orderPlaced: { type: Date, default: Date.now },
+      orderConfirmed: { type: Date },
+      preparingStarted: { type: Date },
+      readyForPickup: { type: Date },
+      delivered: { type: Date }
+    }
   },
   {
     timestamps: true,

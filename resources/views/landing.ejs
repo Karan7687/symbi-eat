@@ -1,0 +1,341 @@
+<section class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white relative overflow-hidden">
+  <!-- Subtle animated background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+    <div class="food-particle" style="--delay: 0s; --size: 30px; --top: 15%; --left: 10%;">🍕</div>
+    <div class="food-particle" style="--delay: 2s; --size: 25px; --top: 25%; --left: 85%;">🍔</div>
+    <div class="food-particle" style="--delay: 4s; --size: 28px; --top: 65%; --left: 5%;">🍟</div>
+    <div class="food-particle" style="--delay: 6s; --size: 32px; --top: 80%; --left: 90%;">🌮</div>
+    <div class="food-particle" style="--delay: 8s; --size: 22px; --top: 40%; --left: 75%;">🍦</div>
+  </div>
+
+  <div class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 relative z-10">
+    <!-- Text with enhanced animations -->
+    <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl fade-in-up">
+      <div class="inline-block bg-[#457B9D]/10 px-4 py-1 rounded-full mb-2">
+        <h6 class="text-lg text-[#457B9D] italic font-light flex items-center">
+          <span class="pulse-dot mr-2"></span>
+          <em>Welcome to Symbi-Eat!</em>
+        </h6>
+      </div>
+      
+      <h1 id="bounceText" class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557] text-gradient">
+        Delicious Food Awaits
+      </h1>
+      
+      <p class="mt-4 text-gray-600 text-lg max-w-md leading-relaxed">
+        Experience culinary excellence with our premium dishes crafted for your delight. Fresh ingredients, amazing taste.
+      </p>
+      
+      <div class="flex flex-wrap gap-4 items-center mt-8">
+        <a href="/login" class="bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md flex items-center">
+          <span>Login</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+        </a>
+        
+        <a href="/register" class="bg-[#112240] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#1a2e50] transition duration-300 shadow-md flex items-center">
+          <span>Register</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dynamic Image Carousel -->
+    <div class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA] relative image-carousel">
+      <!-- Overlay gradient for depth -->
+      <div class="absolute inset-0 bg-gradient-to-tr from-[#1D3557]/10 to-transparent z-10 rounded-full"></div>
+      
+      <!-- Image container with carousel -->
+      <div class="carousel-container w-full h-full relative">
+        <div class="carousel-images w-full h-full">
+          <!-- Images will be dynamically inserted here -->
+        </div>
+        
+        <!-- Navigation dots -->
+        <div class="carousel-dots absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-20">
+          <!-- Dots will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Curved divider -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" fill="#ffffff" preserveAspectRatio="none" class="w-full h-[50px]">
+      <path d="M0,0 C240,95 480,95 720,48 C960,0 1200,0 1440,48 L1440,100 L0,100 Z"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features py-16 bg-gradient-to-b from-white to-[#F8F9FA]">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-[#1D3557] text-center mb-16">
+      Why Choose Symbi-Eat
+      <span class="block w-20 h-1 bg-[#E8C547] mx-auto mt-4"></span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Fast Delivery</h3>
+        <p class="text-gray-600">Hot food delivered to your location in 15 minutes or less.</p>
+      </div>
+      
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Quality Food</h3>
+        <p class="text-gray-600">Fresh ingredients and recipes prepared by expert chefs.</p>
+      </div>
+      
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#1D3557] mb-2">Student Friendly</h3>
+        <p class="text-gray-600">Special discounts and meal plans designed for students.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Styles for the enhanced elements -->
+<style>
+  /* Dynamic image carousel */
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .carousel-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    transform: scale(1.25);
+  }
+  
+  .carousel-image.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .carousel-dot.active {
+    background-color: white;
+    transform: scale(1.3);
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  /* Food particles */
+  .food-particle {
+    position: absolute;
+    font-size: var(--size);
+    top: var(--top);
+    left: var(--left);
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  
+  /* Pulse dot */
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #E8C547;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+  
+  /* Text gradient */
+  .text-gradient {
+    background: linear-gradient(90deg, #1D3557, #457B9D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  /* Feature cards */
+  .feature-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    background-color: #F3F4F6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: #1D3557;
+  }
+</style>
+
+<!-- Script for dynamic image carousel -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Image carousel setup
+    const carouselImages = [
+      '/img/hero.png',
+      '/img/club-sandwich.png',
+      '/img/veg-noodles.png',
+      '/img/pasta.png',
+    ];
+    
+    // Fallback images if the specified ones don't exist
+    const fallbackImages = [
+      '/img/hero.png',
+      '/img/default.jpg',
+      '/img/default.jpg',
+      '/img/default.jpg',
+      '/img/default.jpg'
+    ];
+    
+    const carouselContainer = document.querySelector('.carousel-images');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    
+    if (carouselContainer && dotsContainer) {
+      // Create image elements and dots
+      carouselImages.forEach((src, index) => {
+        // Create image element
+        const img = document.createElement('img');
+        img.className = `carousel-image ${index === 0 ? 'active' : ''}`;
+        img.src = src;
+        img.alt = `Food image ${index + 1}`;
+        img.onerror = function() {
+          this.onerror = null;
+          this.src = fallbackImages[index];
+        };
+        carouselContainer.appendChild(img);
+        
+        // Create dot element
+        const dot = document.createElement('div');
+        dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+        dot.dataset.index = index;
+        dot.addEventListener('click', () => {
+          goToSlide(index);
+        });
+        dotsContainer.appendChild(dot);
+      });
+      
+      // Auto-rotate carousel
+      let currentIndex = 0;
+      const totalSlides = carouselImages.length;
+      
+      function goToSlide(index) {
+        // Update current index
+        currentIndex = index;
+        
+        // Update images
+        const images = document.querySelectorAll('.carousel-image');
+        images.forEach((img, i) => {
+          img.classList.toggle('active', i === index);
+        });
+        
+        // Update dots
+        const dots = document.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }
+      
+      function nextSlide() {
+        const nextIndex = (currentIndex + 1) % totalSlides;
+        goToSlide(nextIndex);
+      }
+      
+      // Auto-rotate every 3 seconds
+      const intervalId = setInterval(nextSlide, 3000);
+      
+      // Stop rotation on hover
+      const carousel = document.querySelector('.image-carousel');
+      carousel.addEventListener('mouseenter', () => {
+        clearInterval(intervalId);
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        clearInterval(intervalId);
+        setInterval(nextSlide, 3000);
+      });
+    }
+  });
+</script>

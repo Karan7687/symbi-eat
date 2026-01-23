@@ -28,13 +28,39 @@ function orderController() {
           }
         }
 
+        // Generate unique order number
+        const orderNumber = 'ORD' + Date.now() + Math.floor(Math.random() * 1000);
+        
+        // Calculate estimated delivery time (30 minutes from now)
+        const estimatedDeliveryTime = new Date(Date.now() + 30 * 60 * 1000);
+
         const order = new Order({
           customerId: req.user._id,
           items: cart.items,
-          total: total, // saved in DB under 'total'
+          total: total,
+          orderNumber: orderNumber,
+          estimatedDeliveryTime: estimatedDeliveryTime,
+          phone: req.body.phone || req.user.phone || '0000000000',
+          deliveryAddress: req.body.deliveryAddress || 'Campus Delivery',
+          specialInstructions: req.body.specialInstructions || '',
+          tracking: {
+            orderPlaced: new Date()
+          }
         });
 
         const saved = await order.save();
+
+        // Emit real-time notification to admin room
+        const io = req.app.get('io');
+        if (io) {
+          io.to('admin-room').emit('new-order-received', {
+            orderId: saved._id,
+            orderNumber: saved.orderNumber,
+            customerName: req.user.name,
+            total: saved.total,
+            items: Object.keys(saved.items).length
+          });
+        }
 
         // clear cart
         req.session.cart = null;
@@ -50,6 +76,7 @@ function orderController() {
           moment,
           success: true,
           orderId: saved._id,
+          orderNumber: saved.orderNumber,
           total: total,
           user: req.user,
           session: req.session,
@@ -79,6 +106,28 @@ function orderController() {
         });
       } catch (err) {
         console.error("Fetch orders error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+    },
+
+    // track: show order tracking page
+    async track(req, res) {
+      try {
+        const orders = await Order.find({ 
+          customerId: req.user._id,
+          status: { $in: ['pending', 'confirmed', 'preparing', 'ready'] }
+        }).sort({
+          createdAt: -1,
+        });
+
+        return res.render("customers/orderTracking", {
+          orders,
+          moment,
+          user: req.user,
+          session: req.session,
+        });
+      } catch (err) {
+        console.error("Fetch tracking orders error:", err);
         return res.status(500).send("Internal Server Error");
       }
     },

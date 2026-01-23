@@ -10,8 +10,17 @@ const flash = require("express-flash");
 const MongoDbStore = require("connect-mongo");
 const passport = require("passport");
 const client = require("prom-client"); // ✅ Prometheus client
+const http = require("http");
+const socketIo = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 // ==================== Prometheus Metrics ====================
 // Create a counter metric for HTTP requests
@@ -54,16 +63,23 @@ let mongoStore = MongoDbStore.create({
   collectionName: "sessions",
 });
 
-// Session middleware (⚠️ this should come before passport initialization)
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: mongoStore,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
-  })
-);
+// Single session middleware for both user and admin
+const appSession = session({
+  name: 'symbiEatSession',
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: mongoStore,
+  cookie: { 
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    httpOnly: true,
+    secure: false, // Set to true in production with HTTPS
+    sameSite: 'lax'
+  },
+});
+
+// Apply session middleware
+app.use(appSession);
 
 // Passport config (⚠️ passport comes after session middleware)
 const passportInit = require("./app/config/passport");
@@ -87,8 +103,45 @@ mongoose
 app.use((req, res, next) => {
   res.locals.session = req.session;
   res.locals.user = req.user;
+  
+  // Add helper to check if user is authenticated in either session
+  res.locals.isAuthenticated = req.isAuthenticated();
+  
   next();
 });
+
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+  console.log('🔌 User connected:', socket.id);
+  
+  socket.on('join-room', (data) => {
+    const { userId, role } = data;
+    socket.join(`user-${userId}`);
+    if (role === 'admin') {
+      socket.join('admin-room');
+    }
+    console.log(`👤 User ${userId} (${role}) joined room`);
+  });
+  
+  socket.on('update-order-status', (data) => {
+    const { orderId, status } = data;
+    console.log(`📦 Order ${orderId} status updated to: ${status}`);
+    
+    // Broadcast to all connected clients
+    io.emit('order-status-updated', {
+      orderId,
+      status,
+      orderNumber: orderId.slice(-6) // Last 6 chars for display
+    });
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('🔌 User disconnected:', socket.id);
+  });
+});
+
+// Make io available to routes
+app.set('io', io);
 
 // Import routes
 const initRoutes = require("./routes/web");
@@ -102,7 +155,8 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3100;
-app.listen(PORT, () => {
+const PORT = process.env.NODE_ENV === 'development' ? process.env.DEV_PORT || 3101 : process.env.PORT || 3100;
+server.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'production'}`);
 });

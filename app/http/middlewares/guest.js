@@ -5,7 +5,12 @@ function guest(req,res,next){
         return next()
     }
 
-    return res.redirect("/")
+    // Redirect authenticated users to their appropriate dashboard
+    if(req.user.role === 'admin'){
+        return res.redirect('/admin/dashboard')
+    } else {
+        return res.redirect('/menu')
+    }
 
 }
 
