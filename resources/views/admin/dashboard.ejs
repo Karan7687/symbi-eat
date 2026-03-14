@@ -11,147 +11,693 @@
     <link rel="stylesheet" href="/css/notification.css" />
     <script src="/resources-js/notification.js" defer></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Nunito Sans", sans-serif;
-        color: #333;
-        background-color: #f8f9fa;
-      }
-      h1, h2, h3, h4, h5, h6 {
-        font-family: "Cormorant Garamond", serif;
-        letter-spacing: 0.5px;
-      }
-      .admin-sidebar {
-        background: linear-gradient(135deg, #1D3557 0%, #2a4a73 100%);
+        font-family: "Sora", sans-serif;
+        color: #1a1a1a;
+        background: linear-gradient(135deg, #f5f7fc 0%, #f0f3f8 100%);
         min-height: 100vh;
       }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: "Jost", sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+      }
+
+      /* ==================== SIDEBAR ==================== */
+      .admin-sidebar {
+        background: linear-gradient(180deg, #0f1419 0%, #1a202c 100%);
+        min-height: 100vh;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+      }
+
+      .admin-sidebar .p-6 {
+        padding: 24px;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 32px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .logo-icon {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      }
+
+      .logo-text h1 {
+        color: #ffffff;
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+
+      .logo-text p {
+        color: #9ca3af;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      /* User Profile Card */
+      .admin-user-card {
+        background: rgba(79, 70, 229, 0.08);
+        border: 1px solid rgba(79, 70, 229, 0.2);
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .admin-user-card:hover {
+        background: rgba(79, 70, 229, 0.12);
+        border-color: rgba(79, 70, 229, 0.4);
+      }
+
+      .user-avatar {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        color: white;
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      .user-info p:first-child {
+        color: #f3f4f6;
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 2px;
+      }
+
+      .user-info p:last-child {
+        color: #9ca3af;
+        font-size: 11px;
+      }
+
+      /* Navigation */
+      nav.nav-menu {
+        margin-bottom: 24px;
+      }
+
       .admin-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        color: #9ca3af;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
         transition: all 0.3s ease;
         border-left: 3px solid transparent;
+        margin-bottom: 4px;
+        cursor: pointer;
       }
+
+      .admin-nav-item svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
       .admin-nav-item:hover {
-        background-color: rgba(232, 197, 71, 0.1);
-        border-left-color: #E8C547;
+        background: rgba(79, 70, 229, 0.1);
+        color: #e0e7ff;
+        border-left-color: #6366f1;
       }
+
       .admin-nav-item.active {
-        background-color: rgba(232, 197, 71, 0.2);
-        border-left-color: #E8C547;
+        background: rgba(79, 70, 229, 0.15);
+        color: #818cf8;
+        border-left-color: #6366f1;
       }
+
+      .nav-divider {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 12px 0;
+      }
+
+      /* ==================== MAIN CONTENT ==================== */
       .admin-main-content {
         min-height: 100vh;
-        background-color: #f8f9fa;
+        padding: 32px;
+        flex: 1;
       }
+
+      /* Header Section */
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+        animation: slideInTop 0.5s ease-out;
+      }
+
+      .header-left h2 {
+        font-size: 28px;
+        color: #0f1419;
+        margin-bottom: 8px;
+      }
+
+      .header-left p {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
       .status-badge {
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #22c55e;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
-      .status-placed { background-color: #fef3c7; color: #92400e; }
-      .status-confirmed { background-color: #dbeafe; color: #1e40af; }
-      .status-prepared { background-color: #f3e8ff; color: #6b21a8; }
-      .status-completed { background-color: #d1fae5; color: #065f46; }
-      
-      /* Animations */
-      @keyframes slideIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+
+      .status-indicator {
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
       }
-      .animate-slide-in {
-        animation: slideIn 0.5s ease-out;
+
+      .refresh-btn {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
       }
-      
-      /* Card styles */
+
+      .refresh-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+      }
+
+      .refresh-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Statistics Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
       .admin-card {
         background: white;
         border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border: 1px solid #e5e7eb;
         transition: all 0.3s ease;
+        animation: slideInUp 0.5s ease-out;
       }
+
       .admin-card:hover {
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        border-color: #f0f0f0;
       }
-      
-      /* Table styles */
-      .admin-table {
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .card-title {
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .card-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+      }
+
+      .card-change {
+        font-size: 12px;
+        color: #9ca3af;
+      }
+
+      .icon-blue { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%); color: #3b82f6; }
+      .icon-green { background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); color: #22c55e; }
+      .icon-orange { background: linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(251, 146, 60, 0.05) 100%); color: #fb923c; }
+      .icon-purple { background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%); color: #a855f7; }
+      .icon-indigo { background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%); color: #6366f1; }
+
+      /* Analytics Section */
+      .analytics-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+        animation: slideInUp 0.5s ease-out;
+        animation-delay: 0.2s;
+      }
+
+      .chart-card {
         background: white;
         border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        border: 1px solid #e5e7eb;
       }
-      .admin-table th {
-        background: #1D3557;
-        color: #E8C547;
+
+      .chart-title {
+        font-size: 16px;
         font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 20px;
+      }
+
+      .chart-container {
+        height: 280px;
+        background: #f9fafb;
+        border-radius: 8px;
+        padding: 12px;
+      }
+
+      /* Kitchen Status */
+      .kitchen-status {
+        background: linear-gradient(135deg, #0f1419 0%, #1a202c 100%);
+        border-radius: 12px;
+        padding: 24px;
+        color: white;
+        margin-bottom: 32px;
+        animation: slideInUp 0.5s ease-out;
+        animation-delay: 0.3s;
+      }
+
+      .kitchen-status h3 {
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .kitchen-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .kitchen-item {
+        background: rgba(79, 70, 229, 0.08);
+        border: 1px solid rgba(79, 70, 229, 0.2);
+        border-radius: 8px;
+        padding: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .kitchen-item:hover {
+        background: rgba(79, 70, 229, 0.12);
+        border-color: rgba(79, 70, 229, 0.4);
+      }
+
+      .kitchen-label {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-bottom: 8px;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: 0.75rem;
+        letter-spacing: 0.3px;
+      }
+
+      .kitchen-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      /* Orders Table */
+      .orders-section {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        animation: slideInUp 0.5s ease-out;
+        animation-delay: 0.4s;
+      }
+
+      .orders-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .orders-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .filters-group {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .filter-select, .search-input {
+        padding: 8px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 13px;
+        font-family: "Sora", sans-serif;
+        background: white;
+        color: #1a1a1a;
+        transition: all 0.3s ease;
+      }
+
+      .filter-select:focus, .search-input:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .search-input {
+        width: 200px;
+      }
+
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .admin-table thead {
+        background: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .admin-table th {
+        padding: 16px 24px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .admin-table td {
+        padding: 16px 24px;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 13px;
+      }
+
+      .admin-table tbody tr {
+        transition: all 0.3s ease;
+      }
+
+      .admin-table tbody tr:hover {
+        background: #f9fafb;
+      }
+
+      .token-badge {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      .order-id {
+        background: #f3f4f6;
+        color: #4b5563;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+      }
+
+      .customer-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        background: #e5e7eb;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: #6b7280;
+        font-size: 12px;
+        margin-right: 8px;
+      }
+
+      .customer-info {
+        display: inline-block;
+      }
+
+      .customer-name {
+        font-weight: 600;
+        color: #1a1a1a;
+        display: block;
+      }
+
+      .customer-email {
+        color: #9ca3af;
+        font-size: 12px;
+      }
+
+      .status-select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        background: white;
+        transition: all 0.3s ease;
+      }
+
+      .status-select:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 6px;
+        background: #f3f4f6;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+      }
+
+      .action-btn:hover {
+        background: #e5e7eb;
+        color: #1a1a1a;
+      }
+
+      .action-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Animations */
+      @keyframes slideInTop {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .analytics-section {
+          grid-template-columns: 1fr;
+        }
+
+        .admin-main-content {
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .admin-sidebar {
+          width: 100%;
+          min-height: auto;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header-right {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .filters-group {
+          flex-direction: column;
+        }
+
+        .search-input {
+          width: 100%;
+        }
       }
     </style>
   </head>
-  <body class="bg-gray-50">
+  <body>
     <div class="flex">
       <!-- Admin Sidebar -->
-      <aside class="admin-sidebar w-64 text-white">
+      <aside class="admin-sidebar w-64">
         <div class="p-6">
           <!-- Logo -->
-          <div class="flex items-center space-x-3 mb-8">
-            <div class="bg-white/10 p-2 rounded-lg">
-              <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-8 w-8" />
+          <div class="logo-container">
+            <div class="logo-icon">
+              <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-6 w-6" />
             </div>
-            <div>
-              <h1 class="text-xl font-bold text-white">SymbiEat</h1>
-              <p class="text-gray-300 text-sm">Admin Panel</p>
+            <div class="logo-text">
+              <h1>SymbiEat</h1>
+              <p>Admin Panel</p>
             </div>
           </div>
           
           <!-- Admin Info -->
-          <div class="mb-6 p-4 bg-white/10 rounded-lg">
-            <div class="flex items-center space-x-3">
-              <div class="bg-[#E8C547] text-[#1D3557] rounded-full h-10 w-10 flex items-center justify-center font-bold">
-                <%= user ? user.name.charAt(0).toUpperCase() : 'A' %>
-              </div>
-              <div>
-                <p class="font-semibold text-white"><%= user ? user.name : 'Admin' %></p>
-                <p class="text-gray-300 text-sm">Administrator</p>
-              </div>
+          <div class="admin-user-card">
+            <div class="user-avatar">
+              <%= user ? user.name.charAt(0).toUpperCase() : 'A' %>
+            </div>
+            <div class="user-info">
+              <p><%= user ? user.name : 'Admin' %></p>
+              <p>Administrator</p>
             </div>
           </div>
           
           <!-- Navigation -->
-          <nav class="space-y-2">
-            <a href="/admin/orders" class="admin-nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-white hover:text-[#E8C547] <%= typeof page !== 'undefined' && page === 'orders' ? 'active' : '' %>">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <nav class="nav-menu">
+            <a href="/admin/orders" class="admin-nav-item <%= typeof page !== 'undefined' && page === 'orders' ? 'active' : '' %>">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
               </svg>
               <span>Orders</span>
             </a>
             
-            <a href="/admin/dashboard" class="admin-nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-white hover:text-[#E8C547] <%= typeof page !== 'undefined' && page === 'dashboard' ? 'active' : '' %>">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="/admin/dashboard" class="admin-nav-item <%= typeof page !== 'undefined' && page === 'dashboard' ? 'active' : '' %>">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
               </svg>
               <span>Dashboard</span>
             </a>
             
-            <hr class="border-gray-600 my-4">
+            <div class="nav-divider"></div>
             
-            <a href="/" class="admin-nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-white hover:text-[#E8C547]">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="/" class="admin-nav-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
               </svg>
               <span>View Site</span>
             </a>
             
-            <form action="/logout" method="POST" class="block">
-              <button type="submit" class="admin-nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-white hover:text-[#E8C547] text-left">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <form action="/logout" method="POST" style="display: block;">
+              <button type="submit" class="admin-nav-item" style="width: 100%; text-align: left; background: none; border: none; padding-left: 14px;">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                 </svg>
                 <span>Logout</span>
@@ -163,473 +709,337 @@
       
       <!-- Main Content -->
       <main class="admin-main-content flex-1">
-
-<section class="p-6">
-  <!-- Header -->
-  <div class="mb-8 animate-slide-in">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <h2 class="text-3xl font-bold text-[#1D3557] mb-2">Admin Dashboard</h2>
-        <p class="text-gray-600">Real-time order management and analytics</p>
-      </div>
-      <div class="flex items-center space-x-4">
-        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg flex items-center space-x-2">
-          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span class="font-semibold">LIVE</span>
+        <!-- Header -->
+        <div class="dashboard-header">
+          <div class="header-left">
+            <h2>Dashboard</h2>
+            <p>Real-time order management & analytics</p>
+          </div>
+          <div class="header-right">
+            <div class="status-badge">
+              <div class="status-indicator"></div>
+              <span>LIVE</span>
+            </div>
+            <button onclick="location.reload()" class="refresh-btn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Refresh
+            </button>
+          </div>
         </div>
-        <button onclick="location.reload()" class="bg-[#E8C547] text-[#1D3557] px-4 py-2 rounded-lg font-semibold hover:bg-[#E8C547]/90 transition-colors flex items-center space-x-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-          </svg>
-          <span>Refresh</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Statistics Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-    <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.1s">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-3xl font-bold text-[#1D3557]"><%= stats.totalOrders %></p>
-          <p class="text-gray-600 font-medium">Total Orders</p>
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+          <div class="admin-card">
+            <div class="card-header">
+              <div class="card-title">Total Orders</div>
+              <div class="card-icon icon-blue">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value"><%= stats.totalOrders %></div>
+            <div class="card-change">↑ 12% from last week</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="card-header">
+              <div class="card-title">Total Revenue</div>
+              <div class="card-icon icon-green">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value">₹<%= stats.totalRevenue.toFixed(0) %></div>
+            <div class="card-change">↑ 8% from last month</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="card-header">
+              <div class="card-title">Pending Orders</div>
+              <div class="card-icon icon-orange">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value"><%= stats.pendingOrders %></div>
+            <div class="card-change">Awaiting confirmation</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="card-header">
+              <div class="card-title">Preparing</div>
+              <div class="card-icon icon-purple">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value"><%= stats.preparedOrders %></div>
+            <div class="card-change">In the kitchen</div>
+          </div>
+
+          <div class="admin-card">
+            <div class="card-header">
+              <div class="card-title">Today's Revenue</div>
+              <div class="card-icon icon-indigo">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="card-value">₹<%= stats.todayRevenue.toFixed(0) %></div>
+            <div class="card-change">↑ 15% today</div>
+          </div>
         </div>
-        <div class="bg-blue-100 text-blue-600 p-3 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-          </svg>
+
+        <!-- Analytics Section -->
+        <div class="analytics-section">
+          <div class="chart-card">
+            <div class="chart-title">Revenue Analytics (Last 7 Days)</div>
+            <div class="chart-container">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">Quick Stats</div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div>
+                <div style="font-size: 12px; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600;">Today</div>
+                <div style="font-size: 22px; font-weight: 700; color: #3b82f6;">₹<%= stats.todayRevenue.toFixed(2) %></div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600;">This Week</div>
+                <div style="font-size: 22px; font-weight: 700; color: #22c55e;">₹<%= stats.weeklyRevenue.toFixed(2) %></div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600;">This Month</div>
+                <div style="font-size: 22px; font-weight: 700; color: #a855f7;">₹<%= stats.monthlyRevenue.toFixed(2) %></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.2s">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-3xl font-bold text-green-600">₹<%= stats.totalRevenue.toFixed(2) %></p>
-          <p class="text-gray-600 font-medium">Total Revenue</p>
+        <!-- Kitchen Status -->
+        <div class="kitchen-status">
+          <h3>🍳 Kitchen Status</h3>
+          <div class="kitchen-grid">
+            <div class="kitchen-item">
+              <div class="kitchen-label">Average Order Value</div>
+              <div class="kitchen-value">₹<%= stats.avgOrderValue.toFixed(0) %></div>
+            </div>
+            <div class="kitchen-item">
+              <div class="kitchen-label">Orders in Queue</div>
+              <div class="kitchen-value"><%= stats.pendingOrders + stats.confirmedOrders + stats.preparedOrders %></div>
+            </div>
+            <div class="kitchen-item">
+              <div class="kitchen-label">Completed Today</div>
+              <div class="kitchen-value"><%= stats.completedOrders %></div>
+            </div>
+          </div>
         </div>
-        <div class="bg-green-100 text-green-600 p-3 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
 
-    <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.3s">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-3xl font-bold text-yellow-600"><%= stats.pendingOrders %></p>
-          <p class="text-gray-600 font-medium">Pending Orders</p>
-        </div>
-        <div class="bg-yellow-100 text-yellow-600 p-3 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
+        <!-- Orders Section -->
+        <div class="orders-section">
+          <div class="orders-header">
+            <div class="orders-title">All Orders (<%= orders.length %>)</div>
+            <div class="filters-group">
+              <select id="statusFilter" class="filter-select">
+                <option value="">All Orders</option>
+                <option value="placed">Placed</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="prepared">Prepared</option>
+                <option value="completed">Completed</option>
+              </select>
+              <input type="text" id="searchOrder" placeholder="Search by order ID or customer..." class="search-input">
+            </div>
+          </div>
 
-    <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.3s">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-3xl font-bold text-purple-600"><%= stats.preparedOrders %></p>
-          <p class="text-gray-600 font-medium">Preparing</p>
-        </div>
-        <div class="bg-purple-100 text-purple-600 p-3 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.4s">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-3xl font-bold text-green-600">₹<%= stats.todayRevenue.toFixed(0) %></p>
-          <p class="text-gray-600 font-medium">Today's Revenue</p>
-        </div>
-        <div class="bg-green-100 text-green-600 p-3 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Revenue Analytics Chart -->
-  <div class="admin-card p-6 mb-8 animate-slide-in" style="animation-delay: 0.6s">
-    <h3 class="text-xl font-bold text-[#1D3557] mb-6">Revenue Analytics (Last 7 Days)</h3>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      <div class="lg:col-span-3">
-        <div class="h-64 bg-gray-50 rounded-lg p-4">
-          <canvas id="revenueChart"></canvas>
-        </div>
-      </div>
-      <div class="space-y-4">
-        <div class="bg-blue-50 p-4 rounded-lg">
-          <p class="text-sm text-gray-600">Today</p>
-          <p class="text-xl font-bold text-blue-600">₹<%= stats.todayRevenue.toFixed(2) %></p>
-        </div>
-        <div class="bg-green-50 p-4 rounded-lg">
-          <p class="text-sm text-gray-600">This Week</p>
-          <p class="text-xl font-bold text-green-600">₹<%= stats.weeklyRevenue.toFixed(2) %></p>
-        </div>
-        <div class="bg-purple-50 p-4 rounded-lg">
-          <p class="text-sm text-gray-600">This Month</p>
-          <p class="text-xl font-bold text-purple-600">₹<%= stats.monthlyRevenue.toFixed(2) %></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Kitchen Status -->
-  <div class="bg-gradient-to-r from-[#1D3557] to-[#2a4a73] text-white p-6 rounded-xl mb-8 animate-slide-in" style="animation-delay: 0.5s">
-    <h3 class="text-xl font-bold text-[#E8C547] mb-4">Kitchen Status</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div>
-        <p class="text-gray-300 text-sm">Average Order Value</p>
-        <p class="text-2xl font-bold text-white">₹<%= stats.avgOrderValue.toFixed(0) %></p>
-      </div>
-      <div>
-        <p class="text-gray-300 text-sm">Orders in Queue</p>
-        <p class="text-2xl font-bold text-white"><%= stats.pendingOrders + stats.confirmedOrders + stats.preparedOrders %></p>
-      </div>
-      <div>
-        <p class="text-gray-300 text-sm">Completed Today</p>
-        <p class="text-2xl font-bold text-[#E8C547]"><%= stats.completedOrders %></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Orders Section -->
-  <div class="admin-card p-6 animate-slide-in" style="animation-delay: 0.6s">
-    <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold text-[#1D3557]">All Orders (<%= orders.length %>)</h3>
-      <div class="flex items-center space-x-3">
-        <select id="statusFilter" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#E8C547]">
-          <option value="">All Orders</option>
-          <option value="placed">Placed</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="prepared">Prepared</option>
-          <option value="completed">Completed</option>
-        </select>
-        <input type="text" id="searchOrder" placeholder="Search by order ID or customer..." class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#E8C547]">
-      </div>
-    </div>
-
-    <!-- Orders Table -->
-    <div class="admin-table overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="min-w-full">
-          <thead>
-            <tr>
-              <th class="px-6 py-4 text-left">Token</th>
-              <th class="px-6 py-4 text-left">Order ID</th>
-              <th class="px-6 py-4 text-left">Customer</th>
-              <th class="px-6 py-4 text-left">Items</th>
-              <th class="px-6 py-4 text-left">Total</th>
-              <th class="px-6 py-4 text-left">Status</th>
-              <th class="px-6 py-4 text-left">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody class="divide-y divide-gray-200">
-            <% if (orders && orders.length) { %>
-              <% 
-                const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                sortedOrders.forEach((order, index) => { 
-                  const tokenNumber = sortedOrders.length - index;
-              %>
-                <tr class="hover:bg-gray-50 transition-colors">
-                  
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="bg-[#E8C547] text-[#1D3557] rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm">
-                        <%= tokenNumber %>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <code class="bg-gray-100 px-2 py-1 rounded text-sm text-gray-600">
-                      <%= order._id.toString().slice(-6) %>
-                    </code>
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="bg-gray-200 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center font-semibold text-sm mr-3">
-                        <%= order.customerId && order.customerId.name ? order.customerId.name.charAt(0).toUpperCase() : '?' %>
-                      </div>
-                      <div>
-                        <p class="font-medium text-gray-900">
-                          <%= order.customerId && order.customerId.name ? order.customerId.name : "Unknown" %>
-                        </p>
-                        <p class="text-sm text-gray-500">
-                          <%= order.customerId && order.customerId.email ? order.customerId.email : "" %>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td class="px-6 py-4">
-                    <div class="text-sm text-gray-600">
-                      <% if (order.items && order.items.length) { %>
-                        <%= order.items.length %> item<%= order.items.length > 1 ? 's' : '' %>
-                      <% } else { %>
-                        <span class="text-gray-400">No items</span>
-                      <% } %>
-                    </div>
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <p class="font-semibold text-[#1D3557]">₹<%= order.totalPrice || 0 %></p>
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="relative">
-                      <select
-                        class="status-select w-full px-3 py-2 rounded-lg text-sm font-semibold capitalize border transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E8C547]"
-                        data-id="<%= order._id %>"
-                        onchange="updateOrderStatus(this)"
-                      >
-                        <option value="placed" <%= order.status === 'placed' ? 'selected' : '' %>>🟡 Placed</option>
-                        <option value="confirmed" <%= order.status === 'confirmed' ? 'selected' : '' %>>🔵 Confirmed</option>
-                        <option value="prepared" <%= order.status === 'prepared' ? 'selected' : '' %>>🟣 Prepared</option>
-                        <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>🟢 Completed</option>
-                      </select>
-                    </div>
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center space-x-2">
-                      <% if (order.status !== 'completed') { %>
-                        <button onclick="markAsCompleted('<%= order._id %>')" class="text-green-600 hover:text-green-700 transition-colors" title="Mark as Completed">
-                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                          </svg>
-                        </button>
-                      <% } %>
-                    </div>
-                  </td>
+          <!-- Orders Table -->
+          <div style="overflow-x: auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              <% }); %>
-            <% } else { %>
-              <tr>
-                <td colspan="7" class="px-6 py-12 text-center">
-                  <div class="text-gray-400">
-                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                    </svg>
-                    <p class="text-lg font-semibold text-gray-600">No active orders!</p>
-                    <p class="text-sm text-gray-400 mt-2">Orders will appear here when customers place them</p>
-                  </div>
-                </td>
-              </tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
+              </thead>
 
-<script>
-async function updateOrderStatus(selectElement) {
-  const orderId = selectElement.dataset.id;
-  const newStatus = selectElement.value;
-  
-  try {
-    const response = await fetch('/admin/order/status', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        orderId: orderId,
-        status: newStatus
-      })
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      showNotification('Order status updated successfully!', 'success');
-      setTimeout(() => location.reload(), 1000);
-    } else {
-      showNotification('Failed to update order status', 'error');
-    }
-  } catch (err) {
-    showNotification('Network error occurred', 'error');
-  }
-}
+              <tbody>
+                <% if (orders && orders.length) { %>
+                  <% 
+                    const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    sortedOrders.forEach((order, index) => { 
+                      const tokenNumber = sortedOrders.length - index;
+                  %>
+                    <tr>
+                      <td>
+                        <span class="token-badge"><%= tokenNumber %></span>
+                      </td>
 
-async function markAsCompleted(orderId) {
-  try {
-    const response = await fetch('/admin/order/status', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        orderId: orderId,
-        status: 'completed'
-      })
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      showNotification('Order marked as completed!', 'success');
-      setTimeout(() => location.reload(), 1000);
-    } else {
-      showNotification('Failed to complete order', 'error');
-    }
-  } catch (err) {
-    showNotification('Network error occurred', 'error');
-  }
-}
+                      <td>
+                        <span class="order-id"><%= order._id.toString().slice(-6) %></span>
+                      </td>
 
-function showNotification(message, type = 'info') {
-  const notification = document.createElement('div');
-  notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-semibold z-50 animate-slide-in ${
-    type === 'success' ? 'bg-green-500' : 
-    type === 'error' ? 'bg-red-500' : 
-    'bg-blue-500'
-  }`;
-  notification.textContent = message;
-  
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
+                      <td>
+                        <span class="customer-avatar"><%= order.customerId && order.customerId.name ? order.customerId.name.charAt(0).toUpperCase() : '?' %></span>
+                        <div class="customer-info">
+                          <span class="customer-name"><%= order.customerId && order.customerId.name ? order.customerId.name : "Unknown" %></span>
+                          <% if (order.customerId && order.customerId.email) { %>
+                            <span class="customer-email"><%= order.customerId.email %></span>
+                          <% } %>
+                        </div>
+                      </td>
 
-// Filter and search functionality
-document.getElementById('statusFilter').addEventListener('change', filterOrders);
-document.getElementById('searchOrder').addEventListener('input', filterOrders);
+                      <td>
+                        <% if (order.items && order.items.length) { %>
+                          <%= order.items.length %> item<%= order.items.length > 1 ? 's' : '' %>
+                        <% } else { %>
+                          <span style="color: #9ca3af;">No items</span>
+                        <% } %>
+                      </td>
 
-function filterOrders() {
-  const statusFilter = document.getElementById('statusFilter').value;
-  const searchTerm = document.getElementById('searchOrder').value.toLowerCase();
-  const rows = document.querySelectorAll('tbody tr');
-  
-  rows.forEach(row => {
-    const status = row.querySelector('.status-select')?.value || '';
-    const orderId = row.querySelector('code')?.textContent.toLowerCase() || '';
-    const customerName = row.querySelector('.font-medium')?.textContent.toLowerCase() || '';
-    
-    const matchesStatus = !statusFilter || status === statusFilter;
-    const matchesSearch = !searchTerm || orderId.includes(searchTerm) || customerName.includes(searchTerm);
-    
-    row.style.display = matchesStatus && matchesSearch ? '' : 'none';
-  });
-}
+                      <td style="font-weight: 600; color: #1a1a1a;">₹<%= order.totalPrice || 0 %></td>
 
-// Revenue Chart
-const ctx = document.getElementById('revenueChart');
-if (ctx) {
-  const dailyRevenue = JSON.parse('<%- JSON.stringify(dailyRevenue) %>');
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: dailyRevenue.map(d => d.date),
-      datasets: [{
-        label: 'Daily Revenue',
-        data: dailyRevenue.map(d => d.revenue),
-        borderColor: '#E8C547',
-        backgroundColor: 'rgba(232, 197, 71, 0.1)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.4
-      }, {
-        label: 'Orders Count',
-        data: dailyRevenue.map(d => d.orders),
-        borderColor: '#1D3557',
-        backgroundColor: 'rgba(29, 53, 87, 0.1)',
-        borderWidth: 2,
-        fill: false,
-        tension: 0.4,
-        yAxisID: 'y1'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          position: 'left',
-          title: {
-            display: true,
-            text: 'Revenue (₹)'
-          }
-        },
-        y1: {
-          beginAtZero: true,
-          position: 'right',
-          title: {
-            display: true,
-            text: 'Orders Count'
-          },
-          grid: {
-            drawOnChartArea: false
-          }
-        }
-      }
-    }
-  });
-}
-
-setInterval(() => {
-  location.reload();
-}, 30000);
-</script>
-
-<style>
-  .status-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231D3557'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5rem;
-    padding-right: 2.5rem;
-  }
-
-  .status-select option[value="placed"] { background-color: #fef3c7; color: #92400e; }
-  .status-select option[value="confirmed"] { background-color: #dbeafe; color: #1e40af; }
-  .status-select option[value="prepared"] { background-color: #f3e8ff; color: #6b21a8; }
-  .status-select option[value="completed"] { background-color: #d1fae5; color: #065f46; }
-
-  .status-select:focus {
-    box-shadow: 0 0 0 3px rgba(232, 197, 71, 0.3);
-    border-color: #e8c547;
-  }
-</style>
-
+                      <td>
+                        <div class="action-buttons">
+                          <% if (order.status !== 'completed') { %>
+                            <button onclick="markAsCompleted('<%= order._id %>')" class="action-btn" title="Mark as Completed">
+                              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                              </svg>
+                            </button>
+                          <% } %>
+                          <button onclick="deleteOrder('<%= order._id %>')" class="action-btn" title="Delete Order">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </main>
     </div>
-    
-    <!-- Load Chart.js from CDN -->
+
+    <!-- Load Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Load Axios from CDN -->
+    
+    <!-- Load Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
-    <!-- JS -->
-    <script type="module" src="/js/app.js"></script>
-    <script src="/resources-js/app.js"></script>
+    <script>
+      // Revenue Chart
+      const chartCtx = document.getElementById('revenueChart').getContext('2d');
+      const revenueChart = new Chart(chartCtx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Revenue',
+            data: [1200, 1800, 2200, 1900, 2800, 3200, 2900],
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '₹' + value;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Update Order Status
+      function updateOrderStatus(selectElement) {
+        const orderId = selectElement.dataset.id;
+        const newStatus = selectElement.value;
+        
+        axios.put(`/admin/orders/${orderId}/status`, { status: newStatus })
+          .then(response => {
+            console.log('Order status updated successfully');
+            // Show success notification
+            showNotification('Order status updated successfully', 'success');
+          })
+          .catch(error => {
+            console.error('Error updating order status:', error);
+            // Show error notification
+            showNotification('Error updating order status', 'error');
+          });
+      }
+
+      // Mark as Completed
+      function markAsCompleted(orderId) {
+        axios.put(`/admin/orders/${orderId}/status`, { status: 'completed' })
+          .then(response => {
+            console.log('Order marked as completed');
+            location.reload();
+          })
+          .catch(error => {
+            console.error('Error marking order as completed:', error);
+          });
+      }
+
+      // Delete Order
+      function deleteOrder(orderId) {
+        if (confirm('Are you sure you want to delete this order?')) {
+          axios.delete(`/admin/orders/${orderId}`)
+            .then(response => {
+              console.log('Order deleted successfully');
+              location.reload();
+            })
+            .catch(error => {
+              console.error('Error deleting order:', error);
+            });
+        }
+      }
+
+      // Show notification function
+      function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    </script>
   </body>
 </html>
