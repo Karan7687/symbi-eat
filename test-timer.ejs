@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Global Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold">SymbiEat Test</div>
+                <div class="text-sm">User: Test User</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Order Timer -->
+    <div id="global-order-timer" class="bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-4 shadow-lg">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium">Your order is being prepared</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="text-sm">
+                        <span class="opacity-90">Order #</span>
+                        <span id="navbar-order-number" class="font-bold">ORD123456</span>
+                    </div>
+                    <div class="text-sm">
+                        <span class="opacity-90">Queue:</span>
+                        <span id="navbar-queue-position" class="font-bold">2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-center">
+                    <div id="navbar-countdown" class="text-2xl font-bold">08:45</div>
+                    <div class="text-xs opacity-90">Time Left</div>
+                </div>
+                <button onclick="toggleOrderDetails()" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full text-sm transition-colors">
+                    Details
+                </button>
+                <button onclick="closeGlobalTimer()" class="text-white/80 hover:text-white ml-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Collapsible Order Details -->
+        <div id="order-details-panel" class="bg-white/10 backdrop-blur-sm border-t border-white/20" style="display: none;">
+            <div class="container mx-auto py-3 px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="opacity-90">Status:</span>
+                        <span id="navbar-order-status" class="font-medium ml-1">Preparing</span>
+                    </div>
+                    <div>
+                        <span class="opacity-90">Items:</span>
+                        <span id="navbar-order-items" class="font-medium ml-1">2 items</span>
+                    </div>
+                    <div>
+                        <span class="opacity-90">Estimated:</span>
+                        <span id="navbar-estimated-time" class="font-medium ml-1">2:45 PM</span>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-white/20 rounded-full h-2">
+                        <div id="navbar-progress-bar" class="bg-white h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <h1 class="text-3xl font-bold mb-4">Global Timer Test Page</h1>
+        <p class="mb-4">This page tests the global order timer feature. You should see the green timer bar above.</p>
+        
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Timer Features:</h2>
+            <ul class="list-disc list-inside space-y-2">
+                <li>✅ Persistent timer visible on all pages</li>
+                <li>✅ Real-time countdown display</li>
+                <li>✅ Order number and queue position</li>
+                <li>✅ Expandable details panel</li>
+                <li>✅ Progress bar showing order status</li>
+                <li>✅ Close button to dismiss timer</li>
+            </ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow mt-6">
+            <h2 class="text-xl font-semibold mb-4">Test Actions:</h2>
+            <div class="space-y-4">
+                <button onclick="testCountdown()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Test Countdown (10 seconds)
+                </button>
+                <button onclick="simulateOrderUpdate()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Simulate Order Status Update
+                </button>
+                <button onclick="checkAPI()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    Test API Connection
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let countdownInterval = null;
+
+        // Initialize timer on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Global Timer Test Page Loaded');
+            startTestCountdown(525); // 8:45 in seconds
+        });
+
+        function startTestCountdown(totalSeconds) {
+            clearInterval(countdownInterval);
+            
+            countdownInterval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('navbar-countdown').textContent = 'Ready!';
+                    return;
+                }
+                
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                document.getElementById('navbar-countdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Add urgent styling when less than 5 minutes
+                const countdownElement = document.getElementById('navbar-countdown');
+                if (totalSeconds <= 300) { // 5 minutes
+                    countdownElement.classList.add('order-timer-pulse');
+                    countdownElement.style.color = '#ffcc00';
+                } else {
+                    countdownElement.classList.remove('order-timer-pulse');
+                    countdownElement.style.color = '';
+                }
+                
+                totalSeconds--;
+            }, 1000);
+        }
+
+        function testCountdown() {
+            startTestCountdown(10); // 10 second test
+            alert('Started 10-second countdown test!');
+        }
+
+        function simulateOrderUpdate() {
+            const statuses = ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Completed'];
+            const currentStatus = document.getElementById('navbar-order-status').textContent;
+            const currentIndex = statuses.indexOf(currentStatus);
+            const nextIndex = (currentIndex + 1) % statuses.length;
+            const nextStatus = statuses[nextIndex];
+            
+            document.getElementById('navbar-order-status').textContent = nextStatus;
+            
+            // Update progress bar
+            const progressBar = document.getElementById('navbar-progress-bar');
+            const progress = ((nextIndex + 1) / statuses.length) * 100;
+            progressBar.style.width = progress + '%';
+            
+            alert(`Order status updated to: ${nextStatus}`);
+        }
+
+        function checkAPI() {
+            axios.get('/api/orders')
+                .then(response => {
+                    console.log('API Response:', response.data);
+                    alert('API connection successful! Check console for details.');
+                })
+                .catch(error => {
+                    console.error('API Error:', error);
+                    alert('API connection failed. Check console for details.');
+                });
+        }
+
+        function toggleOrderDetails() {
+            const panel = document.getElementById('order-details-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function closeGlobalTimer() {
+            const timerElement = document.getElementById('global-order-timer');
+            if (timerElement) {
+                timerElement.style.display = 'none';
+            }
+            clearInterval(countdownInterval);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            #global-order-timer {
+                animation: slideDown 0.5s ease-out;
+                position: sticky;
+                top: 0;
+                z-index: 40;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .order-timer-pulse {
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

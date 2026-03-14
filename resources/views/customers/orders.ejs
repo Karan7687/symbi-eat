@@ -1,4 +1,7 @@
 <% if (typeof success !== 'undefined' && success) { %>
+<script>
+  window.orderSuccess = true;
+</script>
 <div
   id="orderSuccessOverlay"
   class="fixed inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-50 text-center text-white"
@@ -41,6 +44,12 @@
           origin: { y: 0.6 },
         });
       }, i * 300);
+    }
+
+    // Start countdown timer immediately
+    if (typeof startCountdownTimer === 'function') {
+      console.log('Starting timer from order success overlay...');
+      startCountdownTimer();
     }
 
     // Fade out overlay after 3 seconds
@@ -371,5 +380,21 @@ class CustomerOrderTracker {
 // Initialize order tracker when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   new CustomerOrderTracker();
+  
+  // Start countdown timer if order was successful (backup trigger)
+  if (window.orderSuccess === true && typeof startCountdownTimer === 'function') {
+    console.log('Order success detected, starting timer from DOM ready...');
+    setTimeout(() => {
+      startCountdownTimer();
+    }, 100);
+  }
+  
+  // Also check for data attribute as fallback
+  if (document.body.dataset.orderSuccess === 'true' && typeof startCountdownTimer === 'function') {
+    console.log('Data attribute detected, starting timer...');
+    setTimeout(() => {
+      startCountdownTimer();
+    }, 100);
+  }
 });
 </script>

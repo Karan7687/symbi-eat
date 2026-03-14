@@ -1,0 +1,419 @@
+<!-- Order Tracking Section -->
+<% if (isAuthenticated && user && !user.isAdmin) { %>
+<section id="order-tracker" class="order-tracker container mx-auto py-8 px-6" style="display: none;">
+  <div class="max-w-2xl mx-auto">
+    <!-- Blinkit-style Order Tracking Card -->
+    <div class="order-tracking-card bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-bold mb-1">Your Order is Being Prepared</h2>
+            <p class="text-green-100">Track your order in real-time</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold" id="countdown-timer">--:--</div>
+            <div class="text-sm text-green-100">Estimated Time Left</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Order Details -->
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <div class="text-sm text-gray-500">Order Number</div>
+            <div class="text-lg font-semibold text-gray-800" id="order-number">-</div>
+          </div>
+          <div class="text-center">
+            <div class="text-sm text-gray-500">Queue Position</div>
+            <div class="text-2xl font-bold text-orange-500" id="queue-position">-</div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm text-gray-500">Status</div>
+            <div class="text-lg font-semibold text-blue-600" id="order-status">-</div>
+          </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-gray-600">Order Progress</span>
+            <span class="text-sm text-gray-600" id="progress-percentage">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div class="progress-bar bg-gradient-to-r from-blue-500 to-green-500 h-full rounded-full transition-all duration-500" id="progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <!-- Order Timeline -->
+        <div class="order-timeline">
+          <div class="timeline-item" id="step-placed">
+            <div class="timeline-marker bg-gray-300">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Order Placed</div>
+              <div class="timeline-time" id="time-placed">-</div>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="step-confirmed">
+            <div class="timeline-marker bg-gray-300">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Order Confirmed</div>
+              <div class="timeline-time" id="time-confirmed">-</div>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="step-preparing">
+            <div class="timeline-marker bg-gray-300">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Preparing Your Food</div>
+              <div class="timeline-time" id="time-preparing">-</div>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="step-ready">
+            <div class="timeline-marker bg-gray-300">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Ready for Pickup</div>
+              <div class="timeline-time" id="time-ready">-</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Queue Info -->
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                <span id="orders-ahead-count">0</span>
+              </div>
+              <div>
+                <div class="text-sm text-gray-600">Orders ahead of you</div>
+                <div class="text-lg font-semibold text-gray-800" id="estimated-queue-time">Calculating...</div>
+              </div>
+            </div>
+            <button onclick="closeOrderTracker()" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.order-tracker {
+  animation: slideUp 0.5s ease-out;
+}
+
+.order-tracking-card {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  width: 2px;
+  height: 40px;
+  background: #e5e7eb;
+}
+
+.timeline-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline-marker.completed {
+  background: #10b981 !important;
+}
+
+.timeline-marker.active {
+  background: #3b82f6 !important;
+  animation: pulse 2s infinite;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-time {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+</style>
+
+<script>
+// Order Tracking JavaScript
+let currentOrderId = null;
+let countdownInterval = null;
+let socket = null;
+
+// Initialize order tracking
+document.addEventListener('DOMContentLoaded', function() {
+  // Check for active orders
+  checkActiveOrders();
+  
+  // Initialize Socket.IO
+  if (typeof io !== 'undefined') {
+    socket = io();
+    
+    // Join room for order updates
+    socket.emit('join-room', { 
+      userId: '<%= user._id %>', 
+      role: 'user' 
+    });
+    
+    // Listen for order updates
+    socket.on('order_status_changed', (data) => {
+      if (currentOrderId === data.orderId) {
+        updateOrderStatus(data.newStatus, data.tracking);
+      }
+    });
+    
+    socket.on('queue_updated', (data) => {
+      if (currentOrderId) {
+        updateQueueInfo();
+      }
+    });
+  }
+});
+
+// Check for active orders
+async function checkActiveOrders() {
+  try {
+    const response = await axios.get('/api/orders?status=pending,confirmed,preparing,ready');
+    const orders = response.data.orders || [];
+    
+    if (orders.length > 0) {
+      // Show the most recent active order
+      const activeOrder = orders[0];
+      showOrderTracker(activeOrder);
+    }
+  } catch (error) {
+    console.error('Error checking active orders:', error);
+  }
+}
+
+// Show order tracker
+function showOrderTracker(order) {
+  currentOrderId = order._id;
+  const trackerSection = document.getElementById('order-tracker');
+  
+  if (trackerSection) {
+    trackerSection.style.display = 'block';
+    
+    // Update order details
+    document.getElementById('order-number').textContent = order.orderNumber;
+    document.getElementById('queue-position').textContent = order.queuePosition || '-';
+    document.getElementById('order-status').textContent = formatStatus(order.status);
+    
+    // Update timeline
+    updateTimeline(order.tracking || {});
+    
+    // Start countdown
+    startCountdown(order.remainingTime || 0);
+    
+    // Update queue info
+    updateQueueInfo();
+    
+    // Join order-specific room
+    if (socket) {
+      socket.emit('order-tracking', { orderId: order._id });
+    }
+  }
+}
+
+// Update order status
+function updateOrderStatus(status, tracking) {
+  document.getElementById('order-status').textContent = formatStatus(status);
+  updateTimeline(tracking);
+  
+  // Clear countdown if order is ready or completed
+  if (['ready', 'completed'].includes(status)) {
+    clearInterval(countdownInterval);
+    document.getElementById('countdown-timer').textContent = 'Ready!';
+  }
+}
+
+// Update timeline
+function updateTimeline(tracking) {
+  const steps = [
+    { id: 'placed', time: tracking.orderPlaced },
+    { id: 'confirmed', time: tracking.orderConfirmed },
+    { id: 'preparing', time: tracking.preparingStarted },
+    { id: 'ready', time: tracking.readyForPickup }
+  ];
+  
+  steps.forEach((step, index) => {
+    const marker = document.getElementById(`step-${step.id}`);
+    const timeElement = document.getElementById(`time-${step.id}`);
+    
+    if (marker && timeElement) {
+      if (step.time) {
+        marker.querySelector('.timeline-marker').classList.add('completed');
+        timeElement.textContent = formatTime(step.time);
+      } else {
+        marker.querySelector('.timeline-marker').classList.remove('completed');
+        timeElement.textContent = '-';
+      }
+      
+      // Set active step
+      if (index === steps.findIndex(s => !s.time) && step.time) {
+        marker.querySelector('.timeline-marker').classList.add('active');
+      } else {
+        marker.querySelector('.timeline-marker').classList.remove('active');
+      }
+    }
+  });
+  
+  // Update progress bar
+  const completedSteps = steps.filter(step => step.time).length;
+  const progressPercentage = (completedSteps / steps.length) * 100;
+  document.getElementById('progress-bar').style.width = progressPercentage + '%';
+  document.getElementById('progress-percentage').textContent = Math.round(progressPercentage) + '%';
+}
+
+// Start countdown timer
+function startCountdown(remainingMinutes) {
+  clearInterval(countdownInterval);
+  
+  let totalSeconds = Math.max(0, remainingMinutes * 60);
+  
+  countdownInterval = setInterval(() => {
+    if (totalSeconds <= 0) {
+      clearInterval(countdownInterval);
+      document.getElementById('countdown-timer').textContent = 'Ready!';
+      return;
+    }
+    
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    document.getElementById('countdown-timer').textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    totalSeconds--;
+  }, 1000);
+}
+
+// Update queue info
+async function updateQueueInfo() {
+  try {
+    const response = await axios.get('/api/queue/status');
+    const queueStatus = response.data.queueStatus;
+    
+    document.getElementById('orders-ahead-count').textContent = queueStatus.totalOrdersInQueue;
+    document.getElementById('estimated-queue-time').textContent = 
+      `Estimated ${queueStatus.averageWaitTime} minutes`;
+  } catch (error) {
+    console.error('Error updating queue info:', error);
+  }
+}
+
+// Close order tracker
+function closeOrderTracker() {
+  const trackerSection = document.getElementById('order-tracker');
+  if (trackerSection) {
+    trackerSection.style.display = 'none';
+  }
+  clearInterval(countdownInterval);
+  currentOrderId = null;
+}
+
+// Format status
+function formatStatus(status) {
+  const statusMap = {
+    'pending': 'Pending',
+    'confirmed': 'Confirmed',
+    'preparing': 'Preparing',
+    'ready': 'Ready',
+    'completed': 'Completed',
+    'cancelled': 'Cancelled'
+  };
+  return statusMap[status] || status;
+}
+
+// Format time
+function formatTime(dateString) {
+  if (!dateString) return '-';
+  const date = new Date(dateString);
+  return date.toLocaleTimeString('en-US', { 
+    hour: '2-digit', 
+    minute: '2-digit',
+    hour12: true 
+  });
+}
+</script>
+<% } %>

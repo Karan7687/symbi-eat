@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SymbiEat</title>
+    <link rel="icon" href="/img/symbi.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/notification.css" />
+    <script src="/resources-js/notification.js" defer></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      body {
+        font-family: "Nunito Sans", sans-serif;
+        color: #333;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 0.5px;
+      }
+      .nav-item {
+        position: relative;
+      }
+      .nav-item::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #e8c547;
+        transition: width 0.3s ease;
+      }
+      .nav-item:hover::after {
+        width: 100%;
+      }
+      .hidden-text {
+        opacity: 0;
+        animation: fadeIn 1.5s forwards;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      .size {
+        background-color: #f5f5f5;
+        border: 1px solid #e8c547;
+        color: #1d3557;
+      }
+      .add-to-cart {
+        background-color: #1d3557;
+        color: white;
+        transition: all 0.3s ease;
+      }
+      .add-to-cart:hover {
+        background-color: #2a4a73;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      .navbar-container {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .menu-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eaeaea;
+      }
+      .menu-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        border-color: #e8c547;
+      }
+      /* Global Timer Styles */
+      #global-order-timer {
+        animation: slideDown 0.5s ease-out;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .order-timer-pulse {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navbar -->
+    <nav class="bg-[#1D3557] text-white">
+      <div class="navbar-container">
+        <div class="container mx-auto flex flex-wrap items-center justify-between px-6 py-5">
+          <!-- Logo and Title -->
+          <div class="flex items-center space-x-3">
+            <div class="bg-[#] p-2 rounded-lg">
+              <a href="/">
+                <img src="/img/symbi.ico" alt="SymbiEat Logo" class="h-8 w-8" />
+              </a>
+            </div>
+            <a href="/">
+              <span class="text-2xl font-semibold text-white tracking-wide">SymbiEat</span>
+            </a>
+          </div>
+
+          <!-- Menu Links -->
+          <div class="flex flex-wrap items-center space-x-8 mt-4 sm:mt-0">
+            <a href="/menu" class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item">Menu</a>
+            <a href="/" class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item">Offer</a>
+            <a href="/customer/orders" class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+              </svg>
+              <span>My Orders</span>
+            </a>
+            <form id="logout" action="/logout" method="POST">
+              <a onclick="document.getElementById('logout').submit()" href="#" class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item">Logout</a>
+            </form>
+            <a href="/cart" class="bg-[#] p-2 rounded-full hover:bg-[#] transition duration-300">
+              <div class="relative">
+                <img src="/img/cart.png" alt="cart" class="h-12 w-12 nav-item hover:rotate-12 transition-transform duration-300" />
+                <!-- Small notification bubble -->
+                <div class="cartCounter absolute -top-1 -right-1 bg-[#E8C547] text-[#112240] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-bounce">
+                  0
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Global Order Timer -->
+    <div id="global-order-timer" class="bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-4 shadow-lg" style="display: none;">
+      <div class="container mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="font-medium">Your order is being prepared</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <div class="text-sm">
+              <span class="opacity-90">Order #</span>
+              <span id="navbar-order-number" class="font-bold">-</span>
+            </div>
+            <div class="text-sm">
+              <span class="opacity-90">Queue:</span>
+              <span id="navbar-queue-position" class="font-bold">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="text-center">
+            <div id="navbar-countdown" class="text-2xl font-bold">--:--</div>
+            <div class="text-xs opacity-90">Time Left</div>
+          </div>
+          <button onclick="toggleOrderDetails()" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full text-sm transition-colors">
+            Details
+          </button>
+          <button onclick="closeGlobalTimer()" class="text-white/80 hover:text-white ml-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Collapsible Order Details -->
+      <div id="order-details-panel" class="bg-white/10 backdrop-blur-sm border-t border-white/20" style="display: none;">
+        <div class="container mx-auto py-3 px-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <span class="opacity-90">Status:</span>
+              <span id="navbar-order-status" class="font-medium ml-1">-</span>
+            </div>
+            <div>
+              <span class="opacity-90">Items:</span>
+              <span id="navbar-order-items" class="font-medium ml-1">-</span>
+            </div>
+            <div>
+              <span class="opacity-90">Estimated:</span>
+              <span id="navbar-estimated-time" class="font-medium ml-1">-</span>
+            </div>
+          </div>
+          <div class="mt-2">
+            <div class="w-full bg-white/20 rounded-full h-2">
+              <div id="navbar-progress-bar" class="bg-white h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-b from-[#F8F9FA] to-white relative overflow-hidden">
+      <!-- Subtle animated background elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+        <div class="food-particle" style="--delay: 0s; --size: 30px; --top: 15%; --left: 10%;">🍕</div>
+        <div class="food-particle" style="--delay: 2s; --size: 25px; --top: 25%; --left: 85%;">🍔</div>
+        <div class="food-particle" style="--delay: 4s; --size: 28px; --top: 65%; --left: 5%;">🍟</div>
+        <div class="food-particle" style="--delay: 6s; --size: 32px; --top: 80%; --left: 90%;">🌮</div>
+        <div class="food-particle" style="--delay: 8s; --size: 22px; --top: 40%; --left: 75%;">🍦</div>
+      </div>
+
+      <div class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 relative z-10">
+        <!-- Text with enhanced animations -->
+        <div class="text-center md:text-left mt-8 md:mt-0 max-w-xl fade-in-up">
+          <div class="inline-block bg-[#457B9D]/10 px-4 py-1 rounded-full mb-2">
+            <h6 class="text-lg text-[#457B9D] italic font-light flex items-center">
+              <span class="pulse-dot mr-2"></span>
+              <em>Are you hungry?</em>
+            </h6>
+          </div>
+          
+          <h1 id="bounceText" class="text-4xl sm:text-5xl md:text-6xl font-bold mt-2 hidden-text text-[#1D3557] text-gradient">
+            Don't wait!
+          </h1>
+          
+          <p class="mt-4 text-gray-600 text-lg max-w-md leading-relaxed">
+            Experience culinary excellence with our premium dishes crafted for your delight. Fresh ingredients, amazing taste.
+          </p>
+          
+          <a href="#menu">
+            <div class="flex flex-wrap gap-4 items-center">
+              <button class="order-button mt-2 bg-[#E8C547] text-[#1D3557] font-bold py-3 px-8 rounded-lg hover:bg-[#D4B33F] transition duration-300 shadow-md flex items-center">
+                <span>Order Now</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 arrow-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </a>
+        </div>
+
+        <!-- Dynamic Image Carousel -->
+        <div class="w-[550px] h-[550px] rounded-full overflow-hidden mr-10 shadow-xl border-8 border-[#F8F9FA] relative image-carousel">
+          <!-- Overlay gradient for depth -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-[#1D3557]/10 to-transparent z-10 rounded-full"></div>
+          
+          <!-- Image container with carousel -->
+          <div class="carousel-container w-full h-full relative">
+            <div class="carousel-images w-full h-full">
+              <!-- Images will be dynamically inserted here -->
+              <img src="/img/pizza.jpg" alt="Pizza" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Curved divider -->
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" fill="#ffffff" preserveAspectRatio="none" class="w-full h-[50px]">
+          <path d="M0,0 C240,95 480,95 720,48 C960,0 1200,0 1440,48 L1440,100 L0,100 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu container mx-auto py-16 px-6">
+      <h1 class="text-4xl font-bold mb-4 text-[#1D3557] text-center relative">
+        Our Premium Menu
+        <span class="block w-24 h-1 bg-[#E8C547] mx-auto mt-4"></span>
+      </h1>
+      
+      <p class="text-center text-gray-600 max-w-2xl mx-auto mb-16">
+        Discover our carefully crafted menu featuring the freshest ingredients and bold flavors. 
+        From quick bites to hearty meals, we've got your cravings covered.
+      </p>
+
+      <!-- Category filter -->
+      <div class="flex justify-center flex-wrap gap-3 mb-10">
+        <button class="category-filter active" data-category="all">All</button>
+        <button class="category-filter" data-category="breakfast">Breakfast</button>
+        <button class="category-filter" data-category="lunch">Lunch</button>
+        <button class="category-filter" data-category="dinner">Dinner</button>
+        <button class="category-filter" data-category="snacks">Snacks</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <% foodItems.forEach(function(foodItem){ %>
+        <div class="menu-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 transition-transform duration-300">
+          <div class="relative">
+            <img
+              class="h-48 w-full object-cover"
+              src="/img/<%= foodItem.image %>"
+              alt="<%= foodItem.name %>"
+              onerror="this.onerror=null; this.src='/img/default.jpg';"
+            />
+            <div class="absolute top-3 right-3 bg-[#E8C547] text-[#1D3557] text-xs font-bold px-2 py-1 rounded-full">
+              Popular
+            </div>
+          </div>
+
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h2 class="text-xl font-bold text-[#1D3557] line-clamp-1">
+                <%= foodItem.name %>
+              </h2>
+              <span class="font-bold text-lg text-[#1D3557]">₹<%= foodItem.price %></span>
+            </div>
+            
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+              A delicious assortment of vegetarian dishes prepared with fresh ingredients
+            </p>
+
+            <div class="flex items-center justify-between mt-4">
+              <div class="preparation-time flex items-center text-xs text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <%= foodItem.preparationTime || 15 %> min
+              </div>
+              
+              <button
+                data-food-item='<%- JSON.stringify(foodItem).replace(/"/g, '&quot;') %>'
+                class="add-to-cart w-auto bg-[#112240] hover:bg-[#1a2e50] text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300 relative overflow-hidden group"
+              >
+                <span class="relative z-10 flex items-center justify-center">
+                  <span class="mr-2">🚀</span>
+                  Add
+                </span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                ></span>
+                <span
+                  class="absolute inset-0 bg-[#E8C547] opacity-20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+                ></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <% })%>
+      </div>
+    </section>
+
+    <!-- Global Order Timer JavaScript -->
+    <script>
+      // Global Order Timer Management
+      let currentOrderId = null;
+      let countdownInterval = null;
+      let socket = null;
+
+      // Initialize global timer
+      document.addEventListener('DOMContentLoaded', function() {
+        initializeGlobalTimer();
+      });
+
+      function initializeGlobalTimer() {
+        // Initialize Socket.IO
+        if (typeof io !== 'undefined') {
+          socket = io();
+          
+          // Listen for order updates
+          socket.on('order_created', (data) => {
+            console.log('New order created:', data);
+            showNotification(`New order #${data.orderNumber} added to queue`, 'info');
+            checkActiveOrder();
+          });
+          
+          socket.on('order_status_changed', (data) => {
+            console.log('Order status changed:', data);
+            if (currentOrderId === data.orderId) {
+              updateGlobalTimerStatus(data.newStatus, data.tracking);
+            }
+          });
+          
+          socket.on('queue_updated', (data) => {
+            console.log('Queue updated:', data);
+            if (currentOrderId) {
+              updateGlobalTimerInfo();
+            }
+          });
+        }
+        
+        // Check for active orders
+        checkActiveOrder();
+      }
+
+      // Check for active orders
+      async function checkActiveOrder() {
+        try {
+          const response = await axios.get('/api/orders?status=pending,confirmed,preparing,ready');
+          const orders = response.data.orders || [];
+          
+          if (orders.length > 0) {
+            // Show the most recent active order
+            const activeOrder = orders[0];
+            showGlobalTimer(activeOrder);
+          } else {
+            hideGlobalTimer();
+          }
+        } catch (error) {
+          console.error('Error checking active orders:', error);
+        }
+      }
+
+      // Show global timer
+      function showGlobalTimer(order) {
+        currentOrderId = order._id;
+        const timerElement = document.getElementById('global-order-timer');
+        
+        if (timerElement) {
+          timerElement.style.display = 'block';
+          
+          // Update order details
+          document.getElementById('navbar-order-number').textContent = order.orderNumber;
+          document.getElementById('navbar-queue-position').textContent = order.queuePosition || '-';
+          document.getElementById('navbar-order-status').textContent = formatStatus(order.status);
+          document.getElementById('navbar-order-items').textContent = 
+            order.items ? `${order.items.length} item${order.items.length > 1 ? 's' : ''}` : '-';
+          
+          // Update estimated time
+          if (order.estimatedFinishTime) {
+            const finishTime = new Date(order.estimatedFinishTime);
+            document.getElementById('navbar-estimated-time').textContent = 
+              finishTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+          } else {
+            document.getElementById('navbar-estimated-time').textContent = 'Calculating...';
+          }
+          
+          // Start countdown
+          startGlobalCountdown(order.remainingTime || 0);
+          
+          // Update progress bar
+          updateGlobalProgressBar(order.status);
+        }
+      }
+
+      // Update global timer status
+      function updateGlobalTimerStatus(status, tracking) {
+        document.getElementById('navbar-order-status').textContent = formatStatus(status);
+        updateGlobalProgressBar(status);
+        
+        // Clear countdown if order is ready or completed
+        if (['ready', 'completed'].includes(status)) {
+          clearInterval(countdownInterval);
+          document.getElementById('navbar-countdown').textContent = 'Ready!';
+        }
+      }
+
+      // Update global timer info
+      async function updateGlobalTimerInfo() {
+        if (!currentOrderId) return;
+        
+        try {
+          const response = await axios.get(`/api/orders/${currentOrderId}`);
+          const order = response.data.order;
+          
+          if (order) {
+            document.getElementById('navbar-queue-position').textContent = order.queuePosition || '-';
+            document.getElementById('navbar-order-status').textContent = formatStatus(order.status);
+            
+            // Update countdown with new remaining time
+            if (order.remainingTime !== undefined) {
+              startGlobalCountdown(order.remainingTime);
+            }
+          }
+        } catch (error) {
+          console.error('Error updating global timer info:', error);
+        }
+      }
+
+      // Start global countdown timer
+      function startGlobalCountdown(remainingMinutes) {
+        clearInterval(countdownInterval);
+        
+        let totalSeconds = Math.max(0, remainingMinutes * 60);
+        
+        countdownInterval = setInterval(() => {
+          if (totalSeconds <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('navbar-countdown').textContent = 'Ready!';
+            return;
+          }
+          
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          document.getElementById('navbar-countdown').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          // Add urgent styling when less than 5 minutes
+          const countdownElement = document.getElementById('navbar-countdown');
+          if (totalSeconds <= 300) { // 5 minutes
+            countdownElement.classList.add('order-timer-pulse');
+            countdownElement.style.color = '#ffcc00';
+          } else {
+            countdownElement.classList.remove('order-timer-pulse');
+            countdownElement.style.color = '';
+          }
+          
+          totalSeconds--;
+        }, 1000);
+      }
+
+      // Update progress bar
+      function updateGlobalProgressBar(status) {
+        const progressBar = document.getElementById('navbar-progress-bar');
+        const statusProgress = {
+          'pending': 25,
+          'confirmed': 50,
+          'preparing': 75,
+          'ready': 100,
+          'completed': 100
+        };
+        
+        const progress = statusProgress[status] || 0;
+        progressBar.style.width = progress + '%';
+      }
+
+      // Toggle order details panel
+      function toggleOrderDetails() {
+        const panel = document.getElementById('order-details-panel');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      }
+
+      // Hide global timer
+      function hideGlobalTimer() {
+        const timerElement = document.getElementById('global-order-timer');
+        if (timerElement) {
+          timerElement.style.display = 'none';
+        }
+        clearInterval(countdownInterval);
+        currentOrderId = null;
+      }
+
+      // Close global timer
+      function closeGlobalTimer() {
+        hideGlobalTimer();
+      }
+
+      // Format status
+      function formatStatus(status) {
+        const statusMap = {
+          'pending': 'Pending',
+          'confirmed': 'Confirmed',
+          'preparing': 'Preparing',
+          'ready': 'Ready',
+          'completed': 'Completed',
+          'cancelled': 'Cancelled'
+        };
+        return statusMap[status] || status;
+      }
+
+      // Show notification function
+      function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+          type === 'success' ? 'bg-green-500' : 
+          type === 'error' ? 'bg-red-500' : 
+          type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+        } text-white`;
+        notification.textContent = message;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+
+      // Auto-refresh order status every 30 seconds
+      setInterval(() => {
+        if (currentOrderId) {
+          updateGlobalTimerInfo();
+        }
+      }, 30000);
+
+      // Demo: Show timer immediately for testing
+      setTimeout(() => {
+        showGlobalTimer({
+          _id: 'demo-order',
+          orderNumber: 'ORD123456',
+          queuePosition: 2,
+          status: 'preparing',
+          items: [{ name: 'Classic Burger' }, { name: 'Tea' }],
+          estimatedFinishTime: new Date(Date.now() + 8 * 60000),
+          remainingTime: 8
+        });
+        showNotification('Demo order timer started! 🎯', 'success');
+      }, 1000);
+    </script>
+</body>
+</html>

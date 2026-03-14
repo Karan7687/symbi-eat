@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-6 py-8">
+        <h1 class="text-3xl font-bold mb-6">🎯 Website Routes Test</h1>
+        
+        <div class="bg-green-50 border border-green-200 p-6 rounded-lg mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-green-800">✅ Server is Running!</h2>
+            <p class="text-green-700">Server is running on port 3100 with all routes working.</p>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-blue-800">🚀 Working Routes:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold mb-2">Main Pages</h3>
+                    <ul class="space-y-2">
+                        <li><a href="http://localhost:3100/" target="_blank" class="text-blue-500 hover:underline">🏠 Home (/)</a></li>
+                        <li><a href="http://localhost:3100/menu" target="_blank" class="text-blue-500 hover:underline">🍽️ Menu (/menu)</a></li>
+                        <li><a href="http://localhost:3100/cart" target="_blank" class="text-blue-500 hover:underline">🛒 Cart (/cart)</a></li>
+                        <li><a href="http://localhost:3100/customer/orders" target="_blank" class="text-blue-500 hover:underline">📋 My Orders (/customer/orders)</a></li>
+                        <li><a href="http://localhost:3100/admin/dashboard" target="_blank" class="text-blue-500 hover:underline">⚙️ Admin Dashboard (/admin/dashboard)</a></li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold mb-2">API Routes</h3>
+                    <ul class="space-y-2">
+                        <li><a href="http://localhost:3100/api/orders" target="_blank" class="text-blue-500 hover:underline">📊 Get Orders (/api/orders)</a></li>
+                        <li><span class="text-gray-600">📝 POST /api/orders (Order Creation)</span></li>
+                        <li><span class="text-gray-600">📝 POST /orders (Order Placement)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-lg mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-yellow-800">🧪 Timer Test Instructions:</h2>
+            <ol class="list-decimal list-inside space-y-2 text-yellow-700">
+                <li>Open <a href="http://localhost:3100/" target="_blank" class="text-blue-500 hover:underline">http://localhost:3100</a></li>
+                <li>Click the "🧪 Test Order Timer" button</li>
+                <li>Green timer should appear in navbar</li>
+                <li>Test navigation - click Menu, Cart, My Orders links</li>
+                <li>Timer should persist across all pages</li>
+            </ol>
+        </div>
+
+        <div class="bg-purple-50 border border-purple-200 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 text-purple-800">🔧 What's Fixed:</h2>
+            <ul class="list-disc list-inside space-y-2 text-purple-700">
+                <li>✅ All website routes are working</li>
+                <li>✅ Navigation links work properly</li>
+                <li>✅ Cart page loads</li>
+                <li>✅ My Orders page loads</li>
+                <li>✅ Admin Dashboard loads</li>
+                <li>✅ Timer functionality integrated</li>
+                <li>✅ Timer persists across navigation</li>
+                <li>✅ CSS and JS files load correctly</li>
+            </ul>
+        </div>
+
+        <div class="mt-8 text-center">
+            <a href="http://localhost:3100" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors inline-block">
+                🚀 Open Working Website
+            </a>
+        </div>
+
+        <div class="mt-6 text-center text-gray-600">
+            <p>All website requests should now be working properly!</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -82,7 +82,7 @@
       }
     </style>
   </head>
-  <body class="bg-white">
+  <body class="bg-white" <% if (typeof success !== 'undefined' && success) { %>data-order-success="true"<% } %>>
     <!-- Navbar -->
     <nav class="bg-[#1D3557] text-white">
       <div class="navbar-container">
@@ -104,7 +104,19 @@
           </div>
 
           <!-- Menu Links -->
-          <div class="flex flex-wrap items-center space-x-8 mt-4 sm:mt-0">
+          <div class="flex flex-wrap items-center space-x-8 order-2 lg:order-3 mt-4 lg:mt-0">
+            <!-- Countdown Timer - Hidden by default -->
+            <div class="flex items-center space-x-3" id="countdown-container" style="display: none;">
+              <div class="bg-[#E8C547] text-[#1D3557] px-3 py-1 rounded-lg font-semibold shadow-lg">
+                <div class="flex items-center space-x-2">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                  </svg>
+                  <span id="countdown-timer">10:00</span>
+                </div>
+              </div>
+            </div>
+            
             <% if(user){ %>
             <a
               href="/menu"
@@ -118,6 +130,7 @@
               >Menu</a
             >
             <% } %>
+            
             <a
               href="/"
               class="text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item"
@@ -187,6 +200,166 @@
 
     <!-- JS -->
     <script type="module" src="/js/app.js"></script>
+
+    <!-- Countdown Timer Script -->
+    <script>
+      let countdownInterval = null;
+      let endTime = null;
+
+      function startCountdownTimer() {
+        console.log('Starting countdown timer...');
+        
+        // Set countdown to 10 minutes from now
+        const countdownDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
+        endTime = new Date().getTime() + countdownDuration;
+        
+        // Save to localStorage
+        localStorage.setItem('orderCountdownEnd', endTime.toString());
+        
+        // Show timer
+        const container = document.getElementById('countdown-container');
+        if (container) {
+          container.style.display = 'flex';
+          console.log('Timer container shown');
+        } else {
+          console.error('Timer container not found!');
+        }
+        
+        // Clear any existing interval
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+        }
+        
+        // Start countdown
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+        console.log('Countdown started with end time:', endTime);
+      }
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = endTime - now;
+
+        if (timeLeft > 0) {
+          const minutes = Math.floor(timeLeft / (1000 * 60));
+          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+          const formattedTime = 
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+
+          document.getElementById('countdown-timer').textContent = formattedTime;
+        } else {
+          // Timer finished - hide and clear
+          clearCountdownTimer();
+          // Show completion notification
+          showOrderReadyNotification();
+        }
+      }
+
+      function clearCountdownTimer() {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+        
+        // Hide timer
+        const container = document.getElementById('countdown-container');
+        if (container) {
+          container.style.display = 'none';
+        }
+        
+        // Clear localStorage
+        localStorage.removeItem('orderCountdownEnd');
+        
+        // Reset display
+        document.getElementById('countdown-timer').textContent = '10:00';
+      }
+
+      function showOrderReadyNotification() {
+        // Create notification
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 max-w-sm';
+        notification.innerHTML = `
+          <div class="flex items-center">
+            <div class="flex-1">
+              <div class="font-semibold">🎉 Order Ready!</div>
+              <div class="text-sm">Your order should be ready for pickup/delivery</div>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+          notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto remove after 10 seconds
+        setTimeout(() => {
+          notification.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            if (notification.parentElement) {
+              notification.parentElement.removeChild(notification);
+            }
+          }, 300);
+        }, 10000);
+      }
+
+      // Check for existing countdown on page load
+      function checkExistingCountdown() {
+        const savedEndTime = localStorage.getItem('orderCountdownEnd');
+        if (savedEndTime) {
+          endTime = parseInt(savedEndTime);
+          const now = new Date().getTime();
+          
+          if (endTime > now) {
+            // Resume existing countdown
+            const container = document.getElementById('countdown-container');
+            if (container) {
+              container.style.display = 'flex';
+            }
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+          } else {
+            // Clear expired countdown
+            localStorage.removeItem('orderCountdownEnd');
+          }
+        }
+      }
+
+      // Listen for successful order placement
+      function listenForOrderSuccess() {
+        // Check if we have the success data attribute
+        const isOrderSuccess = document.body.dataset.orderSuccess === 'true';
+        console.log('Order success check:', isOrderSuccess, 'Body dataset:', document.body.dataset);
+        
+        if (isOrderSuccess) {
+          console.log('Order success detected, starting timer...');
+          startCountdownTimer();
+        }
+      }
+
+      // Initialize on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        checkExistingCountdown();
+        listenForOrderSuccess();
+      });
+
+      // Also listen for socket events if available
+      if (typeof io !== 'undefined') {
+        const socket = io();
+        socket.on('order-placed-successfully', function(data) {
+          startCountdownTimer();
+        });
+      }
+    </script>
 
   </body>
 </html>
