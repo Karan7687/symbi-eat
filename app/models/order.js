@@ -30,6 +30,10 @@ const orderSchema = new Schema(
     estimatedDeliveryTime: {
       type: Date
     },
+    preparationTime: {
+      type: Number, // in minutes
+      required: true
+    },
     actualDeliveryTime: {
       type: Date
     },

@@ -1,6 +1,14 @@
 <% if (typeof success !== 'undefined' && success) { %>
 <script>
   window.orderSuccess = true;
+  window.preparationTime = <%= preparationTime || 10 %>;
+  console.log('Preparation time set to:', window.preparationTime);
+  
+  // Start timer immediately - only once
+  if (typeof startCountdownTimer === 'function') {
+    console.log('Starting timer from order success overlay...');
+    startCountdownTimer(window.preparationTime);
+  }
 </script>
 <div
   id="orderSuccessOverlay"
@@ -44,12 +52,6 @@
           origin: { y: 0.6 },
         });
       }, i * 300);
-    }
-
-    // Start countdown timer immediately
-    if (typeof startCountdownTimer === 'function') {
-      console.log('Starting timer from order success overlay...');
-      startCountdownTimer();
     }
 
     // Fade out overlay after 3 seconds
@@ -384,16 +386,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start countdown timer if order was successful (backup trigger)
   if (window.orderSuccess === true && typeof startCountdownTimer === 'function') {
     console.log('Order success detected, starting timer from DOM ready...');
+    console.log('window.preparationTime in DOM ready:', window.preparationTime);
+    const prepTime = window.preparationTime || 10;
+    console.log('Using preparation time in DOM ready:', prepTime, 'minutes');
+    
+    // Prevent multiple timer starts
+    if (window.timerStarted) {
+      console.log('Timer already started, skipping DOM ready trigger...');
+      return;
+    }
+    window.timerStarted = true;
+    
     setTimeout(() => {
-      startCountdownTimer();
+      startCountdownTimer(prepTime);
     }, 100);
   }
   
   // Also check for data attribute as fallback
   if (document.body.dataset.orderSuccess === 'true' && typeof startCountdownTimer === 'function') {
     console.log('Data attribute detected, starting timer...');
+    const prepTime = window.preparationTime || 10;
+    console.log('Using preparation time in data attribute fallback:', prepTime);
     setTimeout(() => {
-      startCountdownTimer();
+      startCountdownTimer(prepTime);
     }, 100);
   }
 });

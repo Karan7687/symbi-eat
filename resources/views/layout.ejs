@@ -105,17 +105,27 @@
 
           <!-- Menu Links -->
           <div class="flex flex-wrap items-center space-x-8 order-2 lg:order-3 mt-4 lg:mt-0">
-            <!-- Countdown Timer - Hidden by default -->
+            <% if(user){ %>
+            <!-- Countdown Timer - Only for logged-in users, hidden by default -->
             <div class="flex items-center space-x-3" id="countdown-container" style="display: none;">
               <div class="bg-[#E8C547] text-[#1D3557] px-3 py-1 rounded-lg font-semibold shadow-lg">
                 <div class="flex items-center space-x-2">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                   </svg>
-                  <span id="countdown-timer">10:00</span>
+                  <span id="countdown-timer">00:00</span>
                 </div>
               </div>
             </div>
+            
+            <!-- Test Timer Buttons (temporary for debugging) -->
+            <div class="flex items-center space-x-2">
+              <button onclick="startCountdownTimer(2)" class="text-xs bg-blue-600 text-white px-2 py-1 rounded">2min</button>
+              <button onclick="startCountdownTimer(5)" class="text-xs bg-green-600 text-white px-2 py-1 rounded">5min</button>
+              <button onclick="startCountdownTimer(15)" class="text-xs bg-red-600 text-white px-2 py-1 rounded">15min</button>
+              <button onclick="resetTimer()" class="text-xs bg-gray-600 text-white px-2 py-1 rounded">Reset</button>
+            </div>
+            <% } %>
             
             <% if(user){ %>
             <a
@@ -205,16 +215,96 @@
     <script>
       let countdownInterval = null;
       let endTime = null;
+      let timerCallCount = 0;
+      let timerLocked = false; // Global lock to prevent multiple starts
 
-      function startCountdownTimer() {
-        console.log('Starting countdown timer...');
+      // Get current user ID (if logged in)
+      function getCurrentUserId() {
+        <% if(user) { %>
+        return '<%= user._id %>';
+        <% } else { %>
+        return null;
+        <% } %>
+      }
+
+      // User-specific localStorage keys
+      function getStorageKeys() {
+        const userId = getCurrentUserId();
+        if (!userId) return null;
+        return {
+          endTime: `orderCountdownEnd_${userId}`,
+          prepTime: `orderPreparationTime_${userId}`
+        };
+      }
+
+      function startCountdownTimer(preparationMinutes = 10) {
+        // Only allow timer for logged-in users
+        const userId = getCurrentUserId();
+        if (!userId) {
+          console.log('Timer can only be started for logged-in users');
+          return;
+        }
+
+        const storageKeys = getStorageKeys();
+        if (!storageKeys) return;
+
+        // Global lock - prevent any multiple calls
+        if (timerLocked) {
+          console.log('Timer locked, ignoring call #', timerCallCount + 1);
+          return;
+        }
         
-        // Set countdown to 10 minutes from now
-        const countdownDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
-        endTime = new Date().getTime() + countdownDuration;
+        timerLocked = true;
+        timerCallCount++;
+        console.log('=== TIMER START DEBUG ===');
+        console.log('Timer function called #' + timerCallCount);
+        console.log('User ID:', userId);
+        console.log('New order preparation time:', preparationMinutes, 'minutes');
         
-        // Save to localStorage
-        localStorage.setItem('orderCountdownEnd', endTime.toString());
+        // Check if timer is already running for this user
+        const savedEndTime = localStorage.getItem(storageKeys.endTime);
+        const now = new Date().getTime();
+        
+        console.log('Current time:', now);
+        console.log('Saved end time from localStorage:', savedEndTime);
+        
+        if (savedEndTime && parseInt(savedEndTime) > now) {
+          // Timer is running - add new time to existing
+          const currentEndTime = parseInt(savedEndTime);
+          const additionalTime = preparationMinutes * 60 * 1000; // Convert minutes to milliseconds
+          endTime = currentEndTime + additionalTime;
+          
+          console.log('TIMER WAS RUNNING - ADDING TIME');
+          console.log('Current end time:', currentEndTime);
+          console.log('Additional time (ms):', additionalTime);
+          console.log('New end time:', endTime);
+          
+          const remainingMinutesBefore = Math.ceil((currentEndTime - now) / (1000 * 60));
+          const remainingMinutesAfter = Math.ceil((endTime - now) / (1000 * 60));
+          console.log('Remaining before adding:', remainingMinutesBefore, 'minutes');
+          console.log('Remaining after adding:', remainingMinutesAfter, 'minutes');
+        } else {
+          // No timer running - start new one
+          const countdownDuration = preparationMinutes * 60 * 1000;
+          endTime = new Date().getTime() + countdownDuration;
+          
+          console.log('NO TIMER RUNNING - STARTING NEW');
+          console.log('New countdown duration (ms):', countdownDuration);
+          console.log('New end time:', endTime);
+        }
+        
+        // Save to user-specific localStorage
+        localStorage.setItem(storageKeys.endTime, endTime.toString());
+        localStorage.setItem(storageKeys.prepTime, preparationMinutes.toString());
+        
+        // Update timer display immediately to show correct remaining time
+        const timerElement = document.getElementById('countdown-timer');
+        if (timerElement) {
+          const remainingTime = Math.ceil((endTime - now) / (1000 * 60));
+          const displayTime = String(remainingTime).padStart(2, '0') + ':00';
+          timerElement.textContent = displayTime;
+          console.log('Timer display updated to:', displayTime);
+        }
         
         // Show timer
         const container = document.getElementById('countdown-container');
@@ -233,7 +323,7 @@
         // Start countdown
         updateCountdown();
         countdownInterval = setInterval(updateCountdown, 1000);
-        console.log('Countdown started with end time:', endTime);
+        console.log('=== TIMER START DEBUG END ===');
       }
 
       function updateCountdown() {
@@ -258,6 +348,9 @@
       }
 
       function clearCountdownTimer() {
+        const storageKeys = getStorageKeys();
+        if (!storageKeys) return;
+        
         if (countdownInterval) {
           clearInterval(countdownInterval);
           countdownInterval = null;
@@ -269,11 +362,21 @@
           container.style.display = 'none';
         }
         
-        // Clear localStorage
-        localStorage.removeItem('orderCountdownEnd');
+        // Clear user-specific localStorage
+        localStorage.removeItem(storageKeys.endTime);
+        localStorage.removeItem(storageKeys.prepTime);
         
-        // Reset display
-        document.getElementById('countdown-timer').textContent = '10:00';
+        // Reset display to 00:00
+        document.getElementById('countdown-timer').textContent = '00:00';
+      }
+
+      function resetTimer() {
+        console.log('Resetting timer...');
+        clearCountdownTimer();
+        // Reset the lock so timer can be started again
+        timerLocked = false;
+        timerCallCount = 0;
+        console.log('Timer reset complete');
       }
 
       function showOrderReadyNotification() {
@@ -314,22 +417,29 @@
 
       // Check for existing countdown on page load
       function checkExistingCountdown() {
-        const savedEndTime = localStorage.getItem('orderCountdownEnd');
-        if (savedEndTime) {
+        const storageKeys = getStorageKeys();
+        if (!storageKeys) return;
+        
+        const savedEndTime = localStorage.getItem(storageKeys.endTime);
+        const savedPrepTime = localStorage.getItem(storageKeys.prepTime);
+        
+        if (savedEndTime && savedPrepTime) {
           endTime = parseInt(savedEndTime);
           const now = new Date().getTime();
           
           if (endTime > now) {
-            // Resume existing countdown
+            // Resume existing countdown with correct display
             const container = document.getElementById('countdown-container');
             if (container) {
               container.style.display = 'flex';
             }
-            updateCountdown();
+            updateCountdown(); // This will show the correct remaining time
             countdownInterval = setInterval(updateCountdown, 1000);
+            console.log('Resumed existing countdown for', savedPrepTime, 'minutes');
           } else {
             // Clear expired countdown
-            localStorage.removeItem('orderCountdownEnd');
+            localStorage.removeItem(storageKeys.endTime);
+            localStorage.removeItem(storageKeys.prepTime);
           }
         }
       }
@@ -342,7 +452,10 @@
         
         if (isOrderSuccess) {
           console.log('Order success detected, starting timer...');
-          startCountdownTimer();
+          // Use the preparation time from window variable
+          const prepTime = window.preparationTime || 10;
+          console.log('Using preparation time in listenForOrderSuccess:', prepTime);
+          startCountdownTimer(prepTime);
         }
       }
 
@@ -356,7 +469,9 @@
       if (typeof io !== 'undefined') {
         const socket = io();
         socket.on('order-placed-successfully', function(data) {
-          startCountdownTimer();
+          const prepTime = window.preparationTime || 10;
+          console.log('Socket event triggered, using preparation time:', prepTime);
+          startCountdownTimer(prepTime);
         });
       }
     </script>

@@ -1,4 +1,5 @@
 const Order = require("../../../models/order");
+const Menu = require("../../../models/menu");
 const moment = require("moment");
 
 function orderController() {
@@ -28,11 +29,70 @@ function orderController() {
           }
         }
 
+        // Calculate total preparation time based on cart items
+        let totalPreparationTime = 0;
+        
+        // Fallback preparation times for items (in minutes) - using names for reliability
+        const fallbackPrepTimes = {
+          'Spring Roll': 7,
+          'Samosa': 5,
+          'Ice Cream': 2,
+          'Brownie': 3,
+          'Veg Pizza': 15,
+          'Pasta': 12,
+          'Burger': 10,
+          'Noodles': 8,
+          'Cake Slice': 2,
+          'Donut': 3,
+          'Cookie': 4,
+          'Milkshake': 5
+        };
+        
+        console.log('Cart items for preparation time calculation:', cart.items);
+        
+        for (const itemId in cart.items) {
+          const cartItem = cart.items[itemId];
+          const quantity = cartItem.qty || 1;
+          console.log('Processing cart item:', itemId, 'Quantity:', quantity);
+          
+          let itemPrepTime = 15; // Default fallback
+          
+          // Try to get from database first
+          try {
+            const menuItem = await Menu.findById(itemId);
+            if (menuItem && menuItem.preparationTime) {
+              itemPrepTime = menuItem.preparationTime;
+              console.log('Found menu item prep time from DB:', menuItem.name, '-', itemPrepTime);
+            } else if (menuItem && menuItem.name && fallbackPrepTimes[menuItem.name]) {
+              // Use fallback by name if DB has item but no prep time
+              itemPrepTime = fallbackPrepTimes[menuItem.name];
+              console.log('Using fallback prep time by name:', menuItem.name, '-', itemPrepTime);
+            }
+          } catch (error) {
+            console.log('DB query failed, using default');
+          }
+          
+          console.log('Final item prep time:', itemPrepTime, 'Quantity:', quantity);
+          
+          // Simple addition: total time = sum of all item times
+          const itemTotalTime = itemPrepTime * quantity;
+          totalPreparationTime += itemTotalTime;
+          console.log('Item total time (prep time x quantity):', itemTotalTime, 'Running total:', totalPreparationTime);
+        }
+
+        // No buffer time - show pure preparation time
+        totalPreparationTime = Math.ceil(totalPreparationTime);
+        
+        // Cap at maximum 60 minutes
+        totalPreparationTime = Math.min(totalPreparationTime, 60);
+
+        console.log('Final preparation time calculated:', totalPreparationTime, 'minutes');
+
         // Generate unique order number
         const orderNumber = 'ORD' + Date.now() + Math.floor(Math.random() * 1000);
         
-        // Calculate estimated delivery time (30 minutes from now)
-        const estimatedDeliveryTime = new Date(Date.now() + 30 * 60 * 1000);
+        // Calculate estimated delivery time based on actual preparation time
+        const estimatedDeliveryTime = new Date(Date.now() + totalPreparationTime * 60 * 1000);
 
         const order = new Order({
           customerId: req.user._id,
@@ -40,6 +100,7 @@ function orderController() {
           total: total,
           orderNumber: orderNumber,
           estimatedDeliveryTime: estimatedDeliveryTime,
+          preparationTime: totalPreparationTime, // Store calculated preparation time
           phone: req.body.phone || req.user.phone || '0000000000',
           deliveryAddress: req.body.deliveryAddress || 'Campus Delivery',
           specialInstructions: req.body.specialInstructions || '',
@@ -71,6 +132,7 @@ function orderController() {
         });
 
         // render orders page with success overlay payload
+        console.log('Passing preparationTime to template:', totalPreparationTime);
         return res.render("customers/orders", {
           orders,
           moment,
@@ -78,6 +140,7 @@ function orderController() {
           orderId: saved._id,
           orderNumber: saved.orderNumber,
           total: total,
+          preparationTime: totalPreparationTime, // Pass calculated preparation time
           user: req.user,
           session: req.session,
         });
