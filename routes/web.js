@@ -14,7 +14,7 @@ function initRoutes(app) {
   //homeController().index; //calling homecontroller.index gives us the object
 
   app.get("/", homeController().index);
-  
+
   // Menu route for authenticated users (prevent admin)
   app.get("/menu", auth, preventAdmin, homeController().menu);
 
@@ -43,9 +43,12 @@ function initRoutes(app) {
 
   //admin order status
   app.get("/admin/orders/status", admin, adminOrderController().index);
-  
+
   // POST route for updating order status
   app.post("/admin/order/status", admin, adminOrderController().updateStatus);
+
+  // API Routes
+  app.get("/api/orders/:orderId", auth, preventAdmin, orderController().show);
 }
 
 // Export the function so it can be required in server.js

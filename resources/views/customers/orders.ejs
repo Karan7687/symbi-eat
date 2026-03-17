@@ -73,25 +73,36 @@
     <!-- Success Message (Persistent Banner) -->
     <% if (typeof success !== 'undefined' && success) { %>
     <div
-      class="mb-8 p-6 bg-[#E8C547]/20 border-l-4 border-[#E8C547] rounded-lg shadow-md flex items-center gap-4"
+      class="mb-8 p-6 bg-[#E8C547]/20 border-l-4 border-[#E8C547] rounded-lg shadow-md flex items-center justify-between"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-[#1D3557]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+      <div class="flex items-center gap-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-[#1D3557]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        <p class="text-[#1D3557] font-semibold text-lg">
+          Order placed successfully!
+        </p>
+      </div>
+      <button
+        id="trackOrderBtn"
+        class="bg-[#1D3557] text-white px-6 py-2 rounded-lg hover:bg-[#2a4a73] transition duration-300 flex items-center gap-2 font-semibold"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 13l4 4L19 7"
-        />
-      </svg>
-      <p class="text-[#1D3557] font-semibold text-lg">
-        Order placed successfully!
-      </p>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        Track Order
+      </button>
     </div>
     <% } %>
 
@@ -189,6 +200,89 @@
   </div>
 </section>
 
+<!-- Order Tracking Modal -->
+<div id="orderTrackingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden md:max-w-lg">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-[#1D3557] to-[#457B9D] text-white p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold">Order Status</h2>
+              <p class="text-white/80 text-sm" id="orderNumber">Order #ORD123456</p>
+            </div>
+          </div>
+          <button id="closeTrackingModal" class="text-white/80 hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-3 overflow-y-auto max-h-[70vh]">
+        <div id="trackingContent">
+          <!-- Loading State -->
+          <div id="trackingLoading" class="text-center py-6">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1D3557] mx-auto mb-3"></div>
+            <p class="text-gray-600 text-sm">Loading status...</p>
+          </div>
+
+          <!-- Order Status -->
+          <div id="orderDetails" class="hidden text-center">
+            <!-- Animated Status Icon -->
+            <div class="mb-4">
+              <div id="statusIcon" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-white text-2xl animate-pulse">
+                <!-- Status icon will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Current Status -->
+            <div class="mb-4">
+              <h3 class="text-xl font-bold text-[#1D3557] mb-2" id="currentStatus">Preparing</h3>
+              <p class="text-gray-600 text-sm" id="statusDescription">Your food is being prepared</p>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="mb-4">
+              <div class="bg-gray-200 rounded-full h-2 mb-2">
+                <div id="progressBar" class="bg-gradient-to-r from-[#1D3557] to-[#457B9D] h-2 rounded-full transition-all duration-1000 ease-out" style="width: 40%"></div>
+              </div>
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>Placed</span>
+                <span>Ready</span>
+              </div>
+            </div>
+
+            <!-- Estimated Time -->
+            <div class="bg-gray-50 rounded-lg p-3 mb-4">
+              <div class="flex items-center justify-center gap-2">
+                <svg class="w-4 h-4 text-[#1D3557]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm font-medium text-[#1D3557]" id="estimatedTime">Ready in 15 mins</span>
+              </div>
+            </div>
+
+            <!-- Order Total -->
+            <div class="text-center">
+              <p class="text-gray-600 text-sm">Total Amount</p>
+              <p class="text-2xl font-bold text-[#1D3557]" id="totalAmount">₹0.00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
   .link {
     text-decoration: none;
@@ -257,8 +351,234 @@
   <%= JSON.stringify({ id: user._id, name: user.name, role: 'customer' }) %>
 </script>
 
+<!-- Store order ID for tracking -->
+<% if (typeof orderId !== 'undefined' && orderId) { %>
+<script>
+  localStorage.setItem('lastOrderId', '<%= orderId %>');
+  localStorage.setItem('lastOrderNumber', '<%= orderNumber %>');
+</script>
+<% } %>
+
 <!-- Socket.IO client -->
 <script src="/socket.io/socket.io.js"></script>
+
+<script>
+// Order Tracking Modal Functionality
+class OrderTrackingModal {
+  constructor() {
+    this.modal = document.getElementById('orderTrackingModal');
+    this.closeBtn = document.getElementById('closeTrackingModal');
+    this.trackBtn = document.getElementById('trackOrderBtn');
+    this.currentOrderId = null;
+    this.init();
+  }
+
+  init() {
+    if (this.trackBtn) {
+      this.trackBtn.addEventListener('click', () => this.openModal());
+    }
+    
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener('click', () => this.closeModal());
+    }
+
+    // Close modal when clicking outside
+    this.modal.addEventListener('click', (e) => {
+      if (e.target === this.modal) {
+        this.closeModal();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !this.modal.classList.contains('hidden')) {
+        this.closeModal();
+      }
+    });
+  }
+
+  async openModal(orderId = null) {
+    this.currentOrderId = orderId || localStorage.getItem('lastOrderId');
+    
+    if (!this.currentOrderId) {
+      alert('No order found to track. Please place an order first.');
+      return;
+    }
+
+    this.modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Animate modal entrance
+    gsap.fromTo(this.modal.querySelector('.bg-white'), 
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+    );
+
+    // Load order data
+    await this.loadOrderData();
+  }
+
+  closeModal() {
+    gsap.to(this.modal.querySelector('.bg-white'), {
+      scale: 0.8, 
+      opacity: 0, 
+      duration: 0.2,
+      onComplete: () => {
+        this.modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+
+  async loadOrderData() {
+    const loadingDiv = document.getElementById('trackingLoading');
+    const detailsDiv = document.getElementById('orderDetails');
+    
+    loadingDiv.classList.remove('hidden');
+    detailsDiv.classList.add('hidden');
+
+    try {
+      const response = await axios.get(`/api/orders/${this.currentOrderId}`);
+      const order = response.data;
+
+      this.populateOrderData(order);
+      
+      loadingDiv.classList.add('hidden');
+      detailsDiv.classList.remove('hidden');
+
+      // Animate content entrance
+      gsap.fromTo('#orderDetails > *', 
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
+      );
+
+    } catch (error) {
+      console.error('Error loading order data:', error);
+      loadingDiv.innerHTML = `
+        <div class="text-center py-8">
+          <div class="text-red-500 mb-4">
+            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <p class="text-gray-600">Failed to load order details. Please try again.</p>
+          <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-[#1D3557] text-white rounded-lg hover:bg-[#2a4a73] transition-colors">
+            Retry
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  populateOrderData(order) {
+    // Update order header
+    document.getElementById('orderNumber').textContent = `Order #${order.orderNumber}`;
+
+    // Update status icon and colors
+    this.updateStatusIcon(order.status);
+
+    // Update current status
+    document.getElementById('currentStatus').textContent = this.formatStatus(order.status);
+    document.getElementById('statusDescription').textContent = this.getStatusDescription(order.status);
+
+    // Update progress bar
+    const progress = this.getProgressPercentage(order.status);
+    document.getElementById('progressBar').style.width = `${progress}%`;
+
+    // Update estimated time
+    if (order.estimatedDeliveryTime) {
+      const now = new Date();
+      const delivery = new Date(order.estimatedDeliveryTime);
+      const diffMinutes = Math.ceil((delivery - now) / (1000 * 60));
+      
+      if (diffMinutes > 0) {
+        document.getElementById('estimatedTime').textContent = `Ready in ${diffMinutes} mins`;
+      } else {
+        document.getElementById('estimatedTime').textContent = 'Ready soon!';
+      }
+    }
+
+    // Update total
+    document.getElementById('totalAmount').textContent = `₹${order.total.toFixed(2)}`;
+  }
+
+  updateStatusIcon(status) {
+    const iconContainer = document.getElementById('statusIcon');
+    const statusConfig = {
+      'placed': { icon: '⏳', bg: 'bg-yellow-500' },
+      'confirmed': { icon: '✅', bg: 'bg-blue-500' },
+      'preparing': { icon: '👨‍🍳', bg: 'bg-purple-500' },
+      'ready': { icon: '🎉', bg: 'bg-green-500' },
+      'completed': { icon: '🚀', bg: 'bg-green-600' }
+    };
+
+    const config = statusConfig[status] || statusConfig['placed'];
+    iconContainer.className = `w-16 h-16 mx-auto rounded-full flex items-center justify-center text-white text-2xl animate-pulse ${config.bg}`;
+    iconContainer.textContent = config.icon;
+  }
+
+  getStatusDescription(status) {
+    const descriptions = {
+      'placed': 'Your order has been received',
+      'confirmed': 'Restaurant has confirmed your order',
+      'preparing': 'Your delicious food is being prepared',
+      'ready': 'Your order is ready for pickup!',
+      'completed': 'Order completed successfully'
+    };
+    return descriptions[status] || 'Order status updating...';
+  }
+
+  getProgressPercentage(status) {
+    const progressMap = {
+      'placed': 20,
+      'confirmed': 40,
+      'preparing': 60,
+      'ready': 80,
+      'completed': 100
+    };
+    return progressMap[status] || 0;
+  }
+
+  getCurrentStepIndex(status) {
+    const stepMap = {
+      'placed': 0,
+      'confirmed': 1,
+      'preparing': 2,
+      'ready': 3,
+      'completed': 4
+    };
+    return stepMap[status] || 0;
+  }
+
+  formatStatus(status) {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+
+  getStatusClass(status) {
+    const classMap = {
+      'placed': 'bg-yellow-100 text-yellow-800',
+      'confirmed': 'bg-blue-100 text-blue-800',
+      'preparing': 'bg-purple-100 text-purple-800',
+      'ready': 'bg-green-100 text-green-800',
+      'completed': 'bg-green-100 text-green-800'
+    };
+    return classMap[status] || 'bg-gray-100 text-gray-800';
+  }
+}
+
+// Initialize modal when DOM is ready
+let orderTrackingModal;
+document.addEventListener('DOMContentLoaded', () => {
+  orderTrackingModal = new OrderTrackingModal();
+});
+
+// Global function to open tracking modal from anywhere
+window.openOrderTracking = (orderId) => {
+  if (orderTrackingModal) {
+    orderTrackingModal.openModal(orderId);
+  }
+};
+</script>
 <script>
 class CustomerOrderTracker {
   constructor() {

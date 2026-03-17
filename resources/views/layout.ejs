@@ -157,6 +157,18 @@
               </svg>
               <span>My Orders</span>
             </a>
+            
+            <!-- Track Order Button (shown if recent order exists) -->
+            <button
+              id="globalTrackOrderBtn"
+              class="hidden text-white font-medium text-base hover:text-[#E8C547] transition duration-300 nav-item flex items-center space-x-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <span>Track Order</span>
+            </button>
+            
             <form id="logout" action="/logout" method="POST">
               <a
                 onclick="document.getElementById('logout').submit()"
@@ -205,11 +217,339 @@
 
     <%- body %>
 
+    <!-- Global Order Tracking Modal -->
+    <div id="globalOrderTrackingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden">
+          <!-- Modal Header -->
+          <div class="bg-gradient-to-r from-[#1D3557] to-[#457B9D] text-white p-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold">Order Status</h2>
+                  <p class="text-white/80 text-sm" id="globalOrderNumber">Order #ORD123456</p>
+                </div>
+              </div>
+              <button id="closeGlobalTrackingModal" class="text-white/80 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-4">
+            <div id="globalTrackingContent">
+              <!-- Loading State -->
+              <div id="globalTrackingLoading" class="text-center py-6">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1D3557] mx-auto mb-3"></div>
+                <p class="text-gray-600 text-sm">Loading status...</p>
+              </div>
+
+              <!-- Order Status -->
+              <div id="globalOrderDetails" class="hidden text-center">
+                <!-- Animated Status Icon -->
+                <div class="mb-4">
+                  <div id="globalStatusIcon" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-white text-2xl animate-pulse">
+                    <!-- Status icon will be populated by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Current Status -->
+                <div class="mb-4">
+                  <h3 class="text-xl font-bold text-[#1D3557] mb-2" id="globalCurrentStatus">Preparing</h3>
+                  <p class="text-gray-600 text-sm" id="globalStatusDescription">Your food is being prepared</p>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div class="mb-4">
+                  <div class="bg-gray-200 rounded-full h-2 mb-2">
+                    <div class="progress-bar bg-gradient-to-r from-[#1D3557] to-[#457B9D] h-2 rounded-full transition-all duration-1000 ease-out" id="globalProgressBar" style="width: 40%"></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500">
+                    <span>Placed</span>
+                    <span>Ready</span>
+                  </div>
+                </div>
+
+                <!-- Estimated Time -->
+                <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                  <div class="flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4 text-[#1D3557]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-[#1D3557]" id="globalEstimatedTime">Ready in 15 mins</span>
+                  </div>
+                </div>
+
+                <!-- Order Total -->
+                <div class="text-center">
+                  <p class="text-gray-600 text-sm">Total Amount</p>
+                  <p class="text-2xl font-bold text-[#1D3557]" id="globalTotalAmount">₹0.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Load Axios from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    <!-- Load GSAP for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
     <!-- JS -->
     <script type="module" src="/js/app.js"></script>
+
+    <!-- Global Order Tracking Script -->
+    <script>
+    // Global Order Tracking Modal Functionality
+    class GlobalOrderTrackingModal {
+      constructor() {
+        this.modal = document.getElementById('globalOrderTrackingModal');
+        this.closeBtn = document.getElementById('closeGlobalTrackingModal');
+        this.trackBtn = document.getElementById('globalTrackOrderBtn');
+        this.currentOrderId = null;
+        this.init();
+      }
+
+      init() {
+        // Check if there's a recent order and show track button
+        const lastOrderId = localStorage.getItem('lastOrderId');
+        if (lastOrderId && this.trackBtn) {
+          this.trackBtn.classList.remove('hidden');
+          this.trackBtn.addEventListener('click', () => this.openModal());
+        }
+
+        if (this.closeBtn) {
+          this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+
+        // Close modal when clicking outside
+        if (this.modal) {
+          this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+              this.closeModal();
+            }
+          });
+
+          // Close on Escape key
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !this.modal.classList.contains('hidden')) {
+              this.closeModal();
+            }
+          });
+        }
+      }
+
+      async openModal(orderId = null) {
+        this.currentOrderId = orderId || localStorage.getItem('lastOrderId');
+        
+        if (!this.currentOrderId) {
+          alert('No order found to track. Please place an order first.');
+          return;
+        }
+
+        this.modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        // Animate modal entrance with GSAP if available
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(this.modal.querySelector('.bg-white'), 
+            { scale: 0.8, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+          );
+        }
+
+        // Load order data
+        await this.loadOrderData();
+      }
+
+      closeModal() {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(this.modal.querySelector('.bg-white'), {
+            scale: 0.8, 
+            opacity: 0, 
+            duration: 0.2,
+            onComplete: () => {
+              this.modal.classList.add('hidden');
+              document.body.style.overflow = 'auto';
+            }
+          });
+        } else {
+          this.modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      async loadOrderData() {
+        const loadingDiv = document.getElementById('globalTrackingLoading');
+        const detailsDiv = document.getElementById('globalOrderDetails');
+        
+        if (loadingDiv) loadingDiv.classList.remove('hidden');
+        if (detailsDiv) detailsDiv.classList.add('hidden');
+
+        try {
+          const response = await axios.get(`/api/orders/${this.currentOrderId}`);
+          const order = response.data;
+
+          this.populateOrderData(order);
+          
+          if (loadingDiv) loadingDiv.classList.add('hidden');
+          if (detailsDiv) detailsDiv.classList.remove('hidden');
+
+          // Animate content entrance
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo('#globalOrderDetails > *', 
+              { y: 20, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
+            );
+          }
+
+        } catch (error) {
+          console.error('Error loading order data:', error);
+          if (loadingDiv) {
+            loadingDiv.innerHTML = `
+              <div class="text-center py-8">
+                <div class="text-red-500 mb-4">
+                  <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <p class="text-gray-600">Failed to load order details. Please try again.</p>
+                <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-[#1D3557] text-white rounded-lg hover:bg-[#2a4a73] transition-colors">
+                  Retry
+                </button>
+              </div>
+            `;
+          }
+        }
+      }
+
+      populateOrderData(order) {
+        // Update order header
+        const orderNumberEl = document.getElementById('globalOrderNumber');
+        if (orderNumberEl) orderNumberEl.textContent = `Order #${order.orderNumber}`;
+
+        // Update status icon and colors
+        this.updateStatusIcon(order.status);
+
+        // Update current status
+        const currentStatusEl = document.getElementById('globalCurrentStatus');
+        const statusDescEl = document.getElementById('globalStatusDescription');
+        if (currentStatusEl) currentStatusEl.textContent = this.formatStatus(order.status);
+        if (statusDescEl) statusDescEl.textContent = this.getStatusDescription(order.status);
+
+        // Update progress bar
+        const progressBar = document.getElementById('globalProgressBar');
+        if (progressBar) {
+          const progress = this.getProgressPercentage(order.status);
+          progressBar.style.width = `${progress}%`;
+        }
+
+        // Update estimated time
+        const estimatedTimeEl = document.getElementById('globalEstimatedTime');
+        if (estimatedTimeEl && order.estimatedDeliveryTime) {
+          const now = new Date();
+          const delivery = new Date(order.estimatedDeliveryTime);
+          const diffMinutes = Math.ceil((delivery - now) / (1000 * 60));
+          
+          if (diffMinutes > 0) {
+            estimatedTimeEl.textContent = `Ready in ${diffMinutes} mins`;
+          } else {
+            estimatedTimeEl.textContent = 'Ready soon!';
+          }
+        }
+
+        // Update total
+        const totalAmountEl = document.getElementById('globalTotalAmount');
+        if (totalAmountEl) totalAmountEl.textContent = `₹${order.total.toFixed(2)}`;
+      }
+
+      updateStatusIcon(status) {
+        const iconContainer = document.getElementById('globalStatusIcon');
+        if (!iconContainer) return;
+
+        const statusConfig = {
+          'placed': { icon: '⏳', bg: 'bg-yellow-500' },
+          'confirmed': { icon: '✅', bg: 'bg-blue-500' },
+          'preparing': { icon: '👨‍🍳', bg: 'bg-purple-500' },
+          'ready': { icon: '🎉', bg: 'bg-green-500' },
+          'completed': { icon: '🚀', bg: 'bg-green-600' }
+        };
+
+        const config = statusConfig[status] || statusConfig['placed'];
+        iconContainer.className = `w-16 h-16 mx-auto rounded-full flex items-center justify-center text-white text-2xl animate-pulse ${config.bg}`;
+        iconContainer.textContent = config.icon;
+      }
+
+      getStatusDescription(status) {
+        const descriptions = {
+          'placed': 'Your order has been received',
+          'confirmed': 'Restaurant has confirmed your order',
+          'preparing': 'Your delicious food is being prepared',
+          'ready': 'Your order is ready for pickup!',
+          'completed': 'Order completed successfully'
+        };
+        return descriptions[status] || 'Order status updating...';
+      }
+
+      getProgressPercentage(status) {
+        const progressMap = {
+          'placed': 20,
+          'confirmed': 40,
+          'preparing': 60,
+          'ready': 80,
+          'completed': 100
+        };
+        return progressMap[status] || 0;
+      }
+
+      getCurrentStepIndex(status) {
+        const stepMap = {
+          'placed': 0,
+          'confirmed': 1,
+          'preparing': 2,
+          'ready': 3,
+          'completed': 4
+        };
+        return stepMap[status] || 0;
+      }
+
+      formatStatus(status) {
+        return status.charAt(0).toUpperCase() + status.slice(1);
+      }
+
+      getStatusClass(status) {
+        const classMap = {
+          'placed': 'bg-yellow-100 text-yellow-800',
+          'confirmed': 'bg-blue-100 text-blue-800',
+          'preparing': 'bg-purple-100 text-purple-800',
+          'ready': 'bg-green-100 text-green-800',
+          'completed': 'bg-green-100 text-green-800'
+        };
+        return classMap[status] || 'bg-gray-100 text-gray-800';
+      }
+    }
+
+    // Initialize global modal when DOM is ready
+    let globalOrderTrackingModal;
+    document.addEventListener('DOMContentLoaded', () => {
+      globalOrderTrackingModal = new GlobalOrderTrackingModal();
+    });
+
+    // Global function to open tracking modal from anywhere
+    window.openGlobalOrderTracking = (orderId) => {
+      if (globalOrderTrackingModal) {
+        globalOrderTrackingModal.openModal(orderId);
+      }
+    };
+    </script>
 
     <!-- Countdown Timer Script -->
     <script>
